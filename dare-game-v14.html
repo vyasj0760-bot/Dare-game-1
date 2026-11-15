@@ -313,7 +313,7 @@ label{display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);mar
   <div class="auth-container"><div class="glass-bright auth-card">
     <div class="auth-header"><div style="font-size:2rem;margin-bottom:8px">👑</div><h2>Owner Access</h2></div>
     <div class="form-group"><label>Owner ID</label><input type="text" id="ownerIdInput" placeholder="Owner ID" autocomplete="off" onkeydown="if(event.key==='Enter')ownerLogin()"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="ownerPassInput" placeholder="Password" onkeydown="if(event.key==='Enter')ownerLogin()"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="ownerPassInput" placeholder="Create password on first use" onkeydown="if(event.key==='Enter')ownerLogin()"></div>
     <div class="err-msg" id="ownerErr">❌ Invalid credentials.</div>
     <button class="btn btn-primary" style="width:100%" onclick="ownerLogin()">🔓 Access Portal</button>
   </div></div>
@@ -649,7 +649,7 @@ const FONT_OPTIONS=[
   {name:'Pacifico',preview:'Dare Game'},
 ];
 const DICE=['⚀','⚁','⚂','⚃','⚄','⚅'];
-const OWNER_ID='',OWNER_PASS='';
+const OWNER_ID='Owner_Gamer';
 
 // ═══ STATE ═══
 const S={
@@ -704,9 +704,41 @@ function handlePlayClick(){S.currentUser?navigate('mode'):navigate('user-auth');
 
 // ═══ OWNER AUTH ═══
 function ownerLogin(){
+  const id=document.getElementById('ownerIdInput').value.trim();
+  const pw=document.getElementById('ownerPassInput').value;
   const err=document.getElementById('ownerErr');
-  err.textContent='Owner login is disabled in this public build. Add secure server-side authentication before enabling it.';
-  err.classList.add('show');
+  const saved=localStorage.getItem('tdg_owner_pw');
+  if(id!==OWNER_ID){
+    err.textContent='❌ Invalid owner ID.';
+    err.classList.add('show');
+    return;
+  }
+  if(!saved){
+    if(pw.length<6){
+      err.textContent='First setup: create an owner password with at least 6 characters.';
+      err.classList.add('show');
+      return;
+    }
+    localStorage.setItem('tdg_owner_pw',pw);
+    err.classList.remove('show');
+    document.getElementById('ownerIdInput').value='';
+    document.getElementById('ownerPassInput').value='';
+    navigate('owner');
+    toast('🔐 Owner password created. Welcome!','success');
+    return;
+  }
+  if(pw===saved){
+    err.classList.remove('show');
+    document.getElementById('ownerIdInput').value='';
+    document.getElementById('ownerPassInput').value='';
+    navigate('owner');
+    toast('👑 Welcome, Owner!','success');
+  }else{
+    err.textContent='❌ Invalid credentials.';
+    err.classList.add('show');
+    const c=document.querySelector('#screen-owner-login .auth-card');
+    c.style.animation='none';void c.offsetHeight;c.style.animation='shake .35s ease';
+  }
 }
 function ownerTab(btn,tab){
   document.querySelectorAll('.portal-tab').forEach(t=>t.classList.remove('active'));
