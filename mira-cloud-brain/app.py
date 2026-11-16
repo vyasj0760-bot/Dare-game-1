@@ -58,7 +58,7 @@ def _over_rate_limit(client_id):
 
 
 @socketio.on("chat_message")
-def on_chat_message(payload):
+def on_chat_message(payload=None):
     if not request.sid:
         return
 
