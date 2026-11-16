@@ -1,14 +1,15 @@
-# The Dare Game v15
+# The Dare Game v16
 
-A lightweight, mobile-first party game with an offline-first Android WebView build.
+A lightweight, mobile-first Indian party game with an offline-first Android WebView build.
 
 ## Included
-- 129+ light, optional dares and 15 truth prompts
+- 245+ dares in the main library, with Hinglish and Indian family, school, food and festival themes
+- Separate Gender Style-Swap mode: Boy → Girl-style theme, Girl → Boy-style theme, and Custom mode
+- Classic Dare Mode with the previously played hairstyle, styling, accessory and acting challenges
 - Local pass-and-play multiplayer for 2–8 players
-- Mini-games: Rock Paper Scissors, Dice Duel, Number Guess and Quick Tap
+- Mini-games: Stone Paper Scissors, Dice Duel, Number Guess and Quick Tap
 - Truth or Dare mode
-- Classic Dare Mode with the turn-by-turn hairstyle, styling, accessories and acting challenges from our earlier game
-- No image generation or required purchases; skipping is always allowed
+- Skip and swap are always allowed; no forced outfit changes or purchases
 
 ## Browser version
 Open [dare-game-v15.html](./dare-game-v15.html) from the repository.
