@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.abs
 import kotlin.math.sin
 
 class MiraOverlayView(
@@ -35,16 +36,26 @@ class MiraOverlayView(
         super.onDraw(canvas)
         val phase = (SystemClock.uptimeMillis() % 1200L) / 1200f
         val frame = when (motion) {
-            Motion.IDLE -> 0
-            Motion.WALK -> 1
-            Motion.TALK -> 2
+            Motion.IDLE -> (phase * 3f).toInt().coerceIn(0, 2)
+            Motion.WALK -> 3 + ((phase * 6f).toInt() % 3)
+            Motion.TALK -> 6 + ((phase * 6f).toInt() % 3)
         }
-        val frameWidth = atlas.width / 3
-        source.set(frame * frameWidth, 0, (frame + 1) * frameWidth, atlas.height)
+
+        // The atlas is a 3-column x 3-row sheet: idle, walk, and expressive poses.
+        val cellWidth = atlas.width / 3
+        val cellHeight = atlas.height / 3
+        val column = frame % 3
+        val row = frame / 3
+        source.set(
+            column * cellWidth,
+            row * cellHeight,
+            (column + 1) * cellWidth,
+            (row + 1) * cellHeight
+        )
 
         val bob = when (motion) {
             Motion.IDLE -> sin(phase * Math.PI * 2).toFloat() * dp(3)
-            Motion.WALK -> kotlin.math.abs(sin(phase * Math.PI * 4)).toFloat() * dp(5)
+            Motion.WALK -> abs(sin(phase * Math.PI * 4)).toFloat() * dp(5)
             Motion.TALK -> sin(phase * Math.PI * 5).toFloat() * dp(2)
         }
         val scalePulse = if (motion == Motion.TALK) {
@@ -59,7 +70,7 @@ class MiraOverlayView(
             (height + drawHeight) / 2f - bob
         )
         canvas.drawBitmap(atlas, source, destination, paint)
-        postInvalidateDelayed(70)
+        postInvalidateDelayed(100)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -73,7 +84,7 @@ class MiraOverlayView(
             MotionEvent.ACTION_MOVE -> {
                 val dx = event.rawX - downX
                 val dy = event.rawY - downY
-                if (kotlin.math.abs(dx) > dp(4) || kotlin.math.abs(dy) > dp(4)) moved = true
+                if (abs(dx) > dp(4) || abs(dy) > dp(4)) moved = true
                 if (moved) {
                     onDrag(dx, dy)
                     downX = event.rawX
@@ -83,17 +94,12 @@ class MiraOverlayView(
             }
             MotionEvent.ACTION_UP -> {
                 if (!moved) {
-                    val now = SystemClock.uptimeMillis()
-                    motion = if (now - lastTap < 500L) {
-                        Motion.TALK
-                    } else {
-                        when (motion) {
-                            Motion.IDLE -> Motion.WALK
-                            Motion.WALK -> Motion.TALK
-                            Motion.TALK -> Motion.IDLE
-                        }
+                    motion = when (motion) {
+                        Motion.IDLE -> Motion.WALK
+                        Motion.WALK -> Motion.TALK
+                        Motion.TALK -> Motion.IDLE
                     }
-                    lastTap = now
+                    lastTap = SystemClock.uptimeMillis()
                     invalidate()
                 }
                 performClick()
