@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f7f5f2">
+<title>The Dare Game</title>
+<style>
+:root{--bg:#f7f5f2;--paper:#fff;--ink:#24232b;--muted:#85818d;--line:#ece9ef;--lav:#e9e2ff;--lav2:#7659c9;--pink:#f8e3eb;--mint:#e0f1e9;--yellow:#fff0cf;--shadow:0 12px 34px rgba(46,35,70,.07);--r:22px}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{padding:0 0 28px}button,input{font:inherit}button{cursor:pointer;border:0}button:focus-visible,input:focus-visible{outline:3px solid #b8a5f3;outline-offset:2px}
+.app{max-width:560px;margin:auto;padding:20px 18px 40px}.top{display:flex;align-items:center;justify-content:space-between;margin:6px 0 28px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.5px}.brand-mark{width:38px;height:38px;border-radius:13px;background:var(--lav);display:grid;place-items:center;font-size:20px}.offline{font-size:11px;color:#42785f;background:var(--mint);padding:7px 11px;border-radius:99px;font-weight:700}
+.screen{display:none;animation:in .22s ease}.screen.active{display:block}@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:36px;line-height:1.08;letter-spacing:-1.7px;margin:0 0 12px}h2{font-size:25px;letter-spacing:-.7px;margin:0 0 8px}h3{font-size:17px;margin:0 0 5px}.sub{color:var(--muted);font-size:14px;line-height:1.55}.hero{padding:27px 24px 24px;background:linear-gradient(140deg,#eee8ff,#fff 70%);border:1px solid #e8e0f8;border-radius:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"✦";position:absolute;right:24px;top:17px;font-size:58px;color:#d5c9fa;opacity:.8}.hero-emoji{font-size:43px;margin-bottom:18px}.hero-logo{width:108px;height:108px;margin-bottom:18px;filter:drop-shadow(0 9px 15px rgba(92,66,150,.16))}.hero-logo svg{display:block;width:100%;height:100%}.hero p{max-width:330px}.hero .btn{margin-top:20px}
+.btn{padding:14px 18px;border-radius:15px;background:var(--ink);color:#fff;font-weight:750;min-height:48px;transition:transform .12s,opacity .12s}.btn:active{transform:scale(.98)}.btn.primary{background:var(--lav2)}.btn.soft{background:var(--lav);color:#4f3c8e}.btn.ghost{background:#f1eff4;color:#514c59}.btn.full{width:100%}.btn.small{padding:10px 13px;min-height:40px;font-size:13px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin:26px 2px 12px}.section-head span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.tile{background:var(--paper);border:1px solid var(--line);border-radius:19px;padding:16px;text-align:left;box-shadow:0 5px 18px rgba(30,25,40,.035);min-height:126px;color:var(--ink)}.tile:active{transform:scale(.98)}.tile .emoji{font-size:26px;margin-bottom:12px}.tile b{display:block;font-size:15px}.tile small{display:block;color:var(--muted);font-size:12px;margin-top:4px;line-height:1.4}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);margin:13px 0}.back{background:transparent;color:var(--muted);padding:8px 0;margin:0 0 14px;font-weight:650}.field{margin:15px 0}.field label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:7px}.field input{width:100%;border:1px solid var(--line);background:#fbfafc;border-radius:13px;padding:13px;color:var(--ink)}.player-row{display:flex;gap:8px;align-items:center;margin:8px 0}.player-row input{flex:1;min-width:0}.remove{background:var(--pink);color:#9c4768;border-radius:11px;width:42px;height:43px;font-weight:800}
+.pills{display:flex;flex-wrap:wrap;gap:8px}.pill{border:1px solid var(--line);border-radius:99px;padding:9px 13px;background:#fff;color:var(--ink);font-size:13px;font-weight:650}.pill.selected{background:var(--lav);border-color:#cfc1f7;color:#4d3989}
+.game-title{display:flex;align-items:center;gap:12px;margin:10px 0 18px}.game-title .emoji{width:54px;height:54px;border-radius:17px;background:var(--lav);display:grid;place-items:center;font-size:28px}
+.versus{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px}.versus .field{margin:0}.vs{font-weight:900;color:#b2aabd}
+.choice-row{display:flex;justify-content:center;gap:12px;margin:20px 0}.choice{width:86px;height:86px;border-radius:22px;background:#f3efff;border:2px solid transparent;font-size:36px}.choice.selected{border-color:var(--lav2);background:#e5dcff;transform:translateY(-3px)}
+.result{text-align:center;padding:22px 12px}.result .big{font-size:56px;margin:4px}.result h2{margin:8px 0}.result p{color:var(--muted);line-height:1.5}
+.dare-box{background:linear-gradient(140deg,#fff0f5,#fff8e8);border:1px solid #f5e1e8;border-radius:22px;padding:22px;margin:15px 0;text-align:center}.dare-box .tag{font-size:11px;font-weight:800;color:#a15d7b;letter-spacing:1px;text-transform:uppercase}.dare-box .prompt{font-size:19px;font-weight:750;line-height:1.4;margin:12px 0}
+.score-list{display:flex;gap:8px;flex-wrap:wrap}.score{flex:1;min-width:90px;background:#f7f5fa;border-radius:13px;padding:11px;text-align:center}.score b{display:block;font-size:18px}.score small{color:var(--muted)}
+.center{text-align:center}.hidden{display:none!important}.note{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0}.tap-area{height:150px;border-radius:22px;background:#f0eaff;display:grid;place-items:center;font-size:24px;font-weight:850;color:#5a449c;margin:16px 0;user-select:none}.tap-area.go{background:#dff4e8;color:#24764b}.tap-area.wait{background:#fff0cf;color:#926414}
+.footer-note{text-align:center;font-size:11px;color:#a19ca7;margin:26px 0 0}
+@media(max-width:360px){h1{font-size:31px}.app{padding-left:14px;padding-right:14px}.choice{width:76px;height:76px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="brand-mark"><svg class="brand-icon" viewBox="0 0 108 108" role="img" aria-label="The Dare Game icon"><defs><linearGradient id="iconBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eee8ff"/><stop offset="1" stop-color="#f8e3eb"/></linearGradient></defs><rect width="108" height="108" rx="27" fill="url(#iconBg)"/><path d="M31 34 40 18 53 29 66 18 76 35 72 48 35 48Z" fill="#7659c9" stroke="#4d3989" stroke-width="2"/><path d="m39 36 3-9 7 7 4-10 6 10 9-8 2 11Z" fill="#fff0cf"/><path d="M23 61c0-6 5-10 11-10h40c6 0 11 4 11 10v14c0 7-8 11-14 6l-8-6H45l-8 6c-6 5-14 1-14-6Z" fill="#fff" stroke="#4d3989" stroke-width="2"/><path d="M34 59h6v6h6v6h-6v6h-6v-6h-6v-6h6Z" fill="#7659c9"/><circle cx="67" cy="64" r="4" fill="#f08bb0"/><circle cx="77" cy="72" r="4" fill="#f3c45c"/><path d="m17 24 3-7 3 7 7 3-7 3-3 7-3-7-7-3Zm66 1 3-7 3 7 7 3-7 3-3 7-3-7-7-3Z" fill="#fff"/></svg></div><span>The Dare Game</span></div><span class="offline">● OFFLINE</span></header>
+
+<section id="home" class="screen active">
+ <div class="hero"><div class="hero-logo"><svg viewBox="0 0 108 108" role="img" aria-label="The Dare Game crown and gamepad logo"><defs><linearGradient id="heroIconBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eee8ff"/><stop offset="1" stop-color="#f8e3eb"/></linearGradient></defs><rect width="108" height="108" rx="27" fill="url(#heroIconBg)"/><path d="M31 34 40 18 53 29 66 18 76 35 72 48 35 48Z" fill="#7659c9" stroke="#4d3989" stroke-width="2"/><path d="m39 36 3-9 7 7 4-10 6 10 9-8 2 11Z" fill="#fff0cf"/><path d="M23 61c0-6 5-10 11-10h40c6 0 11 4 11 10v14c0 7-8 11-14 6l-8-6H45l-8 6c-6 5-14 1-14-6Z" fill="#fff" stroke="#4d3989" stroke-width="2"/><path d="M34 59h6v6h6v6h-6v6h-6v-6h-6v-6h6Z" fill="#7659c9"/><circle cx="67" cy="64" r="4" fill="#f08bb0"/><circle cx="77" cy="72" r="4" fill="#f3c45c"/><path d="m17 24 3-7 3 7 7 3-7 3-3 7-3-7-7-3Zm66 1 3-7 3 7 7 3-7 3-3 7-3-7-7-3Z" fill="#fff"/></svg></div><h1>Pick a game.<br>Make a memory.</h1><p class="sub">Mini-games, silly challenges and surprise dares. All on one phone, no internet needed.</p><button class="btn primary full" onclick="show('players')">Start playing →</button></div>
+ <div class="section-head"><h3>Play a mode</h3><span>Choose your vibe</span></div>
+ <div class="grid">
+  <button class="tile" onclick="show('players')"><div class="emoji">🕹️</div><b>Mini-games</b><small>Play, compete, loser gets a dare</small></button>
+  <button class="tile" onclick="startTruthDare()"><div class="emoji">💬</div><b>Truth or Dare</b><small>Take turns and pick a challenge</small></button>
+  <button class="tile" onclick="startClassic()"><div class="emoji">🎀</div><b>Classic Dare Mode</b><small>Our turn-by-turn game • style, hair & acting</small></button>
+ </div>
+ <p class="footer-note">Made for friends • Play kindly • Skipping is always okay</p>
+</section>
+
+<section id="players" class="screen">
+ <button class="back" onclick="show('home')">← Home</button><h2>Who's playing?</h2><p class="sub">Add 2–8 players. Everyone shares the phone.</p>
+ <div class="card"><div id="playerInputs"></div><button class="btn soft full" onclick="addPlayer()">+ Add player</button></div>
+ <button class="btn primary full" onclick="savePlayers()">Continue →</button>
+</section>
+
+<section id="games" class="screen">
+ <button class="back" onclick="show('players')">← Players</button><h2>Choose a mini-game</h2><p class="sub">The winner is safe. The loser gets a random dare.</p>
+ <div class="grid" style="margin-top:18px">
+  <button class="tile" onclick="openDuel('rps')"><div class="emoji">✊</div><b>Stone Paper Scissors</b><small>Classic quick duel</small></button>
+  <button class="tile" onclick="openDuel('dice')"><div class="emoji">🎲</div><b>Dice Duel</b><small>Highest roll wins</small></button>
+  <button class="tile" onclick="openDuel('number')"><div class="emoji">🔢</div><b>Number Guess</b><small>Guess the secret number</small></button>
+  <button class="tile" onclick="openDuel('tap')"><div class="emoji">⚡</div><b>Quick Tap</b><small>Who reacts faster?</small></button>
+ </div>
+ <button class="btn ghost full" style="margin-top:14px" onclick="startTruthDare()">💬 Switch to Truth or Dare</button>
+</section>
+
+<section id="duel" class="screen">
+ <button class="back" onclick="show('games')">← Games</button>
+ <div class="game-title"><div class="emoji" id="duelEmoji">✊</div><div><h2 id="duelTitle">Duel</h2><p class="sub" id="duelSub">Choose two players</p></div></div>
+ <div class="card"><div class="versus">
+  <div class="field"><label>PLAYER 1</label><select id="p1" onchange="resetDuel()"></select></div><div class="vs">VS</div>
+  <div class="field"><label>PLAYER 2</label><select id="p2" onchange="resetDuel()"></select></div>
+ </div><p class="note" id="duelHint">Pick two different players.</p></div>
+ <div id="duelPlay" class="card"></div>
+ <div id="duelResult" class="card hidden"></div>
+ <button class="btn ghost full" onclick="show('games')">Choose another game</button>
+</section>
+
+<section id="truth" class="screen">
+ <button class="back" onclick="show('home')">← Home</button><h2>Truth or Dare</h2><p class="sub">Take turns. Choose honestly, keep it fun.</p>
+ <div class="card"><div class="field"><label>IT'S YOUR TURN</label><select id="truthPlayer"></select></div>
+  <div class="grid"><button class="tile" onclick="pickTruth('truth')"><div class="emoji">💬</div><b>Truth</b><small>Answer a fun question</small></button><button class="tile" onclick="pickTruth('dare')"><div class="emoji">🎯</div><b>Dare</b><small>Try a silly challenge</small></button></div>
+ </div>
+ <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="prompt" id="truthText"></div><button class="btn soft small" onclick="pickTruth(lastTruthType)">Another one</button></div>
+ <button class="btn primary full" onclick="nextTruthPlayer()">Next player's turn →</button>
+</section>
+
+<section id="classic" class="screen">
+ <button class="back" onclick="show('home')">← Home</button><h2>Classic Dare Mode 🎀</h2><p class="sub">One dare per turn. Players alternate. Keep it playful, comfortable and optional.</p>
+ <div class="card"><div class="field"><label>PLAYER THIS TURN</label><select id="classicPlayer"></select></div>
+ <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="hair">Hair & hairstyle</option><option value="style">Outfit & styling</option><option value="accessory">Accessories</option><option value="acting">Acting & expressions</option><option value="classic">Our played-game dares</option></select></div>
+ <button class="btn primary full" onclick="drawClassicDare()">Get one dare 🎯</button></div>
+ <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="prompt" id="classicText"></div><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
+ <div class="grid"><button class="btn soft full" onclick="drawClassicDare()">Swap dare ↻</button><button class="btn full" onclick="nextClassicTurn()">Next player's turn →</button></div>
+ <p class="note">Hair, clothes and accessories are always the player's choice. No makeup purchases or uncomfortable changes.</p>
+</section>
+
+<section id="tap" class="screen">
+ <button class="back" onclick="show('duel')">← Back</button><h2>Quick Tap</h2><p class="sub">Each player gets one turn. Tap only when GO appears.</p>
+ <div class="card center"><h3 id="tapPlayer">Player 1</h3><div class="tap-area" id="tapArea" onclick="tapNow()">Tap Start</div><p class="note" id="tapInfo">No early taps. Wait for the green signal!</p><button class="btn primary full" id="tapStart" onclick="startTap()">Start round</button></div>
+</section>
+
+<section id="loser" class="screen">
+ <button class="back" onclick="show('games')">← Games</button>
+ <div class="result"><div class="big">🎯</div><h2 id="resultHeading">Dare time!</h2><p id="resultCaption"></p></div>
+ <div class="dare-box"><div class="tag">LOSER'S DARE</div><div class="prompt" id="loserDare"></div><p class="note">Keep it comfortable. You can always skip or swap a dare.</p><button class="btn soft small" onclick="newLoserDare()">Swap dare ↻</button></div>
+ <button class="btn primary full" onclick="show('games')">Play another game</button>
+ <button class="btn ghost full" style="margin-top:9px" onclick="show('home')">Home</button>
+</section>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const DARES=[
+"Do a 20-second dramatic movie trailer voice-over about this room.",
+"Give yourself a funny royal title and introduce yourself.",
+"Act like a news anchor reporting a totally silly breaking story.",
+"Do your best robot impression for 20 seconds.",
+"Make up a two-line song about the person on your left.",
+"Give a one-minute imaginary cooking show for a snack.",
+"Do a slow-motion entrance like a movie star.",
+"Speak like a cartoon character for the next round.",
+"Show your best harmless dance move for 15 seconds.",
+"Make three different emoji faces and let the group name them.",
+"Invent a new handshake with another player.",
+"Describe your favourite food like it's a luxury product.",
+"Give a compliment to everyone playing.",
+"Do a funny weather forecast for the next 10 seconds.",
+"Act out brushing your teeth as if it were an action movie.",
+"Balance a soft cushion on your head for five seconds while standing still.",
+"Create a tiny story using the words moon, mango and bicycle.",
+"Imitate a harmless sound effect and let others guess it.",
+"Do a runway pose with an accessory you choose.",
+"Tell a joke. If nobody laughs, tell a second one.",
+"Say the alphabet backwards as far as you can.",
+"Give a 15-second motivational speech to a spoon.",
+"Act like a strict teacher explaining how to eat pizza.",
+"Make up a new festival and explain its main tradition.",
+"Use a paper moustache or imaginary moustache and act like a grandparent.",
+"Style a scarf or dupatta in a way you choose, only if comfortable.",
+"Do a 20-second dramatic family-serial scene.",
+"Hum a tune and let the others guess it.",
+"Name five things in the room that start with the same letter.",
+"Give the group a silly team name and slogan.",
+"Invent a new ice-cream flavour and advertise it in 10 seconds.",
+"Explain how to use a spoon as if it were a brand-new invention.",
+"Give a weather report for an imaginary planet.",
+"Make up a two-line poem about your favourite snack.",
+"Describe a pencil like it is a famous celebrity.",
+"Do a 10-second silent acting scene about losing your keys.",
+"Create a funny slogan for the nearest cushion.",
+"Say one sentence in a made-up alien language and translate it.",
+"Invent a new emoji and explain what it means.",
+"Give a dramatic award speech for the best chair in the room.",
+"Tell a tiny story with a beginning, middle and surprise ending.",
+"Make a pretend phone call to a friendly dragon.",
+"Describe today's weather like a sports commentator.",
+"Act like a museum guide presenting an ordinary water bottle.",
+"Make up a name for a new dance move; demonstrating is optional.",
+"Give a motivational speech to a houseplant or imaginary plant.",
+"Name five fruits without repeating a letter's sound.",
+"Explain your favourite game to someone from another planet.",
+"Create a three-word movie title and explain its plot.",
+"Say a tongue twister slowly and clearly.",
+"Do a cheerful greeting in three different imaginary character voices.",
+"Invent a new school subject and its first lesson.",
+"Describe a normal day as if it were an epic adventure.",
+"Give a compliment to an object in the room.",
+"Make up a silly headline about a missing biscuit.",
+"Act like a chef explaining an imaginary recipe.",
+"Describe a colour without saying its name.",
+"Give a one-sentence review of the nearest book.",
+"Make a sound effect for a spaceship landing using only your voice.",
+"Invent a mascot for your group.",
+"Say three kind things about the group.",
+"Explain why a potato would make a great superhero.",
+"Create a slogan for a pretend space travel company.",
+"Do a 15-second advertisement for fresh air.",
+"Make up a new festival and its greeting.",
+"Tell a story where a mango is the main character.",
+"Name three things that would be useful on a moon picnic.",
+"Give a serious interview as a very unserious celebrity.",
+"Describe your dream treehouse in three sentences.",
+"Create a funny nickname for an imaginary pet.",
+"Say the same sentence as a robot, a poet and a newsreader.",
+"Invent a new board game and explain one rule.",
+"Give a mini award to another player for something kind.",
+"Explain how to make tea to a time traveller.",
+"Act out a happy celebration without jumping or running.",
+"Make up a jingle for a notebook.",
+"Describe a sandwich as if it were a royal treasure.",
+"Create a short riddle about something in the room.",
+"Say five words that rhyme with day.",
+"Invent a friendly monster and describe its favourite food.",
+"Give a 10-second speech as the mayor of Pillow City.",
+"Tell a story using the words star, bicycle and mango.",
+"Make a pretend announcement for a very tiny parade.",
+"Describe your favourite season like a travel presenter.",
+"Give a dramatic reaction to finding an extra biscuit.",
+"Invent a new greeting for your friend group.",
+"Explain why clouds deserve a fan club.",
+"Name three fictional places you would like to visit.",
+"Give a product review of an imaginary invisible hat.",
+"Create a one-line slogan for kindness.",
+"Say a familiar phrase in a gentle cartoon voice.",
+"Describe an ordinary pen as a legendary artefact.",
+"Make up a short cheer for your team.",
+"Tell a joke about a sleepy alarm clock.",
+"Invent a new flavour of popcorn.",
+"Give an acceptance speech for winning Best Snack Taster.",
+"Describe a rainy day without using the words rain or wet.",
+"Act like a tour guide showing an imaginary castle.",
+"Make up a story about a brave little button.",
+"Give a 10-second speech to encourage a nervous pencil.",
+"Invent a new planet and name its three rules.",
+"Create a funny tagline for a pair of socks.",
+"Explain why a chair could be a good detective.",
+"Make up a two-line song about the moon.",
+"Describe your favourite celebration in three words.",
+"Give a pretend interview to an imaginary talking cat.",
+"Invent a new sport that uses only paper and imagination.",
+"Say a tongue twister with a calm newsreader voice.",
+"Create a name for a fictional superhero team.",
+"Give a dramatic introduction to your water bottle.",
+"Describe a banana like a luxury car advert.",
+"Make up a riddle whose answer is a book.",
+"Invent a new app and explain what it does.",
+"Give a one-sentence pep talk to everyone playing.",
+"Tell a tiny mystery story with a funny reveal.",
+"Create a slogan for a pretend library café.",
+"Name five animals in alphabetical order.",
+"Give an imaginary cooking show a very dramatic title.",
+"Describe a rainbow as if it were breaking news.",
+"Invent a new holiday dedicated to naps or relaxing.",
+"Say a simple sentence as if you are narrating a nature documentary.",
+"Create a funny name for an imaginary robot.",
+"Make up a short poem about a rainy window.",
+"Describe your favourite snack as a work of art.",
+"Give a pretend award to the most helpful object nearby.",
+"Invent a friendly alien greeting and teach it to the group.",
+"Explain why a pillow would be a brilliant travel companion.",
+"Make up a new motto for your group.",
+"Tell a story in exactly three sentences about a lost crown."
+];
+const TRUTHS=[
+"What is one small thing that always makes you laugh?",
+"Which fictional character would you invite to a party?",
+"What is the funniest harmless misunderstanding you've had?",
+"What song do you secretly enjoy singing?",
+"If you could instantly learn one skill, what would it be?",
+"What is your most-used emoji and why?",
+"Which snack could you eat any day?",
+"What is one thing your friends are surprisingly good at?",
+"What is the silliest nickname you've ever heard?",
+"If today had a title, what would it be?",
+"Which game are you most competitive at?",
+"What is a tiny fear you know is irrational?",
+"What is one kind thing someone did for you recently?",
+"If you could travel anywhere for one day, where would you go?",
+"What is your funniest school or classroom moment?"
+];
+const CLASSIC_DARES={
+ hair:["Double Braid Challenge: make two simple braids or describe your dream braid style. Ribbons are optional.","Create a quick hairstyle using only your hands—no pins or products needed.","Give your hair a funny movie-character name and introduce the look.","Try a neat side part or a new parting for one turn, only if you like.","Invent a hairstyle for a superhero and explain its special power."],
+ style:["Style a scarf or dupatta in a way you choose, only if comfortable.","Create a royal look using one clothing item you already have.","Make a pretend fashion-show entrance in your normal comfortable outfit.","Choose a colour theme for your outfit and explain the character who would wear it.","Design a festive outfit using imagination—no need to change clothes."],
+ accessory:["Choose a safe, lightweight accessory and give it a dramatic royal introduction.","Make an imaginary crown with your hands and announce your royal title.","Pick a pair of glasses (real or imaginary) and act like a detective.","Give a soft scarf a new name and explain its imaginary superpower.","Create a paper moustache or draw one on paper, then do a grandparent-style introduction."],
+ acting:["Act like a strict but funny teacher for 15 seconds.","Do a dramatic family-serial reaction to a missing samosa.","Speak like a royal announcer for the next 20 seconds.","Perform a silent movie scene where you discover a surprise gift.","Give a 15-second speech as a very serious news reporter."],
+ classic:["Double Braid Challenge: two simple braids; matching ribbons are optional.","Dadaji-style moustache: make an imaginary moustache with your fingers and deliver a funny one-line dialogue.","Dhoti-kurta style challenge: describe or sketch a traditional outfit; changing clothes is not required.","Create a funny family-photo pose and hold it for three seconds.","Give yourself a royal title and ask everyone to use it for one round.","Choose an imaginary accessory and act as if it is the most precious royal treasure.","Do a 10-second runway walk in your normal comfortable outfit.","Invent a new hairstyle for a cartoon character and explain it."]
+};
+let classicTurn=0;
+function startClassic(){if(players.length<2){renderPlayers();show("players");return;}renderClassicPlayer();$("classicPrompt").classList.add("hidden");show("classic");}
+function renderClassicPlayer(){$("classicPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("classicPlayer").value=String(classicTurn%players.length);}
+function drawClassicDare(){const c=$("classicCategory").value,pool=c==="all"?Object.values(CLASSIC_DARES).flat():CLASSIC_DARES[c];const dare=pool[Math.floor(Math.random()*pool.length)];$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+(c==="all"?"SURPRISE DARE":c.toUpperCase());$("classicText").textContent=dare;$("classicPrompt").classList.remove("hidden");}
+function nextClassicTurn(){classicTurn=(classicTurn+1)%players.length;renderClassicPlayer();$("classicPrompt").classList.add("hidden");}
+
+let players=["Player 1","Player 2"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
+function renderPlayers(){ $("playerInputs").innerHTML="";players.forEach((name,i)=>{const row=document.createElement("div");row.className="player-row";const input=document.createElement("input");input.value=name;input.maxLength=18;input.placeholder="Player "+(i+1);input.setAttribute("aria-label","Player "+(i+1));input.oninput=()=>players[i]=input.value;row.appendChild(input);if(players.length>2){const btn=document.createElement("button");btn.className="remove";btn.textContent="×";btn.onclick=()=>{players.splice(i,1);renderPlayers();};row.appendChild(btn);} $("playerInputs").appendChild(row);});}
+function addPlayer(){if(players.length>=8)return;players.push("Player "+(players.length+1));renderPlayers();}
+function savePlayers(){players=players.map((p,i)=>String(p||"").trim()||("Player "+(i+1)));if(players.length<2){alert("At least 2 players needed.");return;}renderDuelSelects();renderTruthSelect();show("games");}
+function renderDuelSelects(){["p1","p2"].forEach((id,idx)=>{$(id).innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$(id).value=String(idx===0?0:Math.min(1,players.length-1));});}
+function renderTruthSelect(){ $("truthPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("truthPlayer").value=String(truthTurn%players.length);}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function openDuel(type){currentDuel.type=type;const meta={rps:["✊","Stone Paper Scissors","Choose secretly, then reveal together."],dice:["🎲","Dice Duel","Roll once each. Highest number wins."],number:["🔢","Number Guess","One player sets a secret number. The other guesses."],tap:["⚡","Quick Tap","Take turns and compare reaction times."]}[type];$("duelEmoji").textContent=meta[0];$("duelTitle").textContent=meta[1];$("duelSub").textContent=meta[2];$("duelHint").textContent="Select two different players. No internet needed.";resetDuel();show("duel");}
+function duelPlayers(){return {a:Number($("p1").value),b:Number($("p2").value)};}
+function resetDuel(){if(!$("p1").options.length)return;const p=duelPlayers();$("duelResult").classList.add("hidden");$("duelPlay").classList.remove("hidden");if(p.a===p.b){$("duelHint").textContent="Choose two different players to start."; $("duelPlay").innerHTML='<p class="center sub">Pick two different players above.</p>';return;}if(currentDuel.type==="rps")renderRps();if(currentDuel.type==="dice")renderDice();if(currentDuel.type==="number")renderNumber();if(currentDuel.type==="tap"){tapTurn=0;tapTimes=[];renderTapDuel();}}
+function renderRps(){rpsFirst=null;$("duelPlay").innerHTML='<p class="center sub" id="rpsStatus">Player 1: '+escapeHtml(players[duelPlayers().a])+' choose. Your choice stays hidden.</p><div class="choice-row"><button class="choice" onclick="chooseRps(&quot;rock&quot;)">✊</button><button class="choice" onclick="chooseRps(&quot;paper&quot;)">✋</button><button class="choice" onclick="chooseRps(&quot;scissors&quot;)">✌️</button></div><p class="note center">Pass the phone after the first choice. The next player will not see it.</p>';}
+function chooseRps(choice){const p=duelPlayers();if(p.a===p.b)return;if(!rpsFirst){rpsFirst=choice;$("duelPlay").innerHTML='<div class="center"><div style="font-size:36px">🔒</div><h3>Choice saved privately</h3><p class="sub">'+escapeHtml(players[p.b])+', take the phone and make your choice.</p><div class="choice-row"><button class="choice" onclick="chooseRps(&quot;rock&quot;)">✊</button><button class="choice" onclick="chooseRps(&quot;paper&quot;)">✋</button><button class="choice" onclick="chooseRps(&quot;scissors&quot;)">✌️</button></div></div>';return;}const second=choice,first=rpsFirst;rpsFirst=null;const beats={rock:"scissors",paper:"rock",scissors:"paper"};if(first===second){$("duelPlay").innerHTML='<div class="center"><h2>🤝 Tie game!</h2><p class="sub">No dare this time. Play again.</p><button class="btn primary full" onclick="renderRps()">Play again</button></div>';return;}const winner=beats[first]===second?p.a:p.b;finishDuel(winner, winner===p.a?p.b:p.a, "✊ "+first+" · "+second);}
+function renderDice(){$("duelPlay").innerHTML='<div class="center"><p class="sub">Both players roll once. Highest number wins.</p><div class="versus" style="margin:18px 0"><div><div style="font-size:36px" id="diceA">🎲</div><b>'+escapeHtml(players[duelPlayers().a])+'</b></div><div class="vs">VS</div><div><div style="font-size:36px" id="diceB">🎲</div><b>'+escapeHtml(players[duelPlayers().b])+'</b></div></div><button class="btn primary full" onclick="rollDiceDuel()">Roll dice</button></div>';}
+function rollDiceDuel(){const p=duelPlayers(),a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);$("diceA").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][a-1];$("diceB").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][b-1];if(a===b){$("duelPlay").insertAdjacentHTML("beforeend",'<p class="center sub">Tie! Roll again.</p>');return;}finishDuel(a>b?p.a:p.b,a>b?p.b:p.a,a+" vs "+b);}
+function renderNumber(){$("duelPlay").innerHTML='<div class="center"><h3>'+escapeHtml(players[duelPlayers().a])+': set a secret number</h3><p class="sub">Choose a number from 1 to 10, then pass the phone.</p><div class="pills" style="justify-content:center;margin:15px 0">'+Array.from({length:10},(_,i)=>'<button class="pill" onclick="setSecret('+ (i+1) +')">'+(i+1)+'</button>').join("")+'</div></div>';}
+function setSecret(n){numberSecret=n;$("duelPlay").innerHTML='<div class="center"><div style="font-size:34px">🔐</div><h3>'+escapeHtml(players[duelPlayers().b])+': guess the number</h3><p class="sub">Choose one number. The secret stays hidden.</p><div class="pills" style="justify-content:center;margin:15px 0">'+Array.from({length:10},(_,i)=>'<button class="pill" onclick="guessSecret('+ (i+1) +')">'+(i+1)+'</button>').join("")+'</div></div>';}
+function guessSecret(n){const p=duelPlayers(),correct=n===numberSecret,secret=numberSecret;numberSecret=null;if(correct)finishDuel(p.b,p.a,"Correct guess: "+n);else finishDuel(p.a,p.b,"Guess: "+n+" · Secret: "+secret);}
+function renderTapDuel(){const p=duelPlayers();$("duelPlay").innerHTML='<div class="center"><h3 id="tapDuelName">'+escapeHtml(players[p.a])+'</h3><div class="tap-area" id="tapDuelArea">Ready?</div><p class="sub" id="tapDuelInfo">Each player gets one timed turn. Wait for GO, then tap quickly.</p><button class="btn primary full" id="tapDuelStart" onclick="startTapTurn()">Start turn</button></div>';}
+function startTapTurn(){const p=duelPlayers(),who=tapTurn===0?p.a:p.b;$("tapDuelName").textContent=players[who];$("tapDuelArea").textContent="Wait…";$("tapDuelArea").className="tap-area wait";$("tapDuelStart").disabled=true;tapReady=false;clearTimeout(tapTimer);tapTimer=setTimeout(()=>{tapReady=true;window.tapStartAt=performance.now();$("tapDuelArea").textContent="GO! TAP!";$("tapDuelArea").className="tap-area go";$("tapDuelArea").onclick=recordTap;},1200+Math.random()*2500);}
+function recordTap(){if(!tapReady)return;tapReady=false;const ms=Math.round(performance.now()-window.tapStartAt);tapTimes[tapTurn]=ms;$("tapDuelArea").onclick=null;$("tapDuelArea").className="tap-area";$("tapDuelArea").textContent=ms+" ms";if(tapTurn===0){tapTurn=1;$("tapDuelInfo").textContent=players[duelPlayers().b]+" gets the next turn."; $("tapDuelStart").disabled=false;$("tapDuelStart").textContent="Next player's turn";}else{const p=duelPlayers();if(tapTimes[0]===tapTimes[1]){$("tapDuelInfo").textContent="Tie game! Play again.";tapTurn=0;tapTimes=[];$("tapDuelStart").textContent="Try again";}else{const aWins=tapTimes[0]<tapTimes[1];finishDuel(aWins?p.a:p.b,aWins?p.b:p.a,tapTimes[0]+" ms vs "+tapTimes[1]+" ms");}}}
+function tapNow(){}
+function startTap(){}
+function finishDuel(winner,loser,detail){$("duelPlay").classList.add("hidden");$("duelResult").classList.remove("hidden");$("duelResult").innerHTML='<div class="result"><div class="big">🏆</div><h2>'+escapeHtml(players[winner])+' wins!</h2><p>'+escapeHtml(detail||"")+'</p><p class="sub">'+escapeHtml(players[loser])+' gets the dare this round.</p></div><button class="btn primary full" onclick="showLoser('+loser+','+winner+')">Reveal loser\'s dare →</button>';}
+function showLoser(loser,winner){$("resultHeading").textContent=players[loser]+", dare time!";$("resultCaption").textContent=players[winner]+" won this round.";newLoserDare();show("loser");}
+function newLoserDare(){$("loserDare").textContent=DARES[Math.floor(Math.random()*DARES.length)];}
+function startTruthDare(){if(players.length<2){renderPlayers();show("players");}else{renderTruthSelect();$("truthPrompt").classList.add("hidden");show("truth");}}
+function pickTruth(type){lastTruthType=type;const pool=type==="truth"?TRUTHS:DARES;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";$("truthText").textContent=pool[Math.floor(Math.random()*pool.length)];$("truthPrompt").classList.remove("hidden");}
+function nextTruthPlayer(){truthTurn=(truthTurn+1)%players.length;renderTruthSelect();$("truthPrompt").classList.add("hidden");}
+renderPlayers();
+</script>
+</body>
+</html>
