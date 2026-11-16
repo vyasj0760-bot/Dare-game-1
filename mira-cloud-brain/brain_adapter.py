@@ -1,7 +1,6 @@
 """Free-tier OpenRouter adapter for Mira.
 
-No API key is stored in source control. Configure OPENROUTER_API_KEY as a
-server-side environment variable. The default model alias is openrouter/free.
+The API key is read only from the server environment. No paid fallback is used.
 """
 import json
 import os
@@ -38,13 +37,11 @@ def _normalise_result(content: str) -> dict:
             }
     except (json.JSONDecodeError, TypeError):
         pass
-
-    # Provider/model may occasionally ignore the JSON-only instruction.
     return {"text": content.strip(), "emotion": "neutral"}
 
 
-def generate_reply(user_text: str) -> dict:
-    """Generate a reply using OpenRouter's free-model router."""
+def generate_reply(user_text: str, history=None) -> dict:
+    """Generate a reply; history is a bounded list of prior chat turns."""
     if not isinstance(user_text, str) or not user_text.strip():
         raise ValueError("user_text must not be empty")
 
@@ -54,13 +51,27 @@ def generate_reply(user_text: str) -> dict:
             "Mira's free AI provider is not configured yet. No paid service was called."
         )
 
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    if isinstance(history, list):
+        for item in history[-10:]:
+            if (
+                isinstance(item, dict)
+                and item.get("role") in {"user", "assistant"}
+                and isinstance(item.get("content"), str)
+                and item["content"].strip()
+            ):
+                messages.append({
+                    "role": item["role"],
+                    "content": item["content"][:4000],
+                })
+    messages.append({"role": "user", "content": user_text.strip()})
+
     model = os.environ.get("OPENROUTER_MODEL", "openrouter/free").strip()
+    if model != "openrouter/free" and not model.endswith(":free"):
+        raise BrainNotIntegrated("Mira is configured for free models only. Paid model IDs are blocked.")
     payload = {
         "model": model,
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_text.strip()},
-        ],
+        "messages": messages,
         "temperature": 0.7,
         "max_tokens": 500,
     }
@@ -81,7 +92,6 @@ def generate_reply(user_text: str) -> dict:
         with urlopen(request, timeout=45) as response:
             data = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:
-        # Never expose provider response bodies or credentials to the client.
         if exc.code in (401, 403):
             raise BrainNotIntegrated("The AI provider rejected its server key. Check the private deployment settings.") from exc
         if exc.code == 429:

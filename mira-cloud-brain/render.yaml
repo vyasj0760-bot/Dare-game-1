@@ -9,7 +9,11 @@ services:
     envVars:
       - key: MIRA_API_TOKEN
         sync: false
+      - key: FLASK_SECRET_KEY
+        generateValue: true
       - key: OPENROUTER_API_KEY
         sync: false
+      - key: OPENROUTER_MODEL
+        value: openrouter/free
       - key: DATABASE_URL
         sync: false

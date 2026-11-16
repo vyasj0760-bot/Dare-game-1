@@ -2,6 +2,7 @@ import hmac
 import os
 import threading
 import time
+import uuid
 from collections import deque
 
 from dotenv import load_dotenv
@@ -9,6 +10,7 @@ from flask import Flask, jsonify, request
 from flask_socketio import SocketIO, emit
 
 from brain_adapter import BrainNotIntegrated, generate_reply
+import memory_store
 
 load_dotenv()
 
@@ -20,12 +22,17 @@ MAX_MESSAGE_CHARS = 4000
 RATE_LIMIT_MESSAGES = 10
 RATE_LIMIT_WINDOW_SECONDS = 60
 _client_messages = {}
+_client_settings = {}
 _client_messages_lock = threading.Lock()
 
 
 @app.get("/health")
 def health():
-    return jsonify({"status": "ok", "service": "mira-cloud-brain-starter"}), 200
+    return jsonify({
+        "status": "ok",
+        "service": "mira-cloud-brain",
+        "memory_storage_configured": memory_store.is_configured(),
+    }), 200
 
 
 @socketio.on("connect")
@@ -37,11 +44,31 @@ def on_connect(auth=None):
     if not hmac.compare_digest(expected, supplied):
         return False
 
+    memory_enabled = bool(auth.get("memory_enabled", False))
+    client_id = auth.get("client_id", "") if memory_enabled else ""
+    if memory_enabled:
+        try:
+            client_id = str(uuid.UUID(client_id))
+        except (ValueError, TypeError, AttributeError):
+            return False
+
+    with _client_messages_lock:
+        _client_settings[request.sid] = {
+            "memory_enabled": memory_enabled and memory_store.is_configured(),
+            "client_id": client_id if memory_enabled else "",
+        }
+    if memory_enabled and not memory_store.is_configured():
+        emit("memory_status", {
+            "enabled": False,
+            "message": "Persistent memory is not configured on the server yet.",
+        })
+
 
 @socketio.on("disconnect")
 def on_disconnect(reason=None):
     with _client_messages_lock:
         _client_messages.pop(request.sid, None)
+        _client_settings.pop(request.sid, None)
 
 
 def _over_rate_limit(client_id):
@@ -55,6 +82,21 @@ def _over_rate_limit(client_id):
             return True
         recent.append(now)
         return False
+
+
+@socketio.on("clear_memory")
+def on_clear_memory(payload=None):
+    with _client_messages_lock:
+        settings = _client_settings.get(request.sid, {})
+    if not settings.get("memory_enabled"):
+        emit("memory_status", {"enabled": False, "message": "Memory is not enabled for this connection."})
+        return
+    try:
+        memory_store.clear_history(settings["client_id"])
+        emit("memory_status", {"enabled": True, "cleared": True})
+    except Exception:
+        app.logger.exception("Mira memory clear failed")
+        emit("brain_error", {"error": "Mira could not clear stored memory. Please try again later."})
 
 
 @socketio.on("chat_message")
@@ -80,12 +122,30 @@ def on_chat_message(payload=None):
         emit("brain_error", {"error": "Mira is receiving messages too quickly. Please wait a minute."})
         return
 
+    with _client_messages_lock:
+        settings = _client_settings.get(request.sid, {})
+    history = []
+    memory_active = settings.get("memory_enabled", False)
+    if memory_active:
+        try:
+            history = memory_store.get_history(settings["client_id"], limit=10)
+        except Exception:
+            app.logger.exception("Mira memory read failed")
+            emit("memory_status", {"enabled": False, "message": "Memory could not be read; this reply will use only the current message."})
+            memory_active = False
+
     try:
-        result = generate_reply(user_text)
+        result = generate_reply(user_text, history=history)
         emit("brain_reply", {
             "text": result["text"],
             "emotion": result.get("emotion", "neutral"),
         })
+        if memory_active:
+            try:
+                memory_store.save_turn(settings["client_id"], user_text, result["text"])
+            except Exception:
+                app.logger.exception("Mira memory write failed")
+                emit("memory_status", {"enabled": False, "message": "Reply worked, but memory could not be saved."})
     except BrainNotIntegrated as exc:
         emit("brain_unavailable", {"message": str(exc)})
     except Exception:
