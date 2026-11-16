@@ -37,7 +37,7 @@ class MiraOverlayService : Service() {
     private fun attachOverlay() {
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         val density = resources.displayMetrics.density
-        params = WindowManager.LayoutParams(
+        val overlayParams = WindowManager.LayoutParams(
             (124 * density).toInt(),
             (158 * density).toInt(),
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
@@ -49,6 +49,7 @@ class MiraOverlayService : Service() {
             x = (12 * density).toInt()
             y = (180 * density).toInt()
         }
+        params = overlayParams
 
         miraView = MiraOverlayView(this) { dx, dy ->
             params?.let { layout ->
@@ -63,7 +64,7 @@ class MiraOverlayService : Service() {
                 }
             }
         }
-        miraView?.let { windowManager?.addView(it, params) }
+        miraView?.let { view -> windowManager?.addView(view, overlayParams) }
     }
 
     private fun createNotificationChannel() {
