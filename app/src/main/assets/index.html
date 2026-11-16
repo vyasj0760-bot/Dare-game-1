@@ -37,6 +37,7 @@ h1{font-size:36px;line-height:1.08;letter-spacing:-1.7px;margin:0 0 12px}h2{font
  <div class="grid">
   <button class="tile" onclick="show('players')"><div class="emoji">🕹️</div><b>Mini-games</b><small>Play, compete, loser gets a dare</small></button>
   <button class="tile" onclick="startTruthDare()"><div class="emoji">💬</div><b>Truth or Dare</b><small>Take turns and pick a challenge</small></button>
+  <button class="tile" onclick="startClassic()"><div class="emoji">🎀</div><b>Classic Dare Mode</b><small>Our turn-by-turn game • style, hair & acting</small></button>
  </div>
  <p class="footer-note">Made for friends • Play kindly • Skipping is always okay</p>
 </section>
@@ -77,6 +78,16 @@ h1{font-size:36px;line-height:1.08;letter-spacing:-1.7px;margin:0 0 12px}h2{font
  </div>
  <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="prompt" id="truthText"></div><button class="btn soft small" onclick="pickTruth(lastTruthType)">Another one</button></div>
  <button class="btn primary full" onclick="nextTruthPlayer()">Next player's turn →</button>
+</section>
+
+<section id="classic" class="screen">
+ <button class="back" onclick="show('home')">← Home</button><h2>Classic Dare Mode 🎀</h2><p class="sub">One dare per turn. Players alternate. Keep it playful, comfortable and optional.</p>
+ <div class="card"><div class="field"><label>PLAYER THIS TURN</label><select id="classicPlayer"></select></div>
+ <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="hair">Hair & hairstyle</option><option value="style">Outfit & styling</option><option value="accessory">Accessories</option><option value="acting">Acting & expressions</option><option value="classic">Our played-game dares</option></select></div>
+ <button class="btn primary full" onclick="drawClassicDare()">Get one dare 🎯</button></div>
+ <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="prompt" id="classicText"></div><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
+ <div class="grid"><button class="btn soft full" onclick="drawClassicDare()">Swap dare ↻</button><button class="btn full" onclick="nextClassicTurn()">Next player's turn →</button></div>
+ <p class="note">Hair, clothes and accessories are always the player's choice. No makeup purchases or uncomfortable changes.</p>
 </section>
 
 <section id="tap" class="screen">
@@ -144,6 +155,19 @@ const TRUTHS=[
 "If you could travel anywhere for one day, where would you go?",
 "What is your funniest school or classroom moment?"
 ];
+const CLASSIC_DARES={
+ hair:["Double Braid Challenge: make two simple braids or describe your dream braid style. Ribbons are optional.","Create a quick hairstyle using only your hands—no pins or products needed.","Give your hair a funny movie-character name and introduce the look.","Try a neat side part or a new parting for one turn, only if you like.","Invent a hairstyle for a superhero and explain its special power."],
+ style:["Style a scarf or dupatta in a way you choose, only if comfortable.","Create a royal look using one clothing item you already have.","Make a pretend fashion-show entrance in your normal comfortable outfit.","Choose a colour theme for your outfit and explain the character who would wear it.","Design a festive outfit using imagination—no need to change clothes."],
+ accessory:["Choose a safe, lightweight accessory and give it a dramatic royal introduction.","Make an imaginary crown with your hands and announce your royal title.","Pick a pair of glasses (real or imaginary) and act like a detective.","Give a soft scarf a new name and explain its imaginary superpower.","Create a paper moustache or draw one on paper, then do a grandparent-style introduction."],
+ acting:["Act like a strict but funny teacher for 15 seconds.","Do a dramatic family-serial reaction to a missing samosa.","Speak like a royal announcer for the next 20 seconds.","Perform a silent movie scene where you discover a surprise gift.","Give a 15-second speech as a very serious news reporter."],
+ classic:["Double Braid Challenge: two simple braids; matching ribbons are optional.","Dadaji-style moustache: make an imaginary moustache with your fingers and deliver a funny one-line dialogue.","Dhoti-kurta style challenge: describe or sketch a traditional outfit; changing clothes is not required.","Create a funny family-photo pose and hold it for three seconds.","Give yourself a royal title and ask everyone to use it for one round.","Choose an imaginary accessory and act as if it is the most precious royal treasure.","Do a 10-second runway walk in your normal comfortable outfit.","Invent a new hairstyle for a cartoon character and explain it."]
+};
+let classicTurn=0;
+function startClassic(){if(players.length<2){renderPlayers();show("players");return;}renderClassicPlayer();$("classicPrompt").classList.add("hidden");show("classic");}
+function renderClassicPlayer(){$("classicPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("classicPlayer").value=String(classicTurn%players.length);}
+function drawClassicDare(){const c=$("classicCategory").value,pool=c==="all"?Object.values(CLASSIC_DARES).flat():CLASSIC_DARES[c];const dare=pool[Math.floor(Math.random()*pool.length)];$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+(c==="all"?"SURPRISE DARE":c.toUpperCase());$("classicText").textContent=dare;$("classicPrompt").classList.remove("hidden");}
+function nextClassicTurn(){classicTurn=(classicTurn+1)%players.length;renderClassicPlayer();$("classicPrompt").classList.add("hidden");}
+
 let players=["Player 1","Player 2"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
 function renderPlayers(){ $("playerInputs").innerHTML="";players.forEach((name,i)=>{const row=document.createElement("div");row.className="player-row";const input=document.createElement("input");input.value=name;input.maxLength=18;input.placeholder="Player "+(i+1);input.setAttribute("aria-label","Player "+(i+1));input.oninput=()=>players[i]=input.value;row.appendChild(input);if(players.length>2){const btn=document.createElement("button");btn.className="remove";btn.textContent="×";btn.onclick=()=>{players.splice(i,1);renderPlayers();};row.appendChild(btn);} $("playerInputs").appendChild(row);});}
