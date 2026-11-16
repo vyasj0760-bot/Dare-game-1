@@ -128,7 +128,7 @@ def on_chat_message(payload=None):
     memory_active = settings.get("memory_enabled", False)
     if memory_active:
         try:
-            history = memory_store.get_history(settings["client_id"], limit=10)
+            history = memory_store.get_history(settings["client_id"], limit=20)
         except Exception:
             app.logger.exception("Mira memory read failed")
             emit("memory_status", {"enabled": False, "message": "Memory could not be read; this reply will use only the current message."})
