@@ -20,7 +20,7 @@ h1{font-size:36px;line-height:1.08;letter-spacing:-1.7px;margin:0 0 12px}h2{font
 .versus{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px}.versus .field{margin:0}.vs{font-weight:900;color:#b2aabd}
 .choice-row{display:flex;justify-content:center;gap:12px;margin:20px 0}.choice{width:86px;height:86px;border-radius:22px;background:#f3efff;border:2px solid transparent;font-size:36px}.choice.selected{border-color:var(--lav2);background:#e5dcff;transform:translateY(-3px)}
 .result{text-align:center;padding:22px 12px}.result .big{font-size:56px;margin:4px}.result h2{margin:8px 0}.result p{color:var(--muted);line-height:1.5}
-.dare-box{background:linear-gradient(140deg,#fff0f5,#fff8e8);border:1px solid #f5e1e8;border-radius:22px;padding:22px;margin:15px 0;text-align:center}.dare-box .tag{font-size:11px;font-weight:800;color:#a15d7b;letter-spacing:1px;text-transform:uppercase}.dare-box .prompt{font-size:19px;font-weight:750;line-height:1.4;margin:12px 0}
+.dare-image-wrap{margin:0 auto 12px;max-width:280px;border-radius:18px;overflow:hidden}.dare-image-wrap img{display:block;width:100%;max-height:220px;object-fit:cover}.dare-image-placeholder{min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:linear-gradient(135deg,#eee6ff,#ffe8f1);color:#7455a6}.dare-image-placeholder span{font-size:34px}.dare-image-placeholder small{font-size:11px;font-weight:700}.dare-box{background:linear-gradient(140deg,#fff0f5,#fff8e8);border:1px solid #f5e1e8;border-radius:22px;padding:22px;margin:15px 0;text-align:center}.dare-box .tag{font-size:11px;font-weight:800;color:#a15d7b;letter-spacing:1px;text-transform:uppercase}.dare-box .prompt{font-size:19px;font-weight:750;line-height:1.4;margin:12px 0}
 .score-list{display:flex;gap:8px;flex-wrap:wrap}.score{flex:1;min-width:90px;background:#f7f5fa;border-radius:13px;padding:11px;text-align:center}.score b{display:block;font-size:18px}.score small{color:var(--muted)}
 .center{text-align:center}.hidden{display:none!important}.note{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0}.tap-area{height:150px;border-radius:22px;background:#f0eaff;display:grid;place-items:center;font-size:24px;font-weight:850;color:#5a449c;margin:16px 0;user-select:none}.tap-area.go{background:#dff4e8;color:#24764b}.tap-area.wait{background:#fff0cf;color:#926414}
 .footer-note{text-align:center;font-size:11px;color:#a19ca7;margin:26px 0 0}
@@ -31,7 +31,7 @@ body.dark .hero{background:linear-gradient(140deg,rgba(105,65,157,.5),rgba(35,26
 body.dark .tile,body.dark .card{background:rgba(38,30,55,.8);border-color:rgba(221,201,255,.15);backdrop-filter:blur(16px)}
 body.dark .btn{background:#eee5ff;color:#251b35}body.dark .btn.primary{background:#a879ff;color:#1e1231}body.dark .btn.soft{background:#3c2c58;color:#eee3ff}body.dark .btn.ghost{background:#30283d;color:#eee3ff}
 body.dark .pill{background:#2a2238;color:#f7f1ff;border-color:#4b3c61}body.dark .field input{background:#211a2e;color:#fff;border-color:#514164}
-body.dark .dare-box{background:linear-gradient(140deg,#3d2639,#3d3222);border-color:#67465f}body.dark .score,body.dark .tap-area{background:#30263f;color:#eee3ff}
+body.dark .dare-image-placeholder{background:linear-gradient(135deg,#302342,#482c4a);color:#e8d7ff}body.dark .dare-box{background:linear-gradient(140deg,#3d2639,#3d3222);border-color:#67465f}body.dark .score,body.dark .tap-area{background:#30263f;color:#eee3ff}
 .top-actions{display:flex;align-items:center;gap:7px}.theme-btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:99px;padding:8px 10px;font-size:12px;font-weight:750;min-height:34px}
 .maya-fab{position:fixed;right:max(16px,calc((100vw - 560px)/2 + 16px));bottom:18px;z-index:20;border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:12px 16px;background:linear-gradient(135deg,#8c55dc,#d15caa);color:#fff;font-weight:800;box-shadow:0 9px 28px rgba(117,67,177,.35);backdrop-filter:blur(18px)}
 .maya-fab small{font-size:10px;opacity:.85;margin-left:5px}
@@ -55,7 +55,7 @@ body.dark .dare-box{background:linear-gradient(140deg,#3d2639,#3d3222);border-co
 <section id="genderMode" class="screen">
 <button class="back" onclick="show('home')">← Home</button><h2>Gender Style-Swap 🎭</h2><p class="sub">Player ke selected style ke opposite theme se fun dare milega. Skip aur swap hamesha allowed hai.</p>
 <div class="card"><div class="field"><label>PLAYER</label><select id="genderPlayer"></select></div><div class="field"><label>PLAYER STYLE</label><select id="genderChoice"><option value="boy">Boy</option><option value="girl">Girl</option><option value="custom">Custom / Skip gender</option></select></div><button class="btn primary full" onclick="drawGenderDare()">Dare lo 🎯</button></div>
-<div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">STYLE-SWAP DARE</div><div class="prompt" id="genderText"></div><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
+<div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">STYLE-SWAP DARE</div><div class="dare-image-wrap hidden" id="genderImageWrap"></div><div class="prompt" id="genderText"></div><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
 <div class="grid"><button class="btn soft full" onclick="drawGenderDare()">Dare badlo ↻</button><button class="btn full" onclick="nextGenderPlayer()">Agla player →</button></div></section>
 <section id="players" class="screen">
  <button class="back" onclick="show('home')">← Home</button><h2>Kaun-kaun khelega?</h2><p class="sub">2–8 players add karo. Sab isi phone par khelenge.</p>
@@ -91,16 +91,16 @@ body.dark .dare-box{background:linear-gradient(140deg,#3d2639,#3d3222);border-co
  <div class="card"><div class="field"><label>IT'S YOUR TURN</label><select id="truthPlayer"></select></div>
   <div class="grid"><button class="tile" onclick="pickTruth('truth')"><div class="emoji">💬</div><b>Truth</b><small>Answer a fun question</small></button><button class="tile" onclick="pickTruth('dare')"><div class="emoji">🎯</div><b>Dare</b><small>Try a silly challenge</small></button></div>
  </div>
- <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="prompt" id="truthText"></div><button class="btn soft small" onclick="pickTruth(lastTruthType)">Ek aur</button></div>
+ <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="dare-image-wrap hidden" id="truthImageWrap"></div><div class="prompt" id="truthText"></div><button class="btn soft small" onclick="pickTruth(lastTruthType)">Ek aur</button></div>
  <button class="btn primary full" onclick="nextTruthPlayer()">Agla player →</button>
 </section>
 
 <section id="classic" class="screen">
  <button class="back" onclick="show('home')">← Home</button><h2>Classic Dare Mode 🎀</h2><p class="sub">One dare per turn. Players alternate. Keep it playful, comfortable and optional.</p>
  <div class="card"><div class="field"><label>PLAYER THIS TURN</label><select id="classicPlayer"></select></div>
- <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="hair">Hair aur hairstyle</option><option value="style">Outfit aur styling</option><option value="accessory">Accessories</option><option value="acting">Acting aur expressions</option><option value="classic">Hamare purane game wale dares</option></select></div>
+ <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="fun">Funny dares</option><option value="hair">Hairstyle</option><option value="dress">Dress / Outfit</option><option value="dupatta">Chunni / Dupatta</option><option value="makeup">Simple Makeup</option><option value="lipstick">Lipstick</option><option value="accessory">Accessories</option><option value="acting">Acting</option></select></div>
  <button class="btn primary full" onclick="drawClassicDare()">Ek dare lo 🎯</button></div>
- <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="prompt" id="classicText"></div><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
+ <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="dare-image-wrap hidden" id="classicImageWrap"></div><div class="prompt" id="classicText"></div><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
  <div class="grid"><button class="btn soft full" onclick="drawClassicDare()">Dare badlo ↻</button><button class="btn full" onclick="nextClassicTurn()">Agla player →</button></div>
  <p class="note">Hair, clothes and accessories are always the player's choice. No makeup purchases or uncomfortable changes.</p>
 </section>
@@ -122,181 +122,139 @@ body.dark .dare-box{background:linear-gradient(140deg,#3d2639,#3d3222);border-co
 
 <script>
 const $=id=>document.getElementById(id);
-const DARES=[
-"Do a 20-second dramatic movie trailer voice-over about this room.",
-"Give yourself a funny royal title and introduce yourself.",
-"Act like a news anchor reporting a totally silly breaking story.",
-"Do your best robot impression for 20 seconds.",
-"Make up a two-line song about the person on your left.",
-"Give a one-minute imaginary cooking show for a snack.",
-"Do a slow-motion entrance like a movie star.",
-"Speak like a cartoon character for the next round.",
-"Show your best harmless dance move for 15 seconds.",
-"Make three different emoji faces and let the group name them.",
-"Invent a new handshake with another player.",
-"Describe your favourite food like it's a luxury product.",
-"Give a compliment to everyone playing.",
-"Do a funny weather forecast for the next 10 seconds.",
-"Act out brushing your teeth as if it were an action movie.",
-"Balance a soft cushion on your head for five seconds while standing still.",
-"Create a tiny story using the words moon, mango and bicycle.",
-"Imitate a harmless sound effect and let others guess it.",
-"Do a runway pose with an accessory you choose.",
-"Tell a joke. If nobody laughs, tell a second one.",
-"Say the alphabet backwards as far as you can.",
-"Give a 15-second motivational speech to a spoon.",
-"Act like a strict teacher explaining how to eat pizza.",
-"Make up a new festival and explain its main tradition.",
-"Use a paper moustache or imaginary moustache and act like a grandparent.",
-"Style a scarf or dupatta in a way you choose, only if comfortable.",
-"Do a 20-second dramatic family-serial scene.",
-"Hum a tune and let the others guess it.",
-"Name five things in the room that start with the same letter.",
-"Give the group a silly team name and slogan.",
-"Invent a new ice-cream flavour and advertise it in 10 seconds.",
-"Explain how to use a spoon as if it were a brand-new invention.",
-"Give a weather report for an imaginary planet.",
-"Make up a two-line poem about your favourite snack.",
-"Describe a pencil like it is a famous celebrity.",
-"Do a 10-second silent acting scene about losing your keys.",
-"Create a funny slogan for the nearest cushion.",
-"Say one sentence in a made-up alien language and translate it.",
-"Invent a new emoji and explain what it means.",
-"Give a dramatic award speech for the best chair in the room.",
-"Tell a tiny story with a beginning, middle and surprise ending.",
-"Make a pretend phone call to a friendly dragon.",
-"Describe today's weather like a sports commentator.",
-"Act like a museum guide presenting an ordinary water bottle.",
-"Make up a name for a new dance move; demonstrating is optional.",
-"Give a motivational speech to a houseplant or imaginary plant.",
-"Name five fruits without repeating a letter's sound.",
-"Explain your favourite game to someone from another planet.",
-"Create a three-word movie title and explain its plot.",
-"Say a tongue twister slowly and clearly.",
-"Do a cheerful greeting in three different imaginary character voices.",
-"Invent a new school subject and its first lesson.",
-"Describe a normal day as if it were an epic adventure.",
-"Give a compliment to an object in the room.",
-"Make up a silly headline about a missing biscuit.",
-"Act like a chef explaining an imaginary recipe.",
-"Describe a colour without saying its name.",
-"Give a one-sentence review of the nearest book.",
-"Make a sound effect for a spaceship landing using only your voice.",
-"Invent a mascot for your group.",
-"Say three kind things about the group.",
-"Explain why a potato would make a great superhero.",
-"Create a slogan for a pretend space travel company.",
-"Do a 15-second advertisement for fresh air.",
-"Make up a new festival and its greeting.",
-"Tell a story where a mango is the main character.",
-"Name three things that would be useful on a moon picnic.",
-"Give a serious interview as a very unserious celebrity.",
-"Describe your dream treehouse in three sentences.",
-"Create a funny nickname for an imaginary pet.",
-"Say the same sentence as a robot, a poet and a newsreader.",
-"Invent a new board game and explain one rule.",
-"Give a mini award to another player for something kind.",
-"Explain how to make tea to a time traveller.",
-"Act out a happy celebration without jumping or running.",
-"Make up a jingle for a notebook.",
-"Describe a sandwich as if it were a royal treasure.",
-"Create a short riddle about something in the room.",
-"Say five words that rhyme with day.",
-"Invent a friendly monster and describe its favourite food.",
-"Give a 10-second speech as the mayor of Pillow City.",
-"Tell a story using the words star, bicycle and mango.",
-"Make a pretend announcement for a very tiny parade.",
-"Describe your favourite season like a travel presenter.",
-"Give a dramatic reaction to finding an extra biscuit.",
-"Invent a new greeting for your friend group.",
-"Explain why clouds deserve a fan club.",
-"Name three fictional places you would like to visit.",
-"Give a product review of an imaginary invisible hat.",
-"Create a one-line slogan for kindness.",
-"Say a familiar phrase in a gentle cartoon voice.",
-"Describe an ordinary pen as a legendary artefact.",
-"Make up a short cheer for your team.",
-"Tell a joke about a sleepy alarm clock.",
-"Invent a new flavour of popcorn.",
-"Give an acceptance speech for winning Best Snack Taster.",
-"Describe a rainy day without using the words rain or wet.",
-"Act like a tour guide showing an imaginary castle.",
-"Make up a story about a brave little button.",
-"Give a 10-second speech to encourage a nervous pencil.",
-"Invent a new planet and name its three rules.",
-"Create a funny tagline for a pair of socks.",
-"Explain why a chair could be a good detective.",
-"Make up a two-line song about the moon.",
-"Describe your favourite celebration in three words.",
-"Give a pretend interview to an imaginary talking cat.",
-"Invent a new sport that uses only paper and imagination.",
-"Say a tongue twister with a calm newsreader voice.",
-"Create a name for a fictional superhero team.",
-"Give a dramatic introduction to your water bottle.",
-"Describe a banana like a luxury car advert.",
-"Make up a riddle whose answer is a book.",
-"Invent a new app and explain what it does.",
-"Give a one-sentence pep talk to everyone playing.",
-"Tell a tiny mystery story with a funny reveal.",
-"Create a slogan for a pretend library café.",
-"Name five animals in alphabetical order.",
-"Give an imaginary cooking show a very dramatic title.",
-"Describe a rainbow as if it were breaking news.",
-"Invent a new holiday dedicated to naps or relaxing.",
-"Say a simple sentence as if you are narrating a nature documentary.",
-"Create a funny name for an imaginary robot.",
-"Make up a short poem about a rainy window.",
-"Describe your favourite snack as a work of art.",
-"Give a pretend award to the most helpful object nearby.",
-"Invent a friendly alien greeting and teach it to the group.",
-"Explain why a pillow would be a brilliant travel companion.",
-"Make up a new motto for your group.",
-"Tell a story in exactly three sentences about a lost crown."
-];
+const DARE_BANK={
+  "fun": [
+    "10 second ka funny news bulletin sunao.",
+    "Apne group ke liye ek funny team name bolo.",
+    "Ek imaginary chai brand ka ad karo.",
+    "Ek biscuit ko award-winning snack ki tarah introduce karo.",
+    "Cartoon robot ki awaaz mein ek sentence bolo.",
+    "Ek funny royal title apne liye choose karo.",
+    "Ek imaginary festival ka naam announce karo.",
+    "Ek mango par 10-second ki shayari sunao.",
+    "Ek normal object ko museum ki rare cheez ki tarah present karo.",
+    "Ek funny ringtone hum karo.",
+    "Ek imaginary superhero ka naam bolo.",
+    "Ek line ka dramatic movie dialogue bolo.",
+    "Ek funny weather report do.",
+    "Ek snack ko cricket commentator ki tarah describe karo.",
+    "Ek friendly alien greeting invent karo."
+  ],
+  "hair": [
+    "Ek simple side-part hairstyle try karo, agar comfortable ho.",
+    "Ek simple braid banao; hair accessories zaroori nahi.",
+    "Apne hairstyle ko ek funny naam do.",
+    "Ek hair clip ya hairband choose karke lagao.",
+    "Apne baalon ke liye ek fictional character ka hairstyle sketch karo.",
+    "Ek ponytail style try karo, agar mann ho.",
+    "Ek hairstyle ka naam invent karo aur uska poster banao.",
+    "Apne current hairstyle ko 5-second ka fashion intro do."
+  ],
+  "dress": [
+    "Apne current outfit ko ek royal title do.",
+    "Ek comfortable outfit choose karke uska fashion-show intro do.",
+    "Ek kurta ya shirt ko fictional character ka signature outfit declare karo.",
+    "Ek outfit ka colour theme choose karo.",
+    "Ek traditional outfit ka quick sketch banao.",
+    "Apne outfit ke liye ek funny designer label invent karo.",
+    "Ek comfortable jacket, kurta ya shirt ko hero-entry style mein present karo.",
+    "Apne current outfit ka 5-second runway pose do, agar comfortable ho."
+  ],
+  "dupatta": [
+    "Dupatta ko ek simple shoulder drape mein set karo, agar comfortable ho.",
+    "Dupatta ko ek cape ki tarah imagine karke pose do.",
+    "Dupatta drape ka ek naya naam invent karo.",
+    "Dupatta ko neatly fold karne ka ek style dikhao.",
+    "Dupatta ke liye ek fictional fashion-brand ad bolo.",
+    "Dupatta ko ek traditional look ka main feature describe karo.",
+    "Dupatta drape ka ek simple sketch banao.",
+    "Dupatta ko ek royal sash ki tarah present karo, agar comfortable ho."
+  ],
+  "makeup": [
+    "Ek bindi design choose karo ya paper par sketch karo.",
+    "Ek blush shade ka naam choose karo; apply karna zaroori nahi.",
+    "Ek eyeshadow colour choose karke uska naam invent karo.",
+    "Ek simple makeup look ko sirf ek naam do.",
+    "Apne personal makeup item mein se ek item choose karke uska ad bolo.",
+    "Ek kajal-inspired eye-look ka sketch banao; aankh mein product lagana zaroori nahi.",
+    "Ek highlighter shade ka naam invent karo.",
+    "Ek makeup brush ko mic bana kar 5-second ka ad bolo."
+  ],
+  "lipstick": [
+    "Apni pasand ka ek lipstick shade choose karo.",
+    "Ek lipstick shade ko funny naam do.",
+    "Ek lipstick shade ka 5-second product review do.",
+    "Ek lipstick colour ka paper swatch sketch karo.",
+    "Apni personal lipstick use karna chaaho toh ek light swipe karo; sharing nahi.",
+    "Ek fictional lipstick brand ka naam invent karo."
+  ],
+  "accessory": [
+    "Ek lightweight bracelet choose karke uska royal intro do.",
+    "Ek hairband ya clip ko fashion award do.",
+    "Ek watch ko superhero gadget ki tarah introduce karo.",
+    "Ek pair of earrings choose karo ya sketch karo.",
+    "Ek ring ko fictional royal treasure ka naam do.",
+    "Ek safe, lightweight accessory ke saath ek pose do.",
+    "Ek cap ko detective character ka signature accessory banao.",
+    "Ek paper crown ka quick sketch banao."
+  ],
+  "acting": [
+    "15 second ke liye funny news anchor bano.",
+    "Ek family-serial style dramatic reaction do.",
+    "Ek school principal ki funny announcement act karo.",
+    "Ek cricket commentator ki tarah room ka scene describe karo.",
+    "Ek imaginary restaurant ka waiter ban kar welcome bolo.",
+    "Ek cartoon villain ka introduction do.",
+    "Ek movie trailer ki opening line bolo.",
+    "Ek 10-second ka silent acting scene karo: lost remote.",
+    "Ek radio jockey ki tarah show start karo.",
+    "Ek fictional king ya queen ka royal announcement do."
+  ]
+};
+const DARE_ICONS={"fun":"🎉","hair":"💇","dress":"👗","dupatta":"🧣","makeup":"🪞","lipstick":"💄","accessory":"✨","acting":"🎭"};
+const DARES=Object.entries(DARE_BANK).flatMap(([category,items])=>items.map((text,index)=>({id:category+"-"+(index+1),category,text,image:""})));
 const TRUTHS=[
-"What is one small thing that always makes you laugh?",
-"Which fictional character would you invite to a party?",
-"What is the funniest harmless misunderstanding you've had?",
-"What song do you secretly enjoy singing?",
-"If you could instantly learn one skill, what would it be?",
-"What is your most-used emoji and why?",
-"Which snack could you eat any day?",
-"What is one thing your friends are surprisingly good at?",
-"What is the silliest nickname you've ever heard?",
-"If today had a title, what would it be?",
-"Which game are you most competitive at?",
-"What is a tiny fear you know is irrational?",
-"What is one kind thing someone did for you recently?",
-"If you could travel anywhere for one day, where would you go?",
-"What is your funniest school or classroom moment?"
+"Aaj tak ka sabse funny school moment kya tha?","Tumhari favourite comfort food kya hai?","Agar ek din ke liye kisi fictional character ki power mile toh kya choose karoge?","Kaunsa song tumhe instantly happy kar deta hai?","Tumhari sabse funny harmless habit kya hai?","Group mein sabse achha storyteller kaun hai?","Ek skill jo tum seekhna chahte ho?","Agar tum ek game invent karo toh uska naam kya hoga?","Tumhara favourite festival kaunsa hai aur kyun?","Tumhe sabse zyada kis baat par hasi aati hai?","Aaj ka din ek movie hota toh uska title kya hota?","Kaunsa snack tum kabhi mana nahi karte?","Tumhari dream holiday destination kya hai?","Ek fictional character jise tum apni team mein rakhna chahoge?","Kisi friend ki ek achhi quality batao?"
 ];
-
-const EXTRA_DARES=["Filmy hero ki tarah room mein entry lo aur dialogue bolo.","Apne ghar ke snack ka 10-second TV ad banao.","Bollywood narrator ki awaaz mein din ka recap do.","Imaginary shaadi ka anchor banke guests welcome karo.","Favourite mithai ko restaurant review ki tarah describe karo.","Cricket commentator banke normal kaam ki commentary karo.","Funny filmi villain ka introduction do.","Dost ko naya desi nickname do, unki permission se.","15 seconds train announcement ki acting karo.","Imaginary chai stall ka naam aur slogan banao.","Monsoon par do line ki shayari banao.","Favourite festival ka funny news bulletin do.","Ek dabbe ko trophy samajhkar award speech do.","Poha par dramatic movie scene act karo.","Shaadi DJ ki tarah song announce karo.","Cartoon voice mein 'chai ready hai' bolo.","Imaginary street-food stall ka menu banao.","Apne naam ka funny full form invent karo.","School assembly announcement ki acting karo.","Hindi news anchor bano.","Indian festival ka mascot describe karo.","Imaginary auto driver ka funny dialogue bolo.","Favourite snack ko cricket team ka captain banao.","Bollywood award show host banke award do.","Funny weather report do: aaj samosa barsenge.","Family function photographer ki acting karo.","Imaginary dhol bajane ki acting karo.","Traditional outfit ka fashion-show intro do; kapde badalna zaroori nahi.","Imaginary mithai shop ka catchy naam socho.","Funny slogan banao jo Indian ghar mein fit ho.","Dost ke liye 10-second motivational ad banao.","Imaginary cricket match ka last-over commentary do.","Favourite language ke phrase ka dramatic translation karo.","School canteen ka naya menu invent karo.","Traffic police announcement act karo.","Train journey ka ticket checker dialogue bolo.","Baraat announcer bano.","Desi superhero ka naam aur power invent karo.","TV serial twist wala funny dialogue bolo.","Plate ko trophy bana kar winner announce karo.","Indian snack ki recipe explain karo.","Dost ko filmy style mein captain declare karo.","Imaginary mela ka loudspeaker announcement do.","Funny dance step ka naam rakho aur dikhao.","15-second radio jockey show host karo.","Favourite Indian city ke liye tourism ad banao.","Imaginary cricket trophy ka naam aur design describe karo.","Funny school principal speech do.","Dost ke liye harmless movie dialogue banao.","Chai tapri par philosopher bano.","Dosa ya chaat stall ka menu announce karo.","Family WhatsApp message ko acting se represent karo.","Cartoon elephant ki slow walk karo, jagah safe ho toh.","Paper ko medal bana kar award do.","Funny festival greeting invent karo.","TV cooking show mein poha banane ki acting karo.","Dost ki achhi quality ki tareef shayari mein karo.","Sports commentator banke room ka scene describe karo.","Bus conductor announcement do.","Desi detective ka introduction do.","Naya Indian superhero festival invent karo.","Snack ko luxury hotel dish ki tarah present karo.","Slogan bolo: 'padhai bhi, masti bhi'.","Radio par traffic update do.","Dost ke liye funny award category invent karo.","Wedding invitation ka 10-second promo banao.","Pressure cooker ya alarm ki harmless mimicry karo.","Bazaar mein sabzi bechne wale ki acting karo.","Cricket umpire decision announce karo.","Family sitcom ka title aur theme song hum karo.","Dost ke liye positive filmy title suggest karo.","Travel vlogger banke room tour do.","Restaurant waiter bankar paani serve karne ki acting karo.","Desi app ka naam aur feature invent karo.","Paper par apna royal logo sketch karo.","Hindi poem sunao ya khud banao.","School bus announcement do.","Kabaddi match ki commentary karo.","Favourite dish ko cricket score ki tarah rate karo.","Ghar ke sofa ke liye funny slogan banao.","Festival host banke welcome speech do.","Dost ko 'Aaj ka Superstar' announce karo.","Imaginary comic book cover describe karo.","Ad mein hone jaisa funny dialogue bolo.","Museum guide banke normal object ka history batao.","Indian food award show host karo.","Funny ringtone hum karo.","Dost ke liye harmless victory celebration invent karo.","Train platform announcement do.","Cricket coach banke team motivate karo.","Slogan banao: 'chai ke bina life adhoori'.","Desi game invent karo aur rules samjhao.","Dost ko funny royal title do.","Street magician banke imaginary trick dikhao.","TV serial ka funny recap do.","Desi food truck ka naam aur logo describe karo.","Local radio RJ bano.","Breaking news do: missing samosa!","Paper cup ko mic bana kar concert host karo.","Indian sports league ka naam invent karo.","Wedding DJ ki tarah safe dance step announce karo.","Funny family photo pose suggest karo; photo lena zaroori nahi.","Dost ke liye 5-second victory anthem banao.","Desi superhero ka catchphrase bolo.","Bazaar bargaining scene act karo.","School canteen reviewer bano.","Indian dish ko celebrity ki tarah introduce karo.","Ghar ke liye funny weather report do.","Festival poster words mein describe karo.","Harmless robot dance step invent karo.","Dost ko positive nickname do, unki marzi se.","Cricket post-match interview do.","Announcement karo: ghar ka remote mil gaya!","Imaginary chai brand ka ad banao.","Desi cartoon character aur uski awaaz invent karo.","Travel guide banke apne shehar ki tareef karo."];
-DARES.push(...EXTRA_DARES);
 
 const CLASSIC_DARES={
- hair:["Double Braid Challenge: make two simple braids or describe your dream braid style. Ribbons are optional.","Create a quick hairstyle using only your hands—no pins or products needed.","Give your hair a funny movie-character name and introduce the look.","Try a neat side part or a new parting for one turn, only if you like.","Invent a hairstyle for a superhero and explain its special power."],
- style:["Style a scarf or dupatta in a way you choose, only if comfortable.","Create a royal look using one clothing item you already have.","Make a pretend fashion-show entrance in your normal comfortable outfit.","Choose a colour theme for your outfit and explain the character who would wear it.","Design a festive outfit using imagination—no need to change clothes."],
- accessory:["Choose a safe, lightweight accessory and give it a dramatic royal introduction.","Make an imaginary crown with your hands and announce your royal title.","Pick a pair of glasses (real or imaginary) and act like a detective.","Give a soft scarf a new name and explain its imaginary superpower.","Create a paper moustache or draw one on paper, then do a grandparent-style introduction."],
- acting:["Act like a strict but funny teacher for 15 seconds.","Do a dramatic family-serial reaction to a missing samosa.","Speak like a royal announcer for the next 20 seconds.","Perform a silent movie scene where you discover a surprise gift.","Give a 15-second speech as a very serious news reporter."],
- classic:["Double Braid Challenge: two simple braids; matching ribbons are optional.","Dadaji-style moustache: make an imaginary moustache with your fingers and deliver a funny one-line dialogue.","Dhoti-kurta style challenge: describe or sketch a traditional outfit; changing clothes is not required.","Create a funny family-photo pose and hold it for three seconds.","Give yourself a royal title and ask everyone to use it for one round.","Choose an imaginary accessory and act as if it is the most precious royal treasure.","Do a 10-second runway walk in your normal comfortable outfit.","Invent a new hairstyle for a cartoon character and explain it."]
+all:DARES,
+fun:DARE_BANK.fun.map((text,i)=>({id:"fun-"+i,category:"fun",text,image:""})),
+hair:DARE_BANK.hair.map((text,i)=>({id:"hair-"+i,category:"hair",text,image:""})),
+dress:DARE_BANK.dress.map((text,i)=>({id:"dress-"+i,category:"dress",text,image:""})),
+dupatta:DARE_BANK.dupatta.map((text,i)=>({id:"dupatta-"+i,category:"dupatta",text,image:""})),
+makeup:DARE_BANK.makeup.map((text,i)=>({id:"makeup-"+i,category:"makeup",text,image:""})),
+lipstick:DARE_BANK.lipstick.map((text,i)=>({id:"lipstick-"+i,category:"lipstick",text,image:""})),
+accessory:DARE_BANK.accessory.map((text,i)=>({id:"accessory-"+i,category:"accessory",text,image:""})),
+acting:DARE_BANK.acting.map((text,i)=>({id:"acting-"+i,category:"acting",text,image:""}))
 };
 let classicTurn=0;
 function startClassic(){if(players.length<2){renderPlayers();show("players");return;}renderClassicPlayer();$("classicPrompt").classList.add("hidden");show("classic");}
 function renderClassicPlayer(){$("classicPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("classicPlayer").value=String(classicTurn%players.length);}
-function drawClassicDare(){const c=$("classicCategory").value,pool=c==="all"?Object.values(CLASSIC_DARES).flat():CLASSIC_DARES[c];const dare=pool[Math.floor(Math.random()*pool.length)];$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+(c==="all"?"SURPRISE DARE":c.toUpperCase());$("classicText").textContent=dare;$("classicPrompt").classList.remove("hidden");}
+function renderDareImage(prefix,dare){const wrap=$(prefix+"ImageWrap");if(!wrap)return;wrap.innerHTML="";wrap.classList.remove("hidden");if(dare&&dare.image){const img=document.createElement("img");img.src=dare.image;img.alt="Dare reference image";img.loading="lazy";wrap.appendChild(img);}else{const box=document.createElement("div");box.className="dare-image-placeholder";const icon=document.createElement("span");icon.textContent=DARE_ICONS[dare.category]||"🎯";const label=document.createElement("small");label.textContent="Is dare ki reference image yahan add hogi";box.append(icon,label);wrap.appendChild(box);}}
+function drawClassicDare(){const c=$("classicCategory").value;const pool=CLASSIC_DARES[c]||CLASSIC_DARES.all;const dare=pool[Math.floor(Math.random()*pool.length)];$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+c.toUpperCase();$("classicText").textContent=dare.text;renderDareImage("classic",dare);$("classicPrompt").classList.remove("hidden");}
 function nextClassicTurn(){classicTurn=(classicTurn+1)%players.length;renderClassicPlayer();$("classicPrompt").classList.add("hidden");}
 
-
 const GENDER_DARES={
-boyToGirl:["Imaginary braid hairstyle ka naam rakho; banana optional hai.","Dupatta drape ko fashion-show style mein describe karo.","Ek graceful movie character ki 10-second acting karo.","Imaginary hair accessory ka ad banao.","Pastel outfit ka designer intro do; kapde badalna zaroori nahi.","Fictional character ke liye accessory choose karo.","Funny royal princess-style announcement apni marzi se karo.","Imaginary mehendi pattern hawa mein draw karo.","Comfortable ho toh graceful walk ka demo do.","Cute nickname invent karo aur meaning batao.","Traditional festive look describe karo; imagination bhi chalegi.","Soft-spoken cartoon character ki acting karo.","Imaginary bangles ki TV advertisement banao.","Elegant pose invent karo, photo ki zaroorat nahi.","Fictional character ko braid hairstyle suggest karo.","Dupatta ko superhero cape imagine karke intro do.","Royal greeting dramatic style mein bolo.","Fashion designer banke festive collection launch karo.","Flower-inspired hairstyle ka naam aur look describe karo."],
-girlToBoy:["Fictional hero ka powerful entry dialogue bolo.","Imaginary cricket captain ki team talk do.","Superhero walk ka safe demo do.","Fictional detective ka introduction banao.","Imaginary tie ya cap style describe karo; pehenna optional hai.","Action-movie narrator ki awaaz mein intro do.","Sports commentator banke team announce karo.","Funny gentleman-style greeting apni marzi se karo.","Imaginary jacket ka fashion ad banao; outfit change zaroori nahi.","Robot-hero ki acting karo.","Game champion ka victory speech do.","Finger se imaginary moustache bana kar funny dialogue bolo.","Hero-style slow-motion entry act karo, jagah safe ho toh.","Cricket coach banke motivation do.","Detective jaisa serious expression banao.","Fictional prince ka royal announcement do.","Imaginary watch ya cap ka product review karo.","Superhero ka naam aur power invent karo.","Movie hero ka harmless one-liner bolo.","Confident host banke show start karo."],
-custom:["Apni pasand ka style theme choose karke intro do.","Fictional character ka look describe karo.","Imaginary accessory ko royal award do.","Funny fashion-show commentary karo.","Superhero pose invent karo, comfortable ho toh.","Character ka hairstyle sketch ya describe karo.","10-second dramatic intro do.","Imaginary outfit ka naam aur backstory invent karo."]
+boyToGirl:[...CLASSIC_DARES.hair.slice(0,2),...CLASSIC_DARES.dupatta.slice(0,3),...CLASSIC_DARES.makeup.slice(0,2),...CLASSIC_DARES.lipstick.slice(0,2),...CLASSIC_DARES.accessory.slice(0,2),...CLASSIC_DARES.dress.slice(0,2)],
+girlToBoy:[
+{id:"g2b-1",category:"accessory",text:"Ek cap choose karke uska hero-style intro do.",image:""},
+{id:"g2b-2",category:"dress",text:"Ek jacket ya shirt ko fictional hero ka signature outfit declare karo.",image:""},
+{id:"g2b-3",category:"accessory",text:"Paper par ek simple moustache sketch karo.",image:""},
+{id:"g2b-4",category:"accessory",text:"Ek watch ko action-hero gadget ki tarah introduce karo.",image:""},
+{id:"g2b-5",category:"acting",text:"Ek fictional detective ka introduction do.",image:""},
+{id:"g2b-6",category:"acting",text:"Cricket captain ki 10-second team speech do.",image:""},
+{id:"g2b-7",category:"acting",text:"Ek movie hero ka entry dialogue bolo.",image:""},
+{id:"g2b-8",category:"dress",text:"Ek tie ka fashion-show intro do; pehenna optional hai.",image:""},
+{id:"g2b-9",category:"acting",text:"Ek sports commentator ki awaaz mein score announce karo.",image:""},
+{id:"g2b-10",category:"accessory",text:"Ek bracelet ko champion medal ki tarah present karo.",image:""}
+],
+custom:DARES
 };
 let genderTurn=0;
 function startGenderMode(){if(players.length<2){renderPlayers();show("players");return;}renderGenderPlayer();$("genderPrompt").classList.add("hidden");show("genderMode");}
 function renderGenderPlayer(){$("genderPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("genderPlayer").value=String(genderTurn%players.length);}
-function drawGenderDare(){const style=$("genderChoice").value;const pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;const dare=pool[Math.floor(Math.random()*pool.length)];$("genderTag").textContent=players[Number($("genderPlayer").value)]+" • "+(style==="boy"?"GIRL-STYLE THEME":style==="girl"?"BOY-STYLE THEME":"CUSTOM STYLE");$("genderText").textContent=dare;$("genderPrompt").classList.remove("hidden");}
+function drawGenderDare(){const style=$("genderChoice").value;const pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;const dare=pool[Math.floor(Math.random()*pool.length)];$("genderTag").textContent=players[Number($("genderPlayer").value)]+" • "+(style==="boy"?"GIRL-STYLE THEME":style==="girl"?"BOY-STYLE THEME":"CUSTOM STYLE");$("genderText").textContent=dare.text;renderDareImage("gender",dare);$("genderPrompt").classList.remove("hidden");}
 function nextGenderPlayer(){genderTurn=(genderTurn+1)%players.length;renderGenderPlayer();$("genderPrompt").classList.add("hidden");}
 
 let players=["Player 1","Player 2"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
@@ -326,7 +284,7 @@ function finishDuel(winner,loser,detail){$("duelPlay").classList.add("hidden");$
 function showLoser(loser,winner){$("resultHeading").textContent=players[loser]+", dare time!";$("resultCaption").textContent=players[winner]+" won this round.";newLoserDare();show("loser");}
 function newLoserDare(){$("loserDare").textContent=DARES[Math.floor(Math.random()*DARES.length)];}
 function startTruthDare(){if(players.length<2){renderPlayers();show("players");}else{renderTruthSelect();$("truthPrompt").classList.add("hidden");show("truth");}}
-function pickTruth(type){lastTruthType=type;const pool=type==="truth"?TRUTHS:DARES;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";$("truthText").textContent=pool[Math.floor(Math.random()*pool.length)];$("truthPrompt").classList.remove("hidden");}
+function pickTruth(type){lastTruthType=type;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";if(type==="truth"){const q=TRUTHS[Math.floor(Math.random()*TRUTHS.length)];$("truthText").textContent=q;$("truthImageWrap").classList.add("hidden");}else{const dare=DARES[Math.floor(Math.random()*DARES.length)];$("truthText").textContent=dare.text;renderDareImage("truth",dare);}$("truthPrompt").classList.remove("hidden");}
 function nextTruthPlayer(){truthTurn=(truthTurn+1)%players.length;renderTruthSelect();$("truthPrompt").classList.add("hidden");}
 renderPlayers();
 function applyTheme(){const d=localStorage.getItem("dareTheme")==="dark";document.body.classList.toggle("dark",d);$("themeToggle").textContent=d?"☀ Light":"☾ Dark";}
