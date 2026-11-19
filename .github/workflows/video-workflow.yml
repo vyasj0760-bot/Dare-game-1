@@ -1,0 +1,58 @@
+name: Video Workflow
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "video-workflow/Raw-Footage/**"
+      - "video-workflow/Reference/**"
+      - "video-workflow/scripts/**"
+      - ".github/workflows/video-workflow.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  analyze-and-prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js for HyperFrames
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+          ffprobe -version
+
+      - name: Install HyperFrames CLI
+        run: |
+          npx --yes hyperframes --help
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Whisper
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai-whisper
+
+      - name: Analyze footage, reference and speech
+        run: python video-workflow/scripts/analyze_media.py
+
+      - name: Upload analysis and generated files
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-workflow-output
+          path: video-workflow/Output/
+          if-no-files-found: error
+          retention-days: 7
