@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi-Latn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -119,35 +119,35 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
   <div class="party-card pc-charades"><span class="art">🏆</span><b>3. Result decides</b><small>Winner aur loser game ke score se decide.</small></div>
   <div class="party-card pc-category"><span class="art">🎯</span><b>4. Loser gets dare</b><small>Sirf round ke baad. Skip/swap allowed.</small></div>
  </div>
- <div class="section-head"><h3>More ways to play</h3><span>New modes</span></div>
+ <div class="section-head"><h3>Aur modes</h3><span>New modes</span></div>
  <div class="feature-grid">
-  <button class="feature-card feature-ludo" onclick="openLudoSetup()"><span class="feature-icon">🎲</span><b>Ludo</b><small>Play with friends or challenge the computer.</small></button>
-  <button class="feature-card feature-iq" onclick="startIQTest()"><span class="feature-icon">🧠</span><b>IQ-style Test</b><small>10 logic and pattern questions. Get your quiz score.</small></button>
+  <button class="feature-card feature-ludo" onclick="openLudoSetup()"><span class="feature-icon">🎲</span><b>Ludo</b><small>Doston ke saath ya computer ke khilaaf khelo.</small></button>
+  <button class="feature-card feature-iq" onclick="startIQTest()"><span class="feature-icon">🧠</span><b>IQ-style Test</b><small>10 logic aur pattern sawaal. Apna score dekho.</small></button>
   <button class="feature-card feature-quick" onclick="openQuickDare()"><span class="feature-icon">🎯</span><b>Give Me a Dare</b><small>One tap, one simple surprise challenge.</small></button>
-  <button class="feature-card feature-arena" onclick="show('players')"><span class="feature-icon">🏆</span><b>Party Arena</b><small>Group games first, loser dare after.</small></button>
+  <button class="feature-card feature-arena" onclick="show('players')"><span class="feature-icon">🏆</span><b>Party Arena</b><small>Pehle group game, phir loser ka dare.</small></button>
  </div>
  <p class="footer-note">Friends ke saath party game • No pressure • Skip is always okay</p>
 </section>
 
 
 <section id="ludoSetup" class="screen">
- <button class="back" onclick="show('home')">← Home</button><h2>Ludo Arena 🎲</h2><p class="sub">Friends ke saath pass-and-play ya computer opponent ke against.</p>
- <div class="card"><div class="field"><label>PLAY MODE</label><select id="ludoMode" onchange="updateLudoSetup()"><option value="computer">Play vs Computer</option><option value="friends">Play with Friends</option></select></div>
+ <button class="back" onclick="show('home')">← Home</button><h2>Ludo Arena 🎲</h2><p class="sub">Doston ke saath ya computer ke against khelo.</p>
+ <div class="card"><div class="field"><label>KHELNE KA MODE</label><select id="ludoMode" onchange="updateLudoSetup()"><option value="computer">Computer ke saath</option><option value="friends">Doston ke saath</option></select></div>
  <div class="field" id="ludoCountWrap"><label>PLAYERS</label><select id="ludoCount"><option value="2">2 Players</option><option value="3">3 Players</option><option value="4">4 Players</option></select></div>
- <p class="note" id="ludoSetupNote">You play as Red. Computer plays as Yellow. Take turns on the same phone.</p><button class="btn primary full" onclick="startLudo()">Start Ludo →</button></div>
+ <p class="note" id="ludoSetupNote">Tum Red ho, computer Yellow. Ek hi phone par baari-baari khelo.</p><button class="btn primary full" onclick="startLudo()">Ludo shuru karo →</button></div>
 </section>
 <section id="ludoGame" class="screen">
- <button class="back" onclick="show('ludoSetup')">← Ludo setup</button><div class="party-topline"><div><h2>Ludo 🎲</h2><p class="sub" id="ludoSub">Race all four tokens home.</p></div><span class="offline">OFFLINE</span></div>
+ <button class="back" onclick="show('ludoSetup')">← Ludo setup</button><div class="party-topline"><div><h2>Ludo 🎲</h2><p class="sub" id="ludoSub">Apni chaaron gotiyon ko ghar pahunchao.</p></div><span class="offline">OFFLINE</span></div>
  <div class="ludo-board-wrap"><svg id="ludoBoard" class="ludo-board" viewBox="0 0 560 560" role="img" aria-label="Ludo game board"></svg></div>
- <div class="ludo-panel center"><div class="ludo-turn" id="ludoTurn">Red's turn</div><div class="ludo-dice" id="ludoDice">🎲</div><button class="btn primary full" id="ludoRoll" onclick="ludoRoll()">Roll dice</button><p class="note" id="ludoHint">Roll a 6 to bring a token out. Select a token to move.</p><div class="ludo-tokens" id="ludoTokens"></div></div>
- <button class="btn ghost full" onclick="show('home')">Exit to Home</button>
+ <div class="ludo-panel center"><div class="ludo-turn" id="ludoTurn">Red ki baari</div><div class="ludo-dice" id="ludoDice">🎲</div><button class="btn primary full" id="ludoRoll" onclick="ludoRoll()">Dice phenko</button><p class="note" id="ludoHint">Goti nikaalne ke liye 6 lao. Chalne ke liye goti chuno.</p><div class="ludo-tokens" id="ludoTokens"></div></div>
+ <button class="btn ghost full" onclick="show('home')">Home par jao</button>
 </section>
 <section id="iqTest" class="screen">
- <button class="back" onclick="leaveIQ()">← Home</button><div class="party-topline"><div><h2>Brain Sprint 🧠</h2><p class="sub">10 questions · logic · patterns · reasoning</p></div><span class="offline" id="iqTimer">05:00</span></div>
+ <button class="back" onclick="leaveIQ()">← Home</button><div class="party-topline"><div><h2>Brain Sprint 🧠</h2><p class="sub">10 sawaal · logic · patterns · reasoning</p></div><span class="offline" id="iqTimer">05:00</span></div>
  <div class="iq-progress"><span id="iqProgress"></span></div><div class="party-stage" id="iqStage"></div>
- <p class="note">This is a fun reasoning quiz, not a scientifically valid IQ test. Your result is a quiz score, not an official IQ number.</p>
+ <p class="note">Yeh fun reasoning quiz hai, asli IQ test nahi. Result quiz score hai, official IQ number nahi.</p>
 </section>
-<section id="quickDare" class="screen">
+<section id="quickDare" class="screen" style="display:none">
  <button class="back" onclick="show('home')">← Home</button><h2>Give Me a Dare 🎯</h2><p class="sub">No game setup. Tap once and get one simple, harmless challenge.</p>
  <div class="quick-dare-card" id="quickDareCard"><div class="q-icon">✨</div><div class="q-text">Ready for a tiny challenge?</div></div>
  <button class="btn primary full" onclick="drawQuickDare()">Give me a dare!</button><button class="btn ghost full" style="margin-top:9px" onclick="drawQuickDare()">Another one ↻</button>
@@ -155,9 +155,9 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
 </section>
 
 <section id="genderMode" class="screen">
-<button class="back" onclick="show('home')">← Home</button><h2>Gender Style-Swap 🎭</h2><p class="sub">Player ke selected style ke opposite theme se fun dare milega. Skip aur swap hamesha allowed hai.</p>
-<div class="card"><div class="field"><label>PLAYER</label><select id="genderPlayer"></select></div><div class="field"><label>PLAYER STYLE</label><select id="genderChoice"><option value="boy">Boy</option><option value="girl">Girl</option><option value="custom">Custom / Skip gender</option></select></div><button class="btn primary full" onclick="drawGenderDare()">Dare lo 🎯</button></div>
-<div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">STYLE-SWAP DARE</div><div class="dare-image-wrap hidden" id="genderImageWrap"></div><div class="prompt" id="genderText"></div><button class="btn soft full" id="genderDone" onclick="markGenderDone()">Complete dare ✓</button><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
+<button class="back" onclick="show('home')">← Home</button><h2>Gender Style Dare 🎭</h2><p class="sub">Player ke selected style ke hisaab se opposite-theme ka funny dare milega. Skip/swap allowed hai.</p>
+<div class="card"><div class="field"><label>PLAYER</label><select id="genderPlayer"></select></div><div class="field"><label>PLAYER KA STYLE</label><select id="genderChoice"><option value="boy">Boy</option><option value="girl">Girl</option><option value="custom">Custom / Skip gender</option></select></div><button class="btn primary full" onclick="drawGenderDare()">Dare nikalo 🎯</button></div>
+<div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">GENDER STYLE DARE</div><div class="dare-image-wrap hidden" id="genderImageWrap"></div><div class="prompt" id="genderText"></div><button class="btn soft full" id="genderDone" onclick="markGenderDone()">Dare complete ✓</button><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
 <div class="grid"><button class="btn soft full" onclick="drawGenderDare()">Dare badlo ↻</button><button class="btn full" onclick="nextGenderPlayer()">Agla player →</button></div></section>
 <section id="players" class="screen">
  <button class="back" onclick="show('home')">← Home</button><h2>Kaun-kaun khelega?</h2><p class="sub">3–8 players add karo. Sab isi phone par khelenge.</p>
@@ -169,14 +169,14 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
  <button class="back" onclick="show('players')">← Players</button>
  <div class="party-topline"><div><h2>Party Arena 🏆</h2><p class="sub">Sab khelenge. Result ke baad loser ko dare!</p></div><span class="offline">3–8 PLAYERS</span></div>
  <div class="card"><b id="partyRosterTitle">Players ready</b><div id="partyRoster" class="score-list" style="margin-top:10px"></div><p class="note">Har round mein sabki baari aayegi. Koi random dare nahi — pehle game ka result, phir loser ka dare.</p></div>
- <div class="section-head"><h3>Choose your battle</h3><span>6 group games</span></div>
+ <div class="section-head"><h3>Apna game chuno</h3><span>6 group games</span></div>
  <div class="party-grid">
-  <button class="party-card pc-reaction" onclick="startPartyGame('reaction')"><span class="art">⚡</span><b>Reflex Rush</b><small>Fastest fingers win. Slowest gets the dare.</small></button>
-  <button class="party-card pc-memory" onclick="startPartyGame('memory')"><span class="art">🧠</span><b>Memory Flash</b><small>Remember the emoji pattern. Highest score wins.</small></button>
-  <button class="party-card pc-category" onclick="startPartyGame('category')"><span class="art">🗣️</span><b>Category Clash</b><small>Unique answers only. Repeats lose points.</small></button>
-  <button class="party-card pc-emoji" onclick="startPartyGame('emoji')"><span class="art">🧩</span><b>Emoji Decode</b><small>Quick puzzle quiz. Score decides the loser.</small></button>
-  <button class="party-card pc-secret" onclick="startPartyGame('secret')"><span class="art">🎯</span><b>Secret Target</b><small>Pick secretly. Closest wins, farthest loses.</small></button>
-  <button class="party-card pc-charades" onclick="startPartyGame('charades')"><span class="art">🎭</span><b>Act It Out</b><small>Act a prompt and let the group score it.</small></button>
+  <button class="party-card pc-reaction" onclick="startPartyGame('reaction')"><span class="art">⚡</span><b>Reflex Rush</b><small>Sabse tez jeetega; sabse slow ko dare milega.</small></button>
+  <button class="party-card pc-memory" onclick="startPartyGame('memory')"><span class="art">🧠</span><b>Memory Flash</b><small>Emoji sequence yaad rakho. Sabse zyada sahi jawab wala jeetega.</small></button>
+  <button class="party-card pc-category" onclick="startPartyGame('category')"><span class="art">🗣️</span><b>Category Clash</b><small>Alag answers do. Repeat par points katenge.</small></button>
+  <button class="party-card pc-emoji" onclick="startPartyGame('emoji')"><span class="art">🧩</span><b>Emoji Decode</b><small>Puzzle solve karo. Score se loser decide hoga.</small></button>
+  <button class="party-card pc-secret" onclick="startPartyGame('secret')"><span class="art">🎯</span><b>Secret Target</b><small>Chupke se number chuno. Sabse kareeb winner, sabse door loser.</small></button>
+  <button class="party-card pc-charades" onclick="startPartyGame('charades')"><span class="art">🎭</span><b>Act It Out</b><small>Acting karo aur group tumhe score dega.</small></button>
  </div>
 </section>
 <section id="partyGame" class="screen">
@@ -199,21 +199,21 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
  <button class="btn ghost full" onclick="show('games')">Choose another game</button>
 </section>
 
-<section id="truth" class="screen">
+<section id="truth" class="screen" style="display:none">
  <button class="back" onclick="show('home')">← Home</button><h2>Truth or Dare</h2><p class="sub">Take turns. Honestly choose karo, masti rakho.</p>
  <div class="card"><div class="field"><label>IT'S YOUR TURN</label><select id="truthPlayer"></select></div>
   <div class="grid"><button class="tile" onclick="pickTruth('truth')"><div class="emoji">💬</div><b>Truth</b><small>Answer a fun question</small></button><button class="tile" onclick="pickTruth('dare')"><div class="emoji">🎯</div><b>Dare</b><small>Try a silly challenge</small></button></div>
  </div>
- <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="dare-image-wrap hidden" id="truthImageWrap"></div><div class="prompt" id="truthText"></div><button class="btn soft full" id="truthDone" onclick="markTruthDone()">Complete dare ✓</button><button class="btn soft small" onclick="pickTruth(lastTruthType)">Ek aur</button></div>
+ <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="dare-image-wrap hidden" id="truthImageWrap"></div><div class="prompt" id="truthText"></div><button class="btn soft full" id="truthDone" onclick="markTruthDone()">Dare complete ✓</button><button class="btn soft small" onclick="pickTruth(lastTruthType)">Ek aur</button></div>
  <button class="btn primary full" onclick="nextTruthPlayer()">Agla player →</button>
 </section>
 
-<section id="classic" class="screen">
+<section id="classic" class="screen" style="display:none">
  <button class="back" onclick="show('home')">← Home</button><h2>Classic Dare Mode 🎀</h2><p class="sub">One dare per turn. Players alternate. Keep it playful, comfortable and optional.</p>
  <div class="card"><div class="field"><label>PLAYER THIS TURN</label><select id="classicPlayer"></select></div>
  <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="makeup">Makeup & Beauty</option><option value="fashion">Clothes & Fashion</option><option value="hairstyle">Hairstyle</option><option value="accessories">Accessories</option><option value="funny">Funny & Special</option><option value="special">Special Challenges</option></select></div>
  <button class="btn primary full" onclick="drawClassicDare()">Ek dare lo 🎯</button></div>
- <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="dare-image-wrap hidden" id="classicImageWrap"></div><div class="prompt" id="classicText"></div><button class="btn soft full" id="classicDone" onclick="markClassicDone()">Complete dare ✓</button><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
+ <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="dare-image-wrap hidden" id="classicImageWrap"></div><div class="prompt" id="classicText"></div><button class="btn soft full" id="classicDone" onclick="markClassicDone()">Dare complete ✓</button><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
  <div class="grid"><button class="btn soft full" onclick="drawClassicDare()">Dare badlo ↻</button><button class="btn full" onclick="nextClassicTurn()">Agla player →</button></div>
  <p class="note">Hair, clothes and accessories are always the player's choice. No makeup purchases or uncomfortable changes.</p>
 </section>
@@ -226,7 +226,7 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
 <section id="loser" class="screen">
  <button class="back" onclick="show('games')">← Games</button>
  <div class="result"><div class="big">🎯</div><h2 id="resultHeading">Dare time!</h2><p id="resultCaption"></p></div>
- <div class="dare-box"><div class="tag">LOSER'S DARE</div><div class="prompt" id="loserDare"></div><button class="btn soft full" id="loserDone" onclick="markLoserDone()">Complete dare ✓</button><p class="note">Keep it comfortable. You can always skip or swap a dare.</p><button class="btn soft small" onclick="newLoserDare()">Dare badlo ↻</button></div>
+ <div class="dare-box"><div class="tag">LOSER KA GENDER DARE</div><div class="field"><label>LOSER KA STYLE</label><select id="loserStyle" onchange="newLoserDare()"><option value="boy">Boy — girl-style dare</option><option value="girl">Girl — boy-style dare</option><option value="custom">Custom — neutral dare</option></select></div><div class="dare-image-wrap hidden" id="loserImageWrap"></div><div class="prompt" id="loserDare"></div><button class="btn soft full" id="loserDone" onclick="markLoserDone()">Dare complete ✓</button><p class="note">Keep it comfortable. You can always skip or swap a dare.</p><button class="btn soft small" onclick="newLoserDare()">Dare badlo ↻</button></div>
  <button class="btn primary full" onclick="show('games')">Play another game</button>
  <button class="btn ghost full" style="margin-top:9px" onclick="show('home')">Home</button>
 </section>
@@ -864,11 +864,11 @@ const TRUTHS=[
 let classicTurn=0,genderTurn=0;
 function startClassic(){if(players.length<2){renderPlayers();show("players");return;}renderClassicPlayer();$("classicPrompt").classList.add("hidden");show("classic");}
 function renderClassicPlayer(){$("classicPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("classicPlayer").value=String(classicTurn%players.length);}
-function renderDareImage(prefix,dare){const wrap=$(prefix+"ImageWrap");if(!wrap)return;wrap.innerHTML="";if(!dare){wrap.classList.add("hidden");return;}wrap.classList.remove("hidden");const box=document.createElement("div");box.className="dare-image-placeholder";const icon=document.createElement("span");icon.textContent=DARE_ICONS[dare.category]||"🎯";const label=document.createElement("small");label.textContent="DARE CHALLENGE";box.append(icon,label);wrap.appendChild(box);}
+function renderDareImage(prefix,dare){const wrap=$(prefix+"ImageWrap");if(!wrap)return;wrap.innerHTML="";if(!dare){wrap.classList.add("hidden");return;}wrap.classList.remove("hidden");const icons={makeup:"💄",fashion:"👗",hairstyle:"💇",accessories:"🎀",funny:"🎭",special:"✨"};const icon=icons[dare.category]||"🎯";wrap.innerHTML='<div style="background:linear-gradient(135deg,#ffe0eb,#e4dcff);border-radius:18px;padding:18px;text-align:center;display:flex;align-items:center;justify-content:center;gap:14px"><svg viewBox="0 0 120 90" width="118" height="88" role="img" aria-label="Dare illustration"><circle cx="60" cy="45" r="37" fill="#ffffffaa"/><path d="M25 67 Q60 12 95 67" fill="none" stroke="#7659c9" stroke-width="5"/><circle cx="60" cy="35" r="15" fill="#f3b58f"/><path d="M43 31 Q60 3 77 31" fill="#4a365e"/><path d="M38 75 Q60 48 82 75" fill="#8b72d6"/></svg><div style="font-size:48px">'+icon+'</div></div><div style="text-align:center;font-size:11px;font-weight:800;margin-top:7px;color:#7659c9">CHALLENGE CARD ✨</div>';}
 function drawClassicDare(){const c=$("classicCategory").value,pool=CLASSIC_DARES[c]||DARES;currentClassicDare=pickAvailableDare(pool);$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+c.toUpperCase();$("classicText").textContent=currentClassicDare?currentClassicDare.text:"Is category ke sabhi dares complete!";renderDareImage("classic",currentClassicDare);$("classicDone").disabled=!currentClassicDare;$("classicPrompt").classList.remove("hidden");}
 function markClassicDone(){completeDare(currentClassicDare);drawClassicDare();}
 function nextClassicTurn(){classicTurn=(classicTurn+1)%players.length;renderClassicPlayer();$("classicPrompt").classList.add("hidden");}
-const GENDER_DARES={boyToGirl:[...DARE_BANK.hairstyle,...DARE_BANK.fashion,...DARE_BANK.makeup,...DARE_BANK.accessories],girlToBoy:[...DARE_BANK.funny,...DARE_BANK.special],custom:DARES};
+const GENDER_DARES={boyToGirl:[{id:"p-b1",category:"makeup",text:"Lipstick Look 💄 — Comfortable ho toh apni personal lipstick se ek shade try karo, ya paper par lipstick look design karo."},{id:"p-b2",category:"fashion",text:"Dupatta Style 🎀 — Dupatta ko creative style mein drape karo, ya sketch par style banao."},{id:"p-b3",category:"hairstyle",text:"Hair Artist ✨ — Ek simple hairstyle try karo ya hairstyle ka funny naam rakho."},{id:"p-b4",category:"accessories",text:"Accessory Ad 🌟 — Ek accessory choose karke uska 10-second ad banao."},{id:"p-b5",category:"funny",text:"Runway Walk 🎬 — Imaginary runway walk karke dramatic pose do."}],girlToBoy:[{id:"p-g1",category:"funny",text:"Hero Entry 😎 — 10 seconds ki over-the-top hero entry act karo."},{id:"p-g2",category:"fashion",text:"Tie Stylist 👔 — Tie style karna dikhao ya paper par cool tie design banao."},{id:"p-g3",category:"funny",text:"Sports Commentator 🎤 — Imaginary match ki 15-second commentary do."},{id:"p-g4",category:"accessories",text:"Cap Challenge 🧢 — Cap ho toh pehno aur uska funny ad banao."},{id:"p-g5",category:"funny",text:"Robot Walk 🤖 — 10 seconds robot ki tarah act karo."}],custom:[{id:"p-c1",category:"funny",text:"Emoji Acting 😂 — Bina bole 3 emojis act karke dikhao."},{id:"p-c2",category:"special",text:"Voice Artist 🎙️ — Cartoon-style awaaz mein apna naam bolo."}]};
 function startGenderMode(){if(players.length<2){renderPlayers();show("players");return;}renderGenderPlayer();$("genderPrompt").classList.add("hidden");show("genderMode");}
 function renderGenderPlayer(){$("genderPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("genderPlayer").value=String(genderTurn%players.length);}
 function drawGenderDare(){const style=$("genderChoice").value,pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;currentGenderDare=pickAvailableDare(pool);$("genderTag").textContent=players[Number($("genderPlayer").value)]+" • "+(style==="boy"?"GIRL-STYLE THEME":style==="girl"?"BOY-STYLE THEME":"CUSTOM STYLE");$("genderText").textContent=currentGenderDare?currentGenderDare.text:"All dares in this theme completed!";renderDareImage("gender",currentGenderDare);$("genderDone").disabled=!currentGenderDare;$("genderPrompt").classList.remove("hidden");}
@@ -887,7 +887,7 @@ function duelPlayers(){return {a:Number($("p1").value),b:Number($("p2").value)};
 function resetDuel(){if(!$("p1").options.length)return;const p=duelPlayers();$("duelResult").classList.add("hidden");$("duelPlay").classList.remove("hidden");if(p.a===p.b){$("duelHint").textContent="Choose two different players to start."; $("duelPlay").innerHTML='<p class="center sub">Pick two different players above.</p>';return;}if(currentDuel.type==="rps")renderRps();if(currentDuel.type==="dice")renderDice();if(currentDuel.type==="number")renderNumber();if(currentDuel.type==="tap"){tapTurn=0;tapTimes=[];renderTapDuel();}}
 function renderRps(){rpsFirst=null;$("duelPlay").innerHTML='<p class="center sub" id="rpsStatus">Player 1: '+escapeHtml(players[duelPlayers().a])+' choose. Your choice stays hidden.</p><div class="choice-row"><button class="choice" onclick="chooseRps(&quot;rock&quot;)">✊</button><button class="choice" onclick="chooseRps(&quot;paper&quot;)">✋</button><button class="choice" onclick="chooseRps(&quot;scissors&quot;)">✌️</button></div><p class="note center">Pass the phone after the first choice. The next player will not see it.</p>';}
 function chooseRps(choice){const p=duelPlayers();if(p.a===p.b)return;if(!rpsFirst){rpsFirst=choice;$("duelPlay").innerHTML='<div class="center"><div style="font-size:36px">🔒</div><h3>Choice saved privately</h3><p class="sub">'+escapeHtml(players[p.b])+', take the phone and make your choice.</p><div class="choice-row"><button class="choice" onclick="chooseRps(&quot;rock&quot;)">✊</button><button class="choice" onclick="chooseRps(&quot;paper&quot;)">✋</button><button class="choice" onclick="chooseRps(&quot;scissors&quot;)">✌️</button></div></div>';return;}const second=choice,first=rpsFirst;rpsFirst=null;const beats={rock:"scissors",paper:"rock",scissors:"paper"};if(first===second){$("duelPlay").innerHTML='<div class="center"><h2>🤝 Tie game!</h2><p class="sub">No dare this time. Play again.</p><button class="btn primary full" onclick="renderRps()">Play again</button></div>';return;}const winner=beats[first]===second?p.a:p.b;finishDuel(winner, winner===p.a?p.b:p.a, "✊ "+first+" · "+second);}
-function renderDice(){$("duelPlay").innerHTML='<div class="center"><p class="sub">Both players roll once. Highest number wins.</p><div class="versus" style="margin:18px 0"><div><div style="font-size:36px" id="diceA">🎲</div><b>'+escapeHtml(players[duelPlayers().a])+'</b></div><div class="vs">VS</div><div><div style="font-size:36px" id="diceB">🎲</div><b>'+escapeHtml(players[duelPlayers().b])+'</b></div></div><button class="btn primary full" onclick="rollDiceDuel()">Roll dice</button></div>';}
+function renderDice(){$("duelPlay").innerHTML='<div class="center"><p class="sub">Both players roll once. Highest number wins.</p><div class="versus" style="margin:18px 0"><div><div style="font-size:36px" id="diceA">🎲</div><b>'+escapeHtml(players[duelPlayers().a])+'</b></div><div class="vs">VS</div><div><div style="font-size:36px" id="diceB">🎲</div><b>'+escapeHtml(players[duelPlayers().b])+'</b></div></div><button class="btn primary full" onclick="rollDiceDuel()">Dice phenko</button></div>';}
 function rollDiceDuel(){const p=duelPlayers(),a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);$("diceA").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][a-1];$("diceB").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][b-1];if(a===b){$("duelPlay").insertAdjacentHTML("beforeend",'<p class="center sub">Tie! Roll again.</p>');return;}finishDuel(a>b?p.a:p.b,a>b?p.b:p.a,a+" vs "+b);}
 function renderNumber(){$("duelPlay").innerHTML='<div class="center"><h3>'+escapeHtml(players[duelPlayers().a])+': set a secret number</h3><p class="sub">Choose a number from 1 to 10, then pass the phone.</p><div class="pills" style="justify-content:center;margin:15px 0">'+Array.from({length:10},(_,i)=>'<button class="pill" onclick="setSecret('+ (i+1) +')">'+(i+1)+'</button>').join("")+'</div></div>';}
 function setSecret(n){numberSecret=n;$("duelPlay").innerHTML='<div class="center"><div style="font-size:34px">🔐</div><h3>'+escapeHtml(players[duelPlayers().b])+': guess the number</h3><p class="sub">Choose one number. The secret stays hidden.</p><div class="pills" style="justify-content:center;margin:15px 0">'+Array.from({length:10},(_,i)=>'<button class="pill" onclick="guessSecret('+ (i+1) +')">'+(i+1)+'</button>').join("")+'</div></div>';}
@@ -899,7 +899,7 @@ function tapNow(){}
 function startTap(){}
 function finishDuel(winner,loser,detail){$("duelPlay").classList.add("hidden");$("duelResult").classList.remove("hidden");$("duelResult").innerHTML='<div class="result"><div class="big">🏆</div><h2>'+escapeHtml(players[winner])+' wins!</h2><p>'+escapeHtml(detail||"")+'</p><p class="sub">'+escapeHtml(players[loser])+' gets the dare this round.</p></div><button class="btn primary full" onclick="showLoser('+loser+','+winner+')">Reveal loser\'s dare →</button>';}
 function showLoser(loser,winner){$("resultHeading").textContent=players[loser]+", dare time!";$("resultCaption").textContent=players[winner]+" won this round.";newLoserDare();show("loser");}
-function newLoserDare(){currentLoserDare=pickAvailableDare(DARES);$("loserDare").textContent=currentLoserDare?currentLoserDare.text:"All dares completed!";$("loserDone").disabled=!currentLoserDare;}
+function newLoserDare(){const style=$("loserStyle")?$("loserStyle").value:"boy";const pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;currentLoserDare=pickAvailableDare(pool);$("loserDare").textContent=currentLoserDare?currentLoserDare.text:"Is style ke prototype dares khatam!";renderDareImage("loser",currentLoserDare);$("loserDone").disabled=!currentLoserDare;}
 function startTruthDare(){if(players.length<2){renderPlayers();show("players");}else{renderTruthSelect();$("truthPrompt").classList.add("hidden");show("truth");}}
 function pickTruth(type){lastTruthType=type;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";$("truthDone").classList.toggle("hidden",type==="truth");if(type==="truth"){const q=TRUTHS[Math.floor(Math.random()*TRUTHS.length)];$("truthText").textContent=q;$("truthImageWrap").classList.add("hidden");currentTruthDare=null;}else{currentTruthDare=pickAvailableDare(DARES);$("truthText").textContent=currentTruthDare?currentTruthDare.text:"All dares completed!";renderDareImage("truth",currentTruthDare);$("truthDone").disabled=!currentTruthDare;} $("truthPrompt").classList.remove("hidden");}
 function markTruthDone(){completeDare(currentTruthDare);pickTruth("dare");}
@@ -1049,7 +1049,7 @@ function saveCharadesVote(n){partyScores[partyIndex]=n;$("partyStage").innerHTML
 const LUDO_COLORS=[{name:"Red",hex:"#e6535c",light:"#ffe1e2",start:0},{name:"Green",hex:"#37a878",light:"#dff5e9",start:13},{name:"Yellow",hex:"#e8b53c",light:"#fff2cb",start:26},{name:"Blue",hex:"#4f83d6",light:"#e2edff",start:39}],LUDO_SAFE=[0,8,13,21,26,34,39,47],LUDO_SYMBOLS=["⚀","⚁","⚂","⚃","⚄","⚅"];
 let ludoPlayers=[],ludoMode="computer",ludoTurn=0,ludoDice=0,ludoCanMove=[],ludoBusy=false,ludoWinner=-1,ludoTimer=null;
 function openLudoSetup(){updateLudoSetup();show("ludoSetup");}
-function updateLudoSetup(){const m=$("ludoMode").value;$("ludoCountWrap").classList.toggle("hidden",m==="computer");$("ludoSetupNote").textContent=m==="computer"?"You play as Red. Computer plays as Yellow. Take turns on the same phone.":"2–4 friends can take turns on this phone.";}
+function updateLudoSetup(){const m=$("ludoMode").value;$("ludoCountWrap").classList.toggle("hidden",m==="computer");$("ludoSetupNote").textContent=m==="computer"?"Tum Red ho, computer Yellow. Ek hi phone par baari-baari khelo.":"2–4 friends can take turns on this phone.";}
 function startLudo(){clearTimeout(ludoTimer);ludoMode=$("ludoMode").value;const n=ludoMode==="computer"?2:Number($("ludoCount").value),slots=n===2?[0,2]:n===3?[0,1,2]:[0,1,2,3];ludoPlayers=slots.map((slot,i)=>({name:ludoMode==="computer"&&i===1?"Computer":(players[i]||"Player "+(i+1)),computer:ludoMode==="computer"&&i===1,color:LUDO_COLORS[slot],tokens:[-1,-1,-1,-1]}));ludoTurn=0;ludoDice=0;ludoCanMove=[];ludoBusy=false;ludoWinner=-1;$("ludoSub").textContent=ludoMode==="computer"?"You vs Computer":"Friends pass-and-play";show("ludoGame");drawLudoBoard();renderLudoTurn();}
 const LUDO_PATH=[];
 LUDO_PATH.push(...Array.from({length:5},(_,i)=>[6,i+1]));
@@ -1081,7 +1081,7 @@ function drawLudoBoard(){
  $("ludoBoard").innerHTML=z;
 }
 function ludoLegal(pi,d){return ludoPlayers[pi].tokens.map((v,i)=>({v,i})).filter(x=>x.v<0?d===6:x.v+d<=57).map(x=>x.i);}
-function renderLudoTurn(){if(ludoWinner>=0)return;const p=ludoPlayers[ludoTurn];$("ludoTurn").textContent=p.name+"'s turn";$("ludoTurn").style.color=p.color.hex;$("ludoDice").textContent=ludoDice?LUDO_SYMBOLS[ludoDice-1]:"🎲";$("ludoRoll").disabled=ludoBusy||!!ludoDice||p.computer;$("ludoRoll").textContent=p.computer?"Computer thinking…":ludoDice?"Choose a token":"Roll dice";$("ludoHint").textContent=ludoDice?"Choose a highlighted token. A 6 brings one out.":(p.computer?"Computer is taking its turn.":"Roll the dice to begin.");$("ludoTokens").innerHTML=p.tokens.map((v,i)=>{const ok=ludoCanMove.includes(i);return '<button class="ludo-token-btn" '+(!ok||p.computer?"disabled":"")+' onclick="ludoMove('+i+')" style="border-color:'+(ok?p.color.hex:"transparent")+'">Token '+(i+1)+'<br><small>'+(v<0?"Home":v===57?"Finished":v>=52?"Home lane "+(v-51):"Step "+v)+'</small></button>';}).join("");}
+function renderLudoTurn(){if(ludoWinner>=0)return;const p=ludoPlayers[ludoTurn];$("ludoTurn").textContent=p.name+"'s turn";$("ludoTurn").style.color=p.color.hex;$("ludoDice").textContent=ludoDice?LUDO_SYMBOLS[ludoDice-1]:"🎲";$("ludoRoll").disabled=ludoBusy||!!ludoDice||p.computer;$("ludoRoll").textContent=p.computer?"Computer thinking…":ludoDice?"Choose a token":"Dice phenko";$("ludoHint").textContent=ludoDice?"Choose a highlighted token. A 6 brings one out.":(p.computer?"Computer is taking its turn.":"Roll the dice to begin.");$("ludoTokens").innerHTML=p.tokens.map((v,i)=>{const ok=ludoCanMove.includes(i);return '<button class="ludo-token-btn" '+(!ok||p.computer?"disabled":"")+' onclick="ludoMove('+i+')" style="border-color:'+(ok?p.color.hex:"transparent")+'">Token '+(i+1)+'<br><small>'+(v<0?"Home":v===57?"Finished":v>=52?"Home lane "+(v-51):"Step "+v)+'</small></button>';}).join("");}
 function ludoRoll(){if(ludoBusy||ludoDice||ludoPlayers[ludoTurn].computer)return;ludoRollCore(false);}
 function ludoRollCore(bot){ludoDice=1+Math.floor(Math.random()*6);ludoCanMove=ludoLegal(ludoTurn,ludoDice);$("ludoDice").textContent=LUDO_SYMBOLS[ludoDice-1];if(!ludoCanMove.length){const six=ludoDice===6;$("ludoHint").textContent="No legal move. "+(six?"Six! You get another roll.":"Turn passes.");ludoBusy=true;renderLudoTurn();ludoTimer=setTimeout(()=>{ludoDice=0;ludoBusy=false;if(!six)ludoTurn=(ludoTurn+1)%ludoPlayers.length;renderLudoTurn();if(ludoPlayers[ludoTurn].computer)ludoComputerTurn();},850);return;}renderLudoTurn();if(bot){ludoBusy=true;ludoTimer=setTimeout(()=>{ludoBusy=false;ludoMove(chooseComputerToken(),true);},750);}}
 function ludoMove(k,bot=false){if(!ludoDice||!ludoCanMove.includes(k)||(ludoBusy&&!bot))return;const pl=ludoPlayers[ludoTurn],old=pl.tokens[k];pl.tokens[k]=old<0?0:old+ludoDice;if(pl.tokens[k]<=51){const g=(pl.color.start+pl.tokens[k])%52;if(!LUDO_SAFE.includes(g))ludoPlayers.forEach((op,pi)=>{if(pi!==ludoTurn)op.tokens=op.tokens.map(v=>v>=0&&v<=51&&(op.color.start+v)%52===g?-1:v);});}if(pl.tokens.every(v=>v===57)){ludoWinner=ludoTurn;drawLudoBoard();$("ludoTurn").textContent=pl.name+" wins! 🏆";$("ludoHint").textContent="All four tokens reached home. Well played!";$("ludoRoll").disabled=true;$("ludoRoll").textContent="Game over";$("ludoTokens").innerHTML='<button class="btn primary full" onclick="startLudo()">Play again</button>';return;}const six=ludoDice===6;ludoDice=0;ludoCanMove=[];drawLudoBoard();if(!six)ludoTurn=(ludoTurn+1)%ludoPlayers.length;renderLudoTurn();if(ludoPlayers[ludoTurn].computer)ludoTimer=setTimeout(ludoComputerTurn,650);}
