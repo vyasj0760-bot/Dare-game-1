@@ -53,6 +53,49 @@ body:not(.dark) .card,body:not(.dark) .tile{background:rgba(255,255,255,.88)}
 body.dark{background:transparent}
 @media(prefers-reduced-motion:reduce){.wallpaper-slide{animation:none}.wallpaper-slide.slide-one{opacity:1}.wallpaper-slide.slide-two,.wallpaper-slide.slide-three{display:none}}
 
+
+/* Party arena: distinct game identities and tactile play states */
+.party-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.party-card{position:relative;overflow:hidden;min-height:166px;border:0;border-radius:22px;padding:16px;text-align:left;color:#fff;box-shadow:0 12px 26px rgba(22,14,38,.18);transition:transform .16s,filter .16s}
+.party-card:active{transform:scale(.97);filter:brightness(1.08)}
+.party-card:before{content:"";position:absolute;width:140px;height:140px;border:1px solid rgba(255,255,255,.22);border-radius:50%;right:-38px;top:-45px}
+.party-card:after{content:"";position:absolute;width:90px;height:90px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:2px;top:2px}
+.party-card .art{font-size:38px;display:block;margin:2px 0 17px;filter:drop-shadow(0 5px 7px rgba(0,0,0,.2))}
+.party-card b{display:block;font-size:16px;position:relative;z-index:1}
+.party-card small{display:block;font-size:11px;line-height:1.4;opacity:.86;margin-top:5px;max-width:145px;position:relative;z-index:1}
+.pc-reaction{background:linear-gradient(145deg,#f07862,#bd3f73)}
+.pc-memory{background:linear-gradient(145deg,#478bd2,#5142a7)}
+.pc-category{background:linear-gradient(145deg,#28a98c,#176c75)}
+.pc-emoji{background:linear-gradient(145deg,#f1a83e,#d05b4e)}
+.pc-secret{background:linear-gradient(145deg,#8d68d7,#503e9b)}
+.pc-charades{background:linear-gradient(145deg,#e16da5,#8b4cae)}
+.party-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 16px}
+.party-progress{height:7px;background:rgba(130,115,155,.18);border-radius:99px;overflow:hidden;margin:8px 0 16px}
+.party-progress span{display:block;height:100%;background:linear-gradient(90deg,#a879ff,#f08bb0);border-radius:99px;transition:width .25s}
+.party-stage{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.7);border-radius:25px;padding:20px;box-shadow:0 15px 34px rgba(25,15,45,.12);margin:14px 0;color:#272333}
+body.dark .party-stage{background:rgba(38,30,55,.91);color:#f7f1ff;border-color:rgba(221,201,255,.15)}
+.party-stage .big-visual{font-size:58px;text-align:center;margin:8px 0 15px}
+.party-stage .turn-name{text-align:center;font-size:20px;font-weight:850}
+.party-stage .stage-hint{text-align:center;color:#85818d;font-size:13px;line-height:1.5;margin:8px 0 18px}
+.party-stage .answer-input{width:100%;border:1px solid #e8e1ef;border-radius:14px;padding:13px;background:#fbf9ff;color:#272333;margin:8px 0}
+.party-stage .choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:15px 0}
+.party-stage .choice-grid button{border:1px solid #e7def4;background:#f6f1ff;border-radius:14px;padding:13px 9px;color:#4d3989;font-weight:750;min-height:50px}
+.party-stage .choice-grid button:active{transform:scale(.97)}
+body.dark .party-stage .choice-grid button{background:#342747;border-color:#59466f;color:#f2e9ff}
+.party-stage .sequence{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;font-size:31px;margin:16px 0}
+.party-stage .sequence span{background:#f1ebff;border-radius:12px;padding:9px}
+body.dark .party-stage .sequence span{background:#342747}
+.party-stage .vote-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:15px 0}
+.party-stage .vote-row button{border-radius:12px;background:#f1eaff;color:#65469d;padding:12px 15px;font-weight:800}
+body.dark .party-stage .vote-row button{background:#3c2c58;color:#eee3ff}
+.party-stage .player-chip{display:inline-flex;padding:8px 11px;border-radius:99px;background:#f2edfb;color:#5e478a;font-size:12px;font-weight:750;margin:3px}
+body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
+.party-stage .big-tap{width:100%;height:150px;border-radius:22px;background:linear-gradient(145deg,#ff9b68,#ed527b);color:#fff;font-size:28px;font-weight:950;box-shadow:inset 0 -5px 0 rgba(0,0,0,.1);margin:12px 0}
+.party-stage .big-tap.go{background:linear-gradient(145deg,#4ed49b,#168a70)}
+.party-stage .big-tap.wait{background:linear-gradient(145deg,#f4c35d,#e68a3d)}
+.party-stage .step-label{font-size:11px;font-weight:900;letter-spacing:1px;color:#9a80c2;text-transform:uppercase}
+@media(max-width:360px){.party-grid{gap:9px}.party-card{padding:13px;min-height:154px}.party-card .art{font-size:33px}}
+
 </style>
 </head>
 <body>
@@ -83,14 +126,26 @@ body.dark{background:transparent}
 </section>
 
 <section id="games" class="screen">
- <button class="back" onclick="show('players')">← Players</button><h2>Mini-game chuno</h2><p class="sub">Winner safe, loser ko random dare milega.</p>
- <div class="grid" style="margin-top:18px">
-  <button class="tile" onclick="openDuel('rps')"><div class="emoji">✊</div><b>Stone Paper Scissors</b><small>Classic quick duel</small></button>
-  <button class="tile" onclick="openDuel('dice')"><div class="emoji">🎲</div><b>Dice Duel</b><small>Highest roll wins</small></button>
-  <button class="tile" onclick="openDuel('number')"><div class="emoji">🔢</div><b>Number Guess</b><small>Guess the secret number</small></button>
-  <button class="tile" onclick="openDuel('tap')"><div class="emoji">⚡</div><b>Quick Tap</b><small>Who reacts faster?</small></button>
+ <button class="back" onclick="show('players')">← Players</button>
+ <div class="party-topline"><div><h2>Party Arena 🏆</h2><p class="sub">Sab khelenge. Result ke baad loser ko dare!</p></div><span class="offline">3–8 PLAYERS</span></div>
+ <div class="card"><b id="partyRosterTitle">Players ready</b><div id="partyRoster" class="score-list" style="margin-top:10px"></div><p class="note">Har round mein sabki baari aayegi. Koi random dare nahi — pehle game ka result, phir loser ka dare.</p></div>
+ <div class="section-head"><h3>Choose your battle</h3><span>6 group games</span></div>
+ <div class="party-grid">
+  <button class="party-card pc-reaction" onclick="startPartyGame('reaction')"><span class="art">⚡</span><b>Reflex Rush</b><small>Fastest fingers win. Slowest gets the dare.</small></button>
+  <button class="party-card pc-memory" onclick="startPartyGame('memory')"><span class="art">🧠</span><b>Memory Flash</b><small>Remember the emoji pattern. Highest score wins.</small></button>
+  <button class="party-card pc-category" onclick="startPartyGame('category')"><span class="art">🗣️</span><b>Category Clash</b><small>Unique answers only. Repeats lose points.</small></button>
+  <button class="party-card pc-emoji" onclick="startPartyGame('emoji')"><span class="art">🧩</span><b>Emoji Decode</b><small>Quick puzzle quiz. Score decides the loser.</small></button>
+  <button class="party-card pc-secret" onclick="startPartyGame('secret')"><span class="art">🎯</span><b>Secret Target</b><small>Pick secretly. Closest wins, farthest loses.</small></button>
+  <button class="party-card pc-charades" onclick="startPartyGame('charades')"><span class="art">🎭</span><b>Act It Out</b><small>Act a prompt and let the group score it.</small></button>
  </div>
- <button class="btn ghost full" style="margin-top:14px" onclick="startTruthDare()">💬 Switch to Truth or Dare</button>
+ <button class="btn ghost full" style="margin-top:15px" onclick="startTruthDare()">💬 Truth or Dare (separate mode)</button>
+</section>
+<section id="partyGame" class="screen">
+ <button class="back" onclick="show('games')">← Party Arena</button>
+ <div class="game-title"><div class="emoji" id="partyIcon">🎮</div><div><h2 id="partyGameTitle">Party Game</h2><p class="sub" id="partyGameSub">Everyone plays this round.</p></div></div>
+ <div class="party-progress"><span id="partyProgressBar" style="width:0%"></span></div>
+ <div id="partyStage" class="party-stage"></div>
+ <button class="btn ghost full" onclick="show('games')">Quit round</button>
 </section>
 
 <section id="duel" class="screen">
@@ -816,6 +871,138 @@ function applyTheme(){const d=localStorage.getItem("dareTheme")==="dark";documen
 function toggleTheme(){const d=!document.body.classList.contains("dark");document.body.classList.toggle("dark",d);try{localStorage.setItem("dareTheme",d?"dark":"light");}catch(e){}$("themeToggle").textContent=d?"☀ Light":"☾ Dark";}
 function mayaSpeakScreen(){const a=document.querySelector(".screen.active");if(!a)return;const t=(a.innerText||"").replace(/\\s+/g," ").trim().slice(0,850);if(window.MayaTTS&&window.MayaTTS.speak)window.MayaTTS.speak("Oho! "+t+" Chalo, enjoy the game!");else alert("Maya voice unavailable. Hindi TTS engine check karein.");}
 applyTheme();
+
+/* MULTIPLAYER PARTY ARENA */
+let partyType="",partyIndex=0,partyScores=[],partyAnswers=[],partyTarget=0,partySequence=[],partyTimer=null,partyStartedAt=0,partyReady=false,partyPromptIndex=0;
+const PARTY_META={
+ reaction:["⚡","Reflex Rush","Take turns. Wait for GO, then tap as fast as you can."],
+ memory:["🧠","Memory Flash","Memorise the emoji line and rebuild it from memory."],
+ category:["🗣️","Category Clash","Each player gives a unique answer. Repeats and blanks lose."],
+ emoji:["🧩","Emoji Decode","Solve a quick emoji clue. Everyone gets the same set of questions."],
+ secret:["🎯","Secret Target","Choose a number privately. Closest to the hidden target wins."],
+ charades:["🎭","Act It Out","Everyone performs one prompt. Group gives each act a score."]
+};
+const PARTY_EMOJIS=["🍕","🚀","🐼","🎸","🌈","⚽","🍩","🦋","🎧","🧁","🐉","🌻"];
+const PARTY_QUESTIONS=[
+ {q:"🦁👑",a:["The Lion King","Madagascar","Jungle Book","Kung Fu Panda"],c:0},
+ {q:"🕷️👨",a:["Ant-Man","Spider-Man","Batman","Superman"],c:1},
+ {q:"❄️👸",a:["Moana","Cinderella","Frozen","Tangled"],c:2},
+ {q:"🐠🔍",a:["Finding Nemo","Shark Tale","Luca","The Little Mermaid"],c:0},
+ {q:"🧙‍♂️⚡",a:["Harry Potter","The Hobbit","Percy Jackson","Doctor Strange"],c:0},
+ {q:"🚢🧊",a:["Jaws","Titanic","Avatar","Life of Pi"],c:1}
+];
+const PARTY_CATEGORIES=["Fruits","Movies","School subjects","Animals","Things in a kitchen","Sports","Cities","Cartoon characters"];
+const PARTY_ACTS=["Act like a dramatic news reporter announcing that a pencil has gone missing","Pretend you are a robot learning how to dance","Act out a sleepy cat who heard the food packet","Give a 10-second silent advertisement for a water bottle","Act like a teacher explaining a very silly invention","Pretend you are a cricket commentator for a slow-motion walk","Show a person trying to remember a forgotten password","Act like a celebrity entering a room in slow motion"];
+function partyRoster(){ $("partyRoster").innerHTML=players.map((p,i)=>'<span class="player-chip">'+(i+1)+'. '+escapeHtml(p)+'</span>').join("");$("partyRosterTitle").textContent=players.length+" players in the arena"; }
+function startPartyGame(type){
+ if(players.length<3){alert("Party Arena ke liye kam se kam 3 players add karo.");show("players");return;}
+ clearTimeout(partyTimer);partyType=type;partyIndex=0;partyScores=players.map(()=>0);partyAnswers=[];partyTarget=1+Math.floor(Math.random()*20);partySequence=Array.from({length:5},()=>PARTY_EMOJIS[Math.floor(Math.random()*PARTY_EMOJIS.length)]);partyPromptIndex=0;
+ const m=PARTY_META[type];$("partyIcon").textContent=m[0];$("partyGameTitle").textContent=m[1];$("partyGameSub").textContent=m[2];show("partyGame");renderPartyStage();
+}
+function setPartyProgress(done,total){$("partyProgressBar").style.width=Math.round(done/total*100)+"%";}
+function renderPartyStage(){
+ if(partyType==="reaction")return renderReactionTurn();
+ if(partyType==="memory")return renderMemoryIntro();
+ if(partyType==="category")return renderCategoryTurn();
+ if(partyType==="emoji")return renderEmojiTurn();
+ if(partyType==="secret")return renderSecretTurn();
+ if(partyType==="charades")return renderCharadesTurn();
+}
+function partyFinish(winner,loser,detail){
+ clearTimeout(partyTimer);partyReady=false;
+ $("partyStage").innerHTML='<div class="big-visual">🏆</div><div class="turn-name">'+escapeHtml(players[winner])+' wins!</div><p class="stage-hint">'+escapeHtml(detail)+'</p><div class="score-list">'+players.map((p,i)=>'<div class="score"><b>'+partyScores[i]+'</b><small>'+escapeHtml(p)+'</small></div>').join("")+'</div><button class="btn primary full" style="margin-top:16px" onclick="showLoser('+loser+','+winner+')">Reveal '+escapeHtml(players[loser])+'’s dare →</button>';
+}
+function renderReactionTurn(){
+ setPartyProgress(partyIndex,players.length);
+ if(partyIndex>=players.length){let order=partyScores.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);partyFinish(order[0].i,order[order.length-1].i,"Fastest: "+partyScores[order[0].i]+" ms · Slowest: "+partyScores[order[order.length-1].i]+" ms");return;}
+ const name=players[partyIndex];
+ $("partyStage").innerHTML='<div class="step-label">PLAYER '+(partyIndex+1)+' OF '+players.length+'</div><div class="big-visual">⚡</div><div class="turn-name">'+escapeHtml(name)+'</div><p class="stage-hint">Phone ko ready rakho. Button dabao, phir random signal ka wait karo. GO se pehle tap kiya toh false start!</p><button class="btn primary full" onclick="startReactionWait()">I am ready</button><div id="reactionResult" class="note center"></div>';
+}
+function startReactionWait(){
+ $("partyStage").innerHTML='<div class="step-label">PLAYER '+(partyIndex+1)+' OF '+players.length+'</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'</div><button class="big-tap wait" id="reactionTap" onclick="recordReaction()">WAIT…</button><p class="stage-hint">Green signal aane tak touch mat karna!</p>';
+ partyReady=false;clearTimeout(partyTimer);partyTimer=setTimeout(()=>{partyReady=true;partyStartedAt=performance.now();const b=$("reactionTap");if(b){b.textContent="GO! TAP NOW";b.classList.remove("wait");b.classList.add("go");}},1400+Math.random()*2600);
+}
+function recordReaction(){
+ if(!partyReady){clearTimeout(partyTimer);partyScores[partyIndex]=9999;$("partyStage").innerHTML='<div class="big-visual">😅</div><div class="turn-name">Too early!</div><p class="stage-hint">'+escapeHtml(players[partyIndex])+' tapped before GO. This turn gets a 9999 ms penalty.</p><button class="btn primary full" onclick="nextReactionPlayer()">Next player →</button>';return;}
+ partyReady=false;partyScores[partyIndex]=Math.round(performance.now()-partyStartedAt);
+ $("partyStage").innerHTML='<div class="big-visual">🚀</div><div class="turn-name">'+partyScores[partyIndex]+' ms</div><p class="stage-hint">'+escapeHtml(players[partyIndex])+' ka reaction time recorded.</p><button class="btn primary full" onclick="nextReactionPlayer()">Next player →</button>';
+}
+function nextReactionPlayer(){partyIndex++;renderReactionTurn();}
+function renderMemoryIntro(){
+ setPartyProgress(0,players.length);
+ $("partyStage").innerHTML='<div class="big-visual">🧠</div><div class="turn-name">Memory Flash</div><p class="stage-hint">Sab players ko same 5-emoji sequence yaad karni hai. Har player apni turn par sequence rebuild karega. Pehle ready ho jao.</p><div class="sequence">'+partySequence.map(e=>'<span>'+e+'</span>').join("")+'</div><button class="btn primary full" onclick="hideMemorySequence()">Hide sequence & start →</button>';
+}
+function hideMemorySequence(){
+ $("partyStage").innerHTML='<div class="big-visual">🙈</div><div class="turn-name">Sequence hidden!</div><p class="stage-hint">Phone pehle player ko do. Ab memory test start hoga.</p><button class="btn primary full" onclick="renderMemoryTurn()">Start player 1</button>';
+}
+function renderMemoryTurn(){
+ setPartyProgress(partyIndex,players.length);
+ if(partyIndex>=players.length){const order=partyScores.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v);partyFinish(order[0].i,order[order.length-1].i,"Highest memory score: "+order[0].v+"/5 · Lowest: "+order[order.length-1].v+"/5");return;}
+ const options=PARTY_EMOJIS.slice().sort(()=>Math.random()-.5);
+ $("partyStage").innerHTML='<div class="step-label">PLAYER '+(partyIndex+1)+' OF '+players.length+'</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'</div><p class="stage-hint">Sequence ko yaad se same order mein select karo. Har position ke liye ek emoji choose karo.</p><div id="memorySlots" class="sequence">'+Array.from({length:5},(_,i)=>'<span id="memorySlot'+i+'">❔</span>').join("")+'</div><div class="choice-grid">'+options.map(e=>'<button onclick="chooseMemoryEmoji('+JSON.stringify(e)+')">'+e+'</button>').join("")+'</div><p class="note center" id="memoryCount">Position 1 of 5</p><button class="btn primary full" id="memorySubmit" disabled onclick="submitMemory()">Check my sequence</button>';
+ window.memoryPicks=[];
+}
+function chooseMemoryEmoji(e){
+ if(!window.memoryPicks)window.memoryPicks=[];if(window.memoryPicks.length>=5)return;
+ window.memoryPicks.push(e);$("memorySlot"+(window.memoryPicks.length-1)).textContent=e;$("memoryCount").textContent="Position "+(window.memoryPicks.length+1)+" of 5";if(window.memoryPicks.length===5){$("memoryCount").textContent="All 5 selected";$("memorySubmit").disabled=false;}
+}
+function submitMemory(){
+ let score=0;partySequence.forEach((e,i)=>{if(window.memoryPicks[i]===e)score++;});partyScores[partyIndex]=score;
+ $("partyStage").innerHTML='<div class="big-visual">'+(score>=4?"🌟":score>=2?"👏":"🫣")+'</div><div class="turn-name">'+score+' / 5 correct</div><p class="stage-hint">'+escapeHtml(players[partyIndex])+' ka score save ho gaya.</p><button class="btn primary full" onclick="partyIndex++;renderMemoryTurn()">Next player →</button>';
+}
+function renderCategoryTurn(){
+ setPartyProgress(partyIndex,players.length);
+ if(partyIndex>=players.length){
+  const counts={};partyAnswers.forEach(a=>{const k=a.answer.toLowerCase();counts[k]=(counts[k]||0)+1;});
+  partyScores=partyAnswers.map(a=>a.answer&&counts[a.answer.toLowerCase()]===1?1:0);
+  let hi=Math.max(...partyScores),lo=Math.min(...partyScores),winner=partyScores.indexOf(hi),loser=partyScores.lastIndexOf(lo);
+  partyFinish(winner,loser,"Unique answers: "+partyScores.filter(x=>x===1).length+" · Duplicate/blank answers: "+partyScores.filter(x=>x===0).length);return;
+ }
+ const cat=PARTY_CATEGORIES[Math.floor(Math.random()*PARTY_CATEGORIES.length)];
+ window.partyCurrentCategory=cat;
+ $("partyStage").innerHTML='<div class="step-label">PLAYER '+(partyIndex+1)+' OF '+players.length+'</div><div class="big-visual">🗣️</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'</div><p class="stage-hint">Category: <b>'+cat+'</b><br>Is category ka ek answer likho. Repeat answer valid nahi hoga. Sab players ko phone pass karo, answers private rakho.</p><input class="answer-input" id="categoryAnswer" maxlength="35" placeholder="Your unique answer…"><button class="btn primary full" onclick="saveCategoryAnswer()">Lock answer</button>';
+}
+function saveCategoryAnswer(){
+ const a=$("categoryAnswer").value.trim();partyAnswers.push({player:partyIndex,answer:a});$("partyStage").innerHTML='<div class="big-visual">🔒</div><div class="turn-name">Answer locked</div><p class="stage-hint">Phone next player ko do. Answer reveal end mein hoga.</p><button class="btn primary full" onclick="partyIndex++;renderCategoryTurn()">Next player →</button>';
+}
+function renderEmojiTurn(){
+ setPartyProgress(partyPromptIndex,PARTY_QUESTIONS.length);
+ if(partyPromptIndex>=PARTY_QUESTIONS.length){
+  let order=partyScores.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v);
+  partyFinish(order[0].i,order[order.length-1].i,"Quiz scores: "+order[0].v+" correct · "+order[order.length-1].v+" correct");return;
+ }
+ const q=PARTY_QUESTIONS[partyPromptIndex];
+ $("partyStage").innerHTML='<div class="step-label">QUESTION '+(partyPromptIndex+1)+' OF '+PARTY_QUESTIONS.length+'</div><div class="big-visual">'+q.q+'</div><div class="turn-name">Who gets this one?</div><p class="stage-hint">Sab players milkar answer decide karo, phir correct option reveal karo.</p><div class="choice-grid">'+q.a.map((a,i)=>'<button onclick="answerEmoji('+i+')">'+a+'</button>').join("")+'</div>';
+}
+function answerEmoji(i){
+ const q=PARTY_QUESTIONS[partyPromptIndex];if(i===q.c)partyScores.forEach((v,j)=>partyScores[j]++);
+ $("partyStage").innerHTML='<div class="big-visual">'+(i===q.c?"🎉":"🤔")+'</div><div class="turn-name">'+(i===q.c?"Correct!":"Not quite!")+'</div><p class="stage-hint">Answer: '+q.a[q.c]+'.</p><button class="btn primary full" onclick="partyPromptIndex++;renderEmojiTurn()">Next question →</button>';
+}
+function renderSecretTurn(){
+ setPartyProgress(partyIndex,players.length);
+ if(partyIndex>=players.length){
+  let order=partyScores.map((v,i)=>({v:Math.abs(v-partyTarget),i})).sort((a,b)=>a.v-b.v);
+  partyScores=partyScores.map(v=>Math.abs(v-partyTarget));
+  partyFinish(order[0].i,order[order.length-1].i,"Secret target was "+partyTarget+". Closest difference: "+order[0].v+" · Farthest: "+order[order.length-1].v);return;
+ }
+ $("partyStage").innerHTML='<div class="step-label">PLAYER '+(partyIndex+1)+' OF '+players.length+'</div><div class="big-visual">🎯</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'</div><p class="stage-hint">1 se 20 ke beech ek number secretly choose karo. Target kisi ko nahi pata. Phone next player ko pass karo.</p><div class="choice-grid">'+Array.from({length:20},(_,i)=>'<button onclick="chooseSecretNumber('+(i+1)+')">'+(i+1)+'</button>').join("")+'</div>';
+}
+function chooseSecretNumber(n){partyScores[partyIndex]=n;$("partyStage").innerHTML='<div class="big-visual">🔐</div><div class="turn-name">Choice locked!</div><p class="stage-hint">Number save ho gaya. Next player ko phone do.</p><button class="btn primary full" onclick="partyIndex++;renderSecretTurn()">Next player →</button>';}
+function renderCharadesTurn(){
+ setPartyProgress(partyIndex,players.length);
+ if(partyIndex>=players.length){
+  let order=partyScores.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v);
+  partyFinish(order[0].i,order[order.length-1].i,"Group ratings: "+order[0].v+" points · "+order[order.length-1].v+" points");return;
+ }
+ const prompt=PARTY_ACTS[(partyIndex+Math.floor(Math.random()*PARTY_ACTS.length))%PARTY_ACTS.length];
+ window.partyActPrompt=prompt;
+ $("partyStage").innerHTML='<div class="step-label">PERFORMER '+(partyIndex+1)+' OF '+players.length+'</div><div class="big-visual">🎭</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'</div><p class="stage-hint">Act this prompt for 15 seconds. No talking, only acting! Group decides score from 1 to 5.</p><div class="card center" style="background:#f8f2ff;border:0"><b>'+escapeHtml(prompt)+'</b></div><button class="btn primary full" onclick="showCharadesVote()">I performed it →</button>';
+}
+function showCharadesVote(){
+ $("partyStage").innerHTML='<div class="big-visual">👏</div><div class="turn-name">Group rating</div><p class="stage-hint">'+escapeHtml(players[partyIndex])+' ki acting ko sab milkar 1–5 points do. Friendly voting only.</p><div class="vote-row">'+[1,2,3,4,5].map(n=>'<button onclick="saveCharadesVote('+n+')">'+n+' ★</button>').join("")+'</div>';
+}
+function saveCharadesVote(n){partyScores[partyIndex]=n;$("partyStage").innerHTML='<div class="big-visual">✨</div><div class="turn-name">Score saved</div><p class="stage-hint">Next performer ki baari.</p><button class="btn primary full" onclick="partyIndex++;renderCharadesTurn()">Next player →</button>';}
+
 </script>
 </body>
 </html>
