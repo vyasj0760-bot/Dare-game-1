@@ -1065,18 +1065,18 @@ LUDO_PATH.push(...Array.from({length:5},(_,i)=>[13-i,6]));
 LUDO_PATH.push(...Array.from({length:6},(_,i)=>[8,5-i]));
 LUDO_PATH.push([7,0],[6,0]);
 const LUDO_LANES=[Array.from({length:6},(_,i)=>[7,i+1]),Array.from({length:6},(_,i)=>[i+1,7]),Array.from({length:6},(_,i)=>[7,13-i]),Array.from({length:6},(_,i)=>[13-i,7])];
-function ludoCell(row,col){return{x:30+col*36+18,y:30+row*36+18};}
+function ludoCell(row,col){return{x:10+col*36+18,y:10+row*36+18};}
 function ludoPoint(i){const p=LUDO_PATH[i];return ludoCell(p[0],p[1]);}
 function ludoLanePoint(pl,k){const p=LUDO_LANES[LUDO_COLORS.indexOf(pl.color)][k];return ludoCell(p[0],p[1]);}
-function ludoBasePoint(pl,k){const c=[{x:138,y:138},{x:462,y:138},{x:462,y:462},{x:138,y:462}][LUDO_COLORS.indexOf(pl.color)],o=[[-25,-25],[25,-25],[-25,25],[25,25]][k];return{x:c.x+o[0],y:c.y+o[1]};}
+function ludoBasePoint(pl,k){const c=[{x:118,y:118},{x:442,y:118},{x:442,y:442},{x:118,y:442}][LUDO_COLORS.indexOf(pl.color)],o=[[-25,-25],[25,-25],[-25,25],[25,25]][k];return{x:c.x+o[0],y:c.y+o[1]};}
 function ludoTokenPoint(pl,k,v){return v<0?ludoBasePoint(pl,k):v<=51?ludoPoint((pl.color.start+v)%52):ludoLanePoint(pl,v-52);}
 function drawLudoBoard(){
  let z='<rect x="10" y="10" width="540" height="540" rx="18" fill="#fff" stroke="#d8d1e2" stroke-width="3"/>';
  const bases=[{r:0,c:0,color:LUDO_COLORS[0]},{r:0,c:9,color:LUDO_COLORS[1]},{r:9,c:9,color:LUDO_COLORS[2]},{r:9,c:0,color:LUDO_COLORS[3]}];
- bases.forEach(b=>{const x=30+b.c*36,y=30+b.r*36;z+='<rect x="'+x+'" y="'+y+'" width="216" height="216" rx="8" fill="'+b.color.light+'" stroke="'+b.color.hex+'" stroke-width="2"/><rect x="'+(x+36)+'" y="'+(y+36)+'" width="144" height="144" rx="12" fill="#fff" stroke="'+b.color.hex+'" stroke-width="2"/>';});
+ bases.forEach(b=>{const x=10+b.c*36,y=10+b.r*36;z+='<rect x="'+x+'" y="'+y+'" width="216" height="216" rx="8" fill="'+b.color.light+'" stroke="'+b.color.hex+'" stroke-width="2"/><rect x="'+(x+36)+'" y="'+(y+36)+'" width="144" height="144" rx="12" fill="#fff" stroke="'+b.color.hex+'" stroke-width="2"/>';});
  LUDO_PATH.forEach((rc,i)=>{const p=ludoCell(rc[0],rc[1]),c=LUDO_COLORS.find(x=>x.start===i);z+='<rect x="'+(p.x-17)+'" y="'+(p.y-17)+'" width="34" height="34" rx="4" fill="'+(c?c.light:"#f5f3f8")+'" stroke="#d4cddd"/>'+(LUDO_SAFE.includes(i)?'<text x="'+p.x+'" y="'+(p.y+6)+'" font-size="18" text-anchor="middle" fill="#806b9b">★</text>':"");});
  LUDO_LANES.forEach((lane,i)=>lane.forEach(rc=>{const p=ludoCell(rc[0],rc[1]),c=LUDO_COLORS[i];z+='<rect x="'+(p.x-17)+'" y="'+(p.y-17)+'" width="34" height="34" rx="4" fill="'+c.light+'" stroke="'+c.hex+'" stroke-width="1.5"/>'; }));
- z+='<rect x="246" y="246" width="108" height="108" rx="8" fill="#f5f2f8" stroke="#cfc5dc" stroke-width="2"/><path d="M246 246 L300 300 L354 246 Z" fill="'+LUDO_COLORS[0].hex+'"/><path d="M354 246 L300 300 L354 354 Z" fill="'+LUDO_COLORS[1].hex+'"/><path d="M354 354 L300 300 L246 354 Z" fill="'+LUDO_COLORS[2].hex+'"/><path d="M246 354 L300 300 L246 246 Z" fill="'+LUDO_COLORS[3].hex+'"/>';
+ z+='<rect x="226" y="226" width="108" height="108" rx="8" fill="#f5f2f8" stroke="#cfc5dc" stroke-width="2"/><path d="M226 226 L280 280 L334 226 Z" fill="'+LUDO_COLORS[0].hex+'"/><path d="M334 226 L280 280 L334 334 Z" fill="'+LUDO_COLORS[1].hex+'"/><path d="M334 334 L280 280 L226 334 Z" fill="'+LUDO_COLORS[2].hex+'"/><path d="M226 334 L280 280 L226 226 Z" fill="'+LUDO_COLORS[3].hex+'"/>';
  ludoPlayers.forEach(pl=>pl.tokens.forEach((v,k)=>{const p=ludoTokenPoint(pl,k,v);z+='<circle cx="'+p.x+'" cy="'+p.y+'" r="13" fill="'+pl.color.hex+'" stroke="#fff" stroke-width="3"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle" font-size="11" font-weight="900" fill="#fff">'+(k+1)+'</text>'; }));
  $("ludoBoard").innerHTML=z;
 }
