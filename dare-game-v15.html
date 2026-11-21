@@ -96,6 +96,13 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
 .party-stage .step-label{font-size:11px;font-weight:900;letter-spacing:1px;color:#9a80c2;text-transform:uppercase}
 @media(max-width:360px){.party-grid{gap:9px}.party-card{padding:13px;min-height:154px}.party-card .art{font-size:33px}}
 
+
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:14px}.feature-card{border:1px solid rgba(255,255,255,.5);border-radius:21px;padding:16px;text-align:left;color:#fff;min-height:132px;box-shadow:0 10px 25px rgba(20,12,38,.17)}.feature-card .feature-icon{font-size:31px;display:block;margin-bottom:12px}.feature-card b{display:block;font-size:15px}.feature-card small{display:block;opacity:.86;font-size:11px;line-height:1.4;margin-top:5px}.feature-ludo{background:linear-gradient(145deg,#e85b66,#9d3159)}.feature-iq{background:linear-gradient(145deg,#5676d8,#5740a4)}.feature-quick{background:linear-gradient(145deg,#efa743,#d65e47)}.feature-arena{background:linear-gradient(145deg,#35b99a,#227a78)}
+.ludo-board-wrap{background:rgba(255,255,255,.94);border-radius:24px;padding:10px;box-shadow:0 12px 30px rgba(20,12,38,.14);margin:14px 0}.ludo-board{display:block;width:100%;height:auto;max-width:540px;margin:auto}.ludo-panel{background:rgba(255,255,255,.93);color:#292333;border-radius:20px;padding:15px;margin:12px 0}body.dark .ludo-board-wrap,body.dark .ludo-panel{background:rgba(37,29,52,.95);color:#f8f1ff}.ludo-turn{font-size:17px;font-weight:850}.ludo-dice{width:76px;height:76px;border-radius:19px;background:#fff;color:#352b45;font-size:42px;font-weight:900;box-shadow:0 5px 0 #d9d2e2;margin:10px auto;display:grid;place-items:center}.ludo-tokens{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.ludo-token-btn{border-radius:13px;padding:10px 4px;font-weight:850;background:#f1edf8;color:#45375b;border:2px solid transparent}.ludo-token-btn:disabled{opacity:.35}body.dark .ludo-token-btn{background:#392c4d;color:#f4eaff}
+.iq-progress{height:8px;border-radius:99px;background:rgba(140,120,170,.18);overflow:hidden;margin:13px 0}.iq-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7b65d5,#e88bb0);transition:width .2s}.iq-option{display:block;width:100%;text-align:left;background:#f5f1fb;color:#3c3150;border:1px solid #e7def1;border-radius:14px;padding:13px;margin:8px 0;font-weight:700}.iq-option:disabled{opacity:.8}body.dark .iq-option{background:#382b4b;color:#f7efff;border-color:#554267}
+.quick-dare-card{padding:28px 20px;border-radius:25px;background:linear-gradient(145deg,rgba(255,245,220,.96),rgba(255,230,241,.94));color:#3a2d3b;text-align:center;margin:16px 0;min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center}.quick-dare-card .q-icon{font-size:48px;margin-bottom:13px}.quick-dare-card .q-text{font-size:21px;font-weight:850;line-height:1.4}
+@media(max-width:360px){.ludo-tokens{gap:5px}.ludo-token-btn{font-size:11px;padding:9px 2px}.feature-card{padding:13px}}
+
 </style>
 </head>
 <body>
@@ -112,7 +119,39 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
   <div class="party-card pc-charades"><span class="art">🏆</span><b>3. Result decides</b><small>Winner aur loser game ke score se decide.</small></div>
   <div class="party-card pc-category"><span class="art">🎯</span><b>4. Loser gets dare</b><small>Sirf round ke baad. Skip/swap allowed.</small></div>
  </div>
- <p class="footer-note">Friends ke saath party game • No random dares • No pressure</p>
+ <div class="section-head"><h3>More ways to play</h3><span>New modes</span></div>
+ <div class="feature-grid">
+  <button class="feature-card feature-ludo" onclick="openLudoSetup()"><span class="feature-icon">🎲</span><b>Ludo</b><small>Play with friends or challenge the computer.</small></button>
+  <button class="feature-card feature-iq" onclick="startIQTest()"><span class="feature-icon">🧠</span><b>IQ-style Test</b><small>10 logic and pattern questions. Get your quiz score.</small></button>
+  <button class="feature-card feature-quick" onclick="openQuickDare()"><span class="feature-icon">🎯</span><b>Give Me a Dare</b><small>One tap, one simple surprise challenge.</small></button>
+  <button class="feature-card feature-arena" onclick="show('players')"><span class="feature-icon">🏆</span><b>Party Arena</b><small>Group games first, loser dare after.</small></button>
+ </div>
+ <p class="footer-note">Friends ke saath party game • No pressure • Skip is always okay</p>
+</section>
+
+
+<section id="ludoSetup" class="screen">
+ <button class="back" onclick="show('home')">← Home</button><h2>Ludo Arena 🎲</h2><p class="sub">Friends ke saath pass-and-play ya computer opponent ke against.</p>
+ <div class="card"><div class="field"><label>PLAY MODE</label><select id="ludoMode" onchange="updateLudoSetup()"><option value="computer">Play vs Computer</option><option value="friends">Play with Friends</option></select></div>
+ <div class="field" id="ludoCountWrap"><label>PLAYERS</label><select id="ludoCount"><option value="2">2 Players</option><option value="3">3 Players</option><option value="4">4 Players</option></select></div>
+ <p class="note" id="ludoSetupNote">You play as Red. Computer plays as Yellow. Take turns on the same phone.</p><button class="btn primary full" onclick="startLudo()">Start Ludo →</button></div>
+</section>
+<section id="ludoGame" class="screen">
+ <button class="back" onclick="show('ludoSetup')">← Ludo setup</button><div class="party-topline"><div><h2>Ludo 🎲</h2><p class="sub" id="ludoSub">Race all four tokens home.</p></div><span class="offline">OFFLINE</span></div>
+ <div class="ludo-board-wrap"><svg id="ludoBoard" class="ludo-board" viewBox="0 0 560 560" role="img" aria-label="Ludo game board"></svg></div>
+ <div class="ludo-panel center"><div class="ludo-turn" id="ludoTurn">Red's turn</div><div class="ludo-dice" id="ludoDice">🎲</div><button class="btn primary full" id="ludoRoll" onclick="ludoRoll()">Roll dice</button><p class="note" id="ludoHint">Roll a 6 to bring a token out. Select a token to move.</p><div class="ludo-tokens" id="ludoTokens"></div></div>
+ <button class="btn ghost full" onclick="show('home')">Exit to Home</button>
+</section>
+<section id="iqTest" class="screen">
+ <button class="back" onclick="leaveIQ()">← Home</button><div class="party-topline"><div><h2>Brain Sprint 🧠</h2><p class="sub">10 questions · logic · patterns · reasoning</p></div><span class="offline" id="iqTimer">05:00</span></div>
+ <div class="iq-progress"><span id="iqProgress"></span></div><div class="party-stage" id="iqStage"></div>
+ <p class="note">This is a fun reasoning quiz, not a scientifically valid IQ test. Your result is a quiz score, not an official IQ number.</p>
+</section>
+<section id="quickDare" class="screen">
+ <button class="back" onclick="show('home')">← Home</button><h2>Give Me a Dare 🎯</h2><p class="sub">No game setup. Tap once and get one simple, harmless challenge.</p>
+ <div class="quick-dare-card" id="quickDareCard"><div class="q-icon">✨</div><div class="q-text">Ready for a tiny challenge?</div></div>
+ <button class="btn primary full" onclick="drawQuickDare()">Give me a dare!</button><button class="btn ghost full" style="margin-top:9px" onclick="drawQuickDare()">Another one ↻</button>
+ <p class="note center">Skip anything you don't feel like doing. No penalty, no pressure.</p>
 </section>
 
 <section id="genderMode" class="screen">
@@ -836,7 +875,7 @@ function drawGenderDare(){const style=$("genderChoice").value,pool=style==="boy"
 function markGenderDone(){completeDare(currentGenderDare);drawGenderDare();}
 function nextGenderPlayer(){genderTurn=(genderTurn+1)%players.length;renderGenderPlayer();$("genderPrompt").classList.add("hidden");}
 let players=["Player 1","Player 2","Player 3"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
-function show(id){if(id!=="partyGame"&&typeof partyTimer!=="undefined"){clearTimeout(partyTimer);partyReady=false;}document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
+function show(id){if(id!=="partyGame"&&typeof partyTimer!=="undefined"){clearTimeout(partyTimer);partyReady=false;}if(id!=="iqTest"&&typeof iqTimerId!=="undefined")clearInterval(iqTimerId);if(id!=="ludoGame"&&typeof ludoTimer!=="undefined")clearTimeout(ludoTimer);document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
 function renderPlayers(){ $("playerInputs").innerHTML="";players.forEach((name,i)=>{const row=document.createElement("div");row.className="player-row";const input=document.createElement("input");input.value=name;input.maxLength=18;input.placeholder="Player "+(i+1);input.setAttribute("aria-label","Player "+(i+1));input.oninput=()=>players[i]=input.value;row.appendChild(input);if(players.length>2){const btn=document.createElement("button");btn.className="remove";btn.textContent="×";btn.onclick=()=>{players.splice(i,1);renderPlayers();};row.appendChild(btn);} $("playerInputs").appendChild(row);});}
 function addPlayer(){if(players.length>=8)return;players.push("Player "+(players.length+1));renderPlayers();}
 function savePlayers(){players=players.map((p,i)=>String(p||"").trim()||("Player "+(i+1)));if(players.length<3){alert("Party Arena ke liye kam se kam 3 players chahiye.");return;}renderDuelSelects();renderTruthSelect();partyRoster();show("games");}
@@ -1004,6 +1043,50 @@ function showCharadesVote(){
  $("partyStage").innerHTML='<div class="big-visual">👏</div><div class="turn-name">Group rating</div><p class="stage-hint">'+escapeHtml(players[partyIndex])+' ki acting ko sab milkar 1–5 points do. Friendly voting only.</p><div class="vote-row">'+[1,2,3,4,5].map(n=>'<button onclick="saveCharadesVote('+n+')">'+n+' ★</button>').join("")+'</div>';
 }
 function saveCharadesVote(n){partyScores[partyIndex]=n;$("partyStage").innerHTML='<div class="big-visual">✨</div><div class="turn-name">Score saved</div><p class="stage-hint">Next performer ki baari.</p><button class="btn primary full" onclick="partyIndex++;renderCharadesTurn()">Next player →</button>';}
+
+
+/* LUDO: local pass-and-play and computer opponent */
+const LUDO_COLORS=[{name:"Red",hex:"#e6535c",light:"#ffe1e2",start:0},{name:"Green",hex:"#37a878",light:"#dff5e9",start:13},{name:"Yellow",hex:"#e8b53c",light:"#fff2cb",start:26},{name:"Blue",hex:"#4f83d6",light:"#e2edff",start:39}],LUDO_SAFE=[0,8,13,21,26,34,39,47],LUDO_SYMBOLS=["⚀","⚁","⚂","⚃","⚄","⚅"];
+let ludoPlayers=[],ludoMode="computer",ludoTurn=0,ludoDice=0,ludoCanMove=[],ludoBusy=false,ludoWinner=-1,ludoTimer=null;
+function openLudoSetup(){updateLudoSetup();show("ludoSetup");}
+function updateLudoSetup(){const m=$("ludoMode").value;$("ludoCountWrap").classList.toggle("hidden",m==="computer");$("ludoSetupNote").textContent=m==="computer"?"You play as Red. Computer plays as Yellow. Take turns on the same phone.":"2–4 friends can take turns on this phone.";}
+function startLudo(){clearTimeout(ludoTimer);ludoMode=$("ludoMode").value;const n=ludoMode==="computer"?2:Number($("ludoCount").value),slots=n===2?[0,2]:n===3?[0,1,2]:[0,1,2,3];ludoPlayers=slots.map((slot,i)=>({name:ludoMode==="computer"&&i===1?"Computer":(players[i]||"Player "+(i+1)),computer:ludoMode==="computer"&&i===1,color:LUDO_COLORS[slot],tokens:[-1,-1,-1,-1]}));ludoTurn=0;ludoDice=0;ludoCanMove=[];ludoBusy=false;ludoWinner=-1;$("ludoSub").textContent=ludoMode==="computer"?"You vs Computer":"Friends pass-and-play";show("ludoGame");drawLudoBoard();renderLudoTurn();}
+function ludoPoint(i,r=184){const a=(-90+i*360/52)*Math.PI/180;return{x:280+Math.cos(a)*r,y:280+Math.sin(a)*r};}
+function ludoLanePoint(pl,k){const a=(-90+pl.color.start*360/52)*Math.PI/180,r=154-k*25.6;return{x:280+Math.cos(a)*r,y:280+Math.sin(a)*r};}
+function ludoBasePoint(pl,k){const c=[{x:120,y:120},{x:440,y:120},{x:440,y:440},{x:120,y:440}][LUDO_COLORS.indexOf(pl.color)],o=[[-27,-27],[27,-27],[-27,27],[27,27]][k];return{x:c.x+o[0],y:c.y+o[1]};}
+function ludoTokenPoint(pl,k,v){return v<0?ludoBasePoint(pl,k):v<=51?ludoPoint((pl.color.start+v)%52):ludoLanePoint(pl,v-52);}
+function drawLudoBoard(){let z='<rect x="8" y="8" width="544" height="544" rx="28" fill="#faf8fc" stroke="#ded7e8" stroke-width="3"/>',bases=[{x:28,y:28,c:LUDO_COLORS[0]},{x:362,y:28,c:LUDO_COLORS[1]},{x:362,y:362,c:LUDO_COLORS[2]},{x:28,y:362,c:LUDO_COLORS[3]}];bases.forEach(b=>z+='<rect x="'+b.x+'" y="'+b.y+'" width="170" height="170" rx="25" fill="'+b.c.light+'" stroke="'+b.c.hex+'" stroke-width="3"/><rect x="'+(b.x+24)+'" y="'+(b.y+24)+'" width="122" height="122" rx="18" fill="#fff" opacity=".86"/>');for(let i=0;i<52;i++){const p=ludoPoint(i),c=LUDO_COLORS.find(x=>x.start===i);z+='<circle cx="'+p.x+'" cy="'+p.y+'" r="9.5" fill="'+(c?c.hex:"#e7e2ec")+'" stroke="#bdb5c8" stroke-width="1.5"/>'+(LUDO_SAFE.includes(i)?'<text x="'+p.x+'" y="'+(p.y+4)+'" font-size="12" text-anchor="middle" fill="#6e5b86">★</text>':"");}ludoPlayers.forEach(pl=>{for(let k=0;k<6;k++){const p=ludoLanePoint(pl,k);z+='<circle cx="'+p.x+'" cy="'+p.y+'" r="10" fill="'+pl.color.light+'" stroke="'+pl.color.hex+'" stroke-width="2"/>';}});z+='<circle cx="280" cy="280" r="35" fill="#fff" stroke="#cfc5dc" stroke-width="3"/><path d="M280 245 L315 280 L280 315 L245 280 Z" fill="#f1edf6" stroke="#bfb4ce" stroke-width="2"/>';ludoPlayers.forEach(pl=>pl.tokens.forEach((v,k)=>{const p=ludoTokenPoint(pl,k,v);z+='<circle cx="'+p.x+'" cy="'+p.y+'" r="13" fill="'+pl.color.hex+'" stroke="#fff" stroke-width="3"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle" font-size="11" font-weight="900" fill="#fff">'+(k+1)+'</text>'; }));$("ludoBoard").innerHTML=z;}
+function ludoLegal(pi,d){return ludoPlayers[pi].tokens.map((v,i)=>({v,i})).filter(x=>x.v<0?d===6:x.v+d<=57).map(x=>x.i);}
+function renderLudoTurn(){if(ludoWinner>=0)return;const p=ludoPlayers[ludoTurn];$("ludoTurn").textContent=p.name+"'s turn";$("ludoTurn").style.color=p.color.hex;$("ludoDice").textContent=ludoDice?LUDO_SYMBOLS[ludoDice-1]:"🎲";$("ludoRoll").disabled=ludoBusy||!!ludoDice||p.computer;$("ludoRoll").textContent=p.computer?"Computer thinking…":ludoDice?"Choose a token":"Roll dice";$("ludoHint").textContent=ludoDice?"Choose a highlighted token. A 6 brings one out.":(p.computer?"Computer is taking its turn.":"Roll the dice to begin.");$("ludoTokens").innerHTML=p.tokens.map((v,i)=>{const ok=ludoCanMove.includes(i);return '<button class="ludo-token-btn" '+(!ok||p.computer?"disabled":"")+' onclick="ludoMove('+i+')" style="border-color:'+(ok?p.color.hex:"transparent")+'">Token '+(i+1)+'<br><small>'+(v<0?"Home":v===57?"Finished":v>=52?"Home lane "+(v-51):"Step "+v)+'</small></button>';}).join("");}
+function ludoRoll(){if(ludoBusy||ludoDice||ludoPlayers[ludoTurn].computer)return;ludoRollCore(false);}
+function ludoRollCore(bot){ludoDice=1+Math.floor(Math.random()*6);ludoCanMove=ludoLegal(ludoTurn,ludoDice);$("ludoDice").textContent=LUDO_SYMBOLS[ludoDice-1];if(!ludoCanMove.length){const six=ludoDice===6;$("ludoHint").textContent="No legal move. "+(six?"Six! You get another roll.":"Turn passes.");ludoBusy=true;renderLudoTurn();ludoTimer=setTimeout(()=>{ludoDice=0;ludoBusy=false;if(!six)ludoTurn=(ludoTurn+1)%ludoPlayers.length;renderLudoTurn();if(ludoPlayers[ludoTurn].computer)ludoComputerTurn();},850);return;}renderLudoTurn();if(bot){ludoBusy=true;ludoTimer=setTimeout(()=>{ludoBusy=false;ludoMove(chooseComputerToken(),true);},750);}}
+function ludoMove(k,bot=false){if(!ludoDice||!ludoCanMove.includes(k)||(ludoBusy&&!bot))return;const pl=ludoPlayers[ludoTurn],old=pl.tokens[k];pl.tokens[k]=old<0?0:old+ludoDice;if(pl.tokens[k]<=51){const g=(pl.color.start+pl.tokens[k])%52;if(!LUDO_SAFE.includes(g))ludoPlayers.forEach((op,pi)=>{if(pi!==ludoTurn)op.tokens=op.tokens.map(v=>v>=0&&v<=51&&(op.color.start+v)%52===g?-1:v);});}if(pl.tokens.every(v=>v===57)){ludoWinner=ludoTurn;drawLudoBoard();$("ludoTurn").textContent=pl.name+" wins! 🏆";$("ludoHint").textContent="All four tokens reached home. Well played!";$("ludoRoll").disabled=true;$("ludoRoll").textContent="Game over";$("ludoTokens").innerHTML='<button class="btn primary full" onclick="startLudo()">Play again</button>';return;}const six=ludoDice===6;ludoDice=0;ludoCanMove=[];drawLudoBoard();if(!six)ludoTurn=(ludoTurn+1)%ludoPlayers.length;renderLudoTurn();if(ludoPlayers[ludoTurn].computer)ludoTimer=setTimeout(ludoComputerTurn,650);}
+function chooseComputerToken(){const pl=ludoPlayers[ludoTurn],a=ludoCanMove.slice();a.sort((x,y)=>{const score=i=>{const v=pl.tokens[i],n=v<0?0:v+ludoDice;let s=n*2+(v<0?15:0)+(n===57?1000:0);if(n<=51&&ludoPlayers.some((op,j)=>j!==ludoTurn&&op.tokens.some(t=>t>=0&&t<=51&&(op.color.start+t)%52===(pl.color.start+n)%52)))s+=100;return s;};return score(y)-score(x);});return a[0];}
+function ludoComputerTurn(){if(ludoWinner>=0||!ludoPlayers[ludoTurn]?.computer)return;ludoRollCore(true);}
+/* IQ-style quiz score only; it is not an actual IQ measurement. */
+const IQ_QUESTIONS=[
+{q:"What number comes next? 2, 4, 8, 16, …",o:["18","24","32","36"],a:2,e:"Each number doubles: 16 × 2 = 32."},
+{q:"Which one does not belong?",o:["Triangle","Square","Circle","Rectangle"],a:2,e:"Circle has no straight sides; the others are polygons."},
+{q:"All Nors are Veks. All Veks are Lums. Are all Nors Lums?",o:["Yes","No","Only sometimes","Cannot tell"],a:0,e:"If Nors are inside Veks and Veks inside Lums, Nors are inside Lums."},
+{q:"Find the missing number: 3, 6, 11, 18, 27, …",o:["34","36","38","40"],a:2,e:"The gaps are +3, +5, +7, +9, then +11 = 38."},
+{q:"Book is to reading as fork is to…",o:["Drawing","Eating","Writing","Running"],a:1,e:"A book is used for reading; a fork is used for eating."},
+{q:"A clock shows 3:00. What is the angle between its hands?",o:["45°","60°","90°","180°"],a:2,e:"At 3:00, the hands are a quarter-turn apart: 90°."},
+{q:"Which letter comes next? A, C, F, J, O, …",o:["S","T","U","V"],a:2,e:"The jumps are +2, +3, +4, +5, then +6: U."},
+{q:"Mira is taller than Dev. Dev is taller than Karan. Who is shortest?",o:["Mira","Dev","Karan","Cannot tell"],a:2,e:"Mira > Dev > Karan, so Karan is shortest."},
+{q:"5 machines make 5 toys in 5 minutes. How long for 10 machines to make 10 toys?",o:["2.5 minutes","5 minutes","10 minutes","50 minutes"],a:1,e:"Each machine makes one toy in five minutes, so 10 machines make 10 toys in five minutes."},
+{q:"Which pair has the same relationship as Bird : Nest?",o:["Bee : Hive","Fish : Water","Dog : Bark","Horse : Grass"],a:0,e:"A nest is a bird's home; a hive is a bee's home."}
+];
+let iqIndex=0,iqScore=0,iqSeconds=300,iqTimerId=null,iqAnswered=false;
+function startIQTest(){clearInterval(iqTimerId);iqIndex=0;iqScore=0;iqSeconds=300;iqAnswered=false;show("iqTest");$("iqTimer").textContent="05:00";renderIQQuestion();iqTimerId=setInterval(()=>{iqSeconds--;const m=String(Math.floor(iqSeconds/60)).padStart(2,"0"),v=String(iqSeconds%60).padStart(2,"0");$("iqTimer").textContent=m+":"+v;if(iqSeconds<=0){clearInterval(iqTimerId);finishIQTest(true);}},1000);}
+function renderIQQuestion(){const q=IQ_QUESTIONS[iqIndex];iqAnswered=false;$("iqProgress").style.width=(iqIndex/10*100)+"%";$("iqStage").innerHTML='<div class="step-label">QUESTION '+(iqIndex+1)+' OF 10</div><h3 style="font-size:20px;line-height:1.4;margin:12px 0 18px">'+q.q+'</h3>'+q.o.map((a,i)=>'<button class="iq-option" onclick="answerIQ('+i+')">'+String.fromCharCode(65+i)+'. '+a+'</button>').join("")+'<p class="note">Choose one answer. You cannot change it after submitting.</p>';}
+function answerIQ(i){if(iqAnswered)return;iqAnswered=true;const q=IQ_QUESTIONS[iqIndex],ok=i===q.a;if(ok)iqScore++;document.querySelectorAll(".iq-option").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.style.borderColor="#39a77b";if(j===i&&!ok)b.style.borderColor="#dc6b77";});$("iqStage").insertAdjacentHTML("beforeend",'<div class="card"><b>'+(ok?"Correct! ✓":"Good try!")+'</b><p class="note">'+q.e+'</p><button class="btn primary full" onclick="nextIQQuestion()">'+(iqIndex===9?"See my result":"Next question →")+'</button></div>');}
+function nextIQQuestion(){iqIndex++;if(iqIndex>=10){finishIQTest(false);return;}renderIQQuestion();}
+function finishIQTest(timeUp){clearInterval(iqTimerId);$("iqProgress").style.width="100%";const band=iqScore>=9?"Excellent puzzle performance":iqScore>=7?"Strong puzzle performance":iqScore>=5?"Good practice score":"Keep practising — every attempt builds skill";$("iqStage").innerHTML='<div class="big-visual">'+(iqScore>=8?"🏆":iqScore>=5?"🧠":"🌱")+'</div><div class="turn-name">'+(timeUp?"Time is up!":"Test complete!")+'</div><div style="font-size:42px;font-weight:950;text-align:center;margin:12px">'+iqScore+'/10</div><p class="stage-hint"><b>'+band+'</b><br>'+Math.round(iqScore*10)+'% correct answers</p><p class="note">This is your score on this 10-question game only. It does not calculate your real IQ or compare you with a population.</p><button class="btn primary full" onclick="startIQTest()">Try again</button>';}
+function leaveIQ(){clearInterval(iqTimerId);show("home");}
+const QUICK_DARES=["Speak like a sports commentator for 20 seconds.","Make up a two-line jingle about a spoon.","Do your best robot walk for 10 seconds.","Name five animals in five seconds.","Tell a tiny story using moon, mango and bicycle.","Try to say the days of the week backwards.","Give an imaginary award speech for winning absolutely nothing.","Balance a soft cushion on your head for 10 seconds, only if comfortable.","Make three different cartoon sound effects.","Describe your favourite snack like a luxury food advertisement.","Act like a news reporter covering a missing pencil.","Say a tongue twister three times slowly.","Invent a new dance move and give it a funny name.","Name four things that are blue in five seconds.","Speak in a whisper for the next 30 seconds.","Make the group guess an animal using only gestures.","Give a dramatic movie-trailer voice to a normal sentence.","Draw a tiny house in 20 seconds with your non-dominant hand.","Say one nice thing about each player.","Make up a secret handshake with the person next to you."];
+let lastQuickDare=-1;
+function openQuickDare(){show("quickDare");if(lastQuickDare<0)drawQuickDare();}
+function drawQuickDare(){let n=Math.floor(Math.random()*QUICK_DARES.length);if(n===lastQuickDare)n=(n+1)%QUICK_DARES.length;lastQuickDare=n;$("quickDareCard").innerHTML='<div class="q-icon">🎯</div><div class="q-text">'+QUICK_DARES[n]+'</div>';}
 
 </script>
 </body>
