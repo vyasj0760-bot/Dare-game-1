@@ -1,21 +1,32 @@
-# The Dare Game v2.3
+# The Dare Game v2.4
 
-A mobile-first, offline-friendly friends party game. The core loop is simple: **play a fair group mini-game → decide the winner and loser from the result → reveal a dare for the loser.**
+An offline-friendly Android friends party game.
 
 ## Party Arena
-- 3–8 players on one phone (three sample players are prefilled; rename or add players)
-- Six group mini-games: Reflex Rush, Memory Flash, Category Clash, Emoji Decode, Secret Target, and Act It Out
-- Each game has its own flow and scoring; every player participates
-- Ties lead to a rematch — no dare is assigned on a tied round
-- A dare is shown only after a completed game identifies a loser
-- Dares can be skipped or swapped; no forced changes or purchases
+- 3–8 players on one phone
+- Six group games: Reflex Rush, Memory Flash, Category Clash, Emoji Decode, Secret Target and Act It Out
+- A dare appears only after a completed game identifies a loser; ties lead to a rematch
+
+## Ludo
+- Local pass-and-play for 2–4 friends
+- Play against a computer opponent
+- Dice turns, token release on six, safe squares, captures, home lanes and a win condition
+
+## Brain Sprint
+- 10 timed reasoning questions covering number patterns, logic and analogies
+- Shows the quiz score and explanations
+- This is a casual puzzle quiz, not a standardized IQ test or an official IQ estimate
+
+## Give Me a Dare
+- One-tap collection of short, harmless optional dares
+- Separate from the Party Arena game-then-dare loop
 
 ## Dare library
 - 100 explained dares across Makeup & Beauty, Clothes & Fashion, Hairstyle, Accessories, Funny & Special, and Special Challenges
-- Completed dare history is saved locally and excluded from future draws
+- Completed dare history is saved locally
 
 ## Android APK
-Pushes to the Android app source trigger the GitHub Actions debug APK build. Download **The-Dare-Game-APK** from the latest successful workflow run.
+Pushes to the Android source trigger the GitHub Actions debug APK build. Download **The-Dare-Game-APK** from the latest successful workflow run.
 
 ## Current scope
-The current build is offline pass-and-play on one device. It does not include online matchmaking or a remote multiplayer server.
+All modes are offline on one device. Ludo friend mode is pass-and-play; computer mode is single-player versus an automated opponent. No online matchmaking or server is required.
