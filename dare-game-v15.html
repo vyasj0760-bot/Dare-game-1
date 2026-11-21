@@ -839,7 +839,7 @@ let players=["Player 1","Player 2","Player 3"],currentDuel={type:"rps",p1:0,p2:1
 function show(id){if(id!=="partyGame"&&typeof partyTimer!=="undefined"){clearTimeout(partyTimer);partyReady=false;}document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
 function renderPlayers(){ $("playerInputs").innerHTML="";players.forEach((name,i)=>{const row=document.createElement("div");row.className="player-row";const input=document.createElement("input");input.value=name;input.maxLength=18;input.placeholder="Player "+(i+1);input.setAttribute("aria-label","Player "+(i+1));input.oninput=()=>players[i]=input.value;row.appendChild(input);if(players.length>2){const btn=document.createElement("button");btn.className="remove";btn.textContent="×";btn.onclick=()=>{players.splice(i,1);renderPlayers();};row.appendChild(btn);} $("playerInputs").appendChild(row);});}
 function addPlayer(){if(players.length>=8)return;players.push("Player "+(players.length+1));renderPlayers();}
-function savePlayers(){players=players.map((p,i)=>String(p||"").trim()||("Player "+(i+1)));if(players.length<3){alert("Party Arena ke liye kam se kam 3 players chahiye.");return;}renderDuelSelects();renderTruthSelect();show("games");}
+function savePlayers(){players=players.map((p,i)=>String(p||"").trim()||("Player "+(i+1)));if(players.length<3){alert("Party Arena ke liye kam se kam 3 players chahiye.");return;}renderDuelSelects();renderTruthSelect();partyRoster();show("games");}
 function renderDuelSelects(){["p1","p2"].forEach((id,idx)=>{$(id).innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$(id).value=String(idx===0?0:Math.min(1,players.length-1));});}
 function renderTruthSelect(){ $("truthPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("truthPlayer").value=String(truthTurn%players.length);}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
@@ -864,7 +864,8 @@ function newLoserDare(){currentLoserDare=pickAvailableDare(DARES);$("loserDare")
 function startTruthDare(){if(players.length<2){renderPlayers();show("players");}else{renderTruthSelect();$("truthPrompt").classList.add("hidden");show("truth");}}
 function pickTruth(type){lastTruthType=type;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";$("truthDone").classList.toggle("hidden",type==="truth");if(type==="truth"){const q=TRUTHS[Math.floor(Math.random()*TRUTHS.length)];$("truthText").textContent=q;$("truthImageWrap").classList.add("hidden");currentTruthDare=null;}else{currentTruthDare=pickAvailableDare(DARES);$("truthText").textContent=currentTruthDare?currentTruthDare.text:"All dares completed!";renderDareImage("truth",currentTruthDare);$("truthDone").disabled=!currentTruthDare;} $("truthPrompt").classList.remove("hidden");}
 function markTruthDone(){completeDare(currentTruthDare);pickTruth("dare");}
-function markLoserDone(){completeDare(currentLoserDare);newLoserDare();}
+function markLoserDone(){completeDare(currentLoserDare);show("games");}
+function skipLoserDare(){show("games");}
 function nextTruthPlayer(){truthTurn=(truthTurn+1)%players.length;renderTruthSelect();$("truthPrompt").classList.add("hidden");}
 renderPlayers();
 function applyTheme(){const d=localStorage.getItem("dareTheme")==="dark";document.body.classList.toggle("dark",d);$("themeToggle").textContent=d?"☀ Light":"☾ Dark";}
