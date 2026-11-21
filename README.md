@@ -3,7 +3,8 @@
 A lightweight, mobile-first Indian party game with an offline-first Android WebView build.
 
 ## Included
-- 245+ dares in the main library, with Hinglish and Indian family, school, food and festival themes
+- 100 fresh explained dares across six categories: Makeup & Beauty, Clothes & Fashion, Hairstyle, Accessories, Funny & Special, and Special Challenges
+- Completed dares are saved locally and excluded from future draws until the player resets dare history
 - Separate Gender Style-Swap mode: Boy → Girl-style theme, Girl → Boy-style theme, and Custom mode
 - Classic Dare Mode with the previously played hairstyle, styling, accessory and acting challenges
 - Local pass-and-play multiplayer for 2–8 players
