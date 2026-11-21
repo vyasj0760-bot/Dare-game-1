@@ -105,13 +105,14 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
 
 <section id="home" class="screen active">
  <div class="hero"><div class="hero-logo"><svg viewBox="0 0 108 108" role="img" aria-label="The Dare Game crown and gamepad logo"><defs><linearGradient id="heroIconBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eee8ff"/><stop offset="1" stop-color="#f8e3eb"/></linearGradient></defs><rect width="108" height="108" rx="27" fill="url(#heroIconBg)"/><path d="M31 34 40 18 53 29 66 18 76 35 72 48 35 48Z" fill="#7659c9" stroke="#4d3989" stroke-width="2"/><path d="m39 36 3-9 7 7 4-10 6 10 9-8 2 11Z" fill="#fff0cf"/><path d="M23 61c0-6 5-10 11-10h40c6 0 11 4 11 10v14c0 7-8 11-14 6l-8-6H45l-8 6c-6 5-14 1-14-6Z" fill="#fff" stroke="#4d3989" stroke-width="2"/><path d="M34 59h6v6h6v6h-6v6h-6v-6h-6v-6h6Z" fill="#7659c9"/><circle cx="67" cy="64" r="4" fill="#f08bb0"/><circle cx="77" cy="72" r="4" fill="#f3c45c"/><path d="m17 24 3-7 3 7 7 3-7 3-3 7-3-7-7-3Zm66 1 3-7 3 7 7 3-7 3-3 7-3-7-7-3Z" fill="#fff"/></svg></div><h1>Game chuno.<br>Masti yaadgaar banao.</h1><p class="sub">Mini-games, funny challenges aur surprise dares. Ek phone par, bina internet.</p><button class="btn primary full" onclick="show('players')">Khelna shuru karo →</button></div>
- <div class="section-head"><h3>Game mode chuno</h3><span>Apni pasand chuno</span></div>
- <div class="grid">
-  <button class="tile" onclick="show('players')"><div class="emoji">🕹️</div><b>Mini-games</b><small>Khelo, jeeto aur loser ko dare milega</small></button>
-  <button class="tile" onclick="startTruthDare()"><div class="emoji">💬</div><b>Truth or Dare</b><small>Baari-baari se challenge chuno</small></button>
-  <button class="tile" onclick="startClassic()"><div class="emoji">🎀</div><b>Classic Dare Mode</b><small>Purane wale dares • hair, style aur acting</small></button><button class="tile" onclick="startGenderMode()"><div class="emoji">🎭</div><b>Gender Style-Swap</b><small>Boy ↔ Girl theme ke fun dares</small></button>
+ <div class="section-head"><h3>Ek round kaise chalega?</h3><span>Simple rules</span></div>
+ <div class="party-grid">
+  <div class="party-card pc-memory"><span class="art">🎮</span><b>1. Game choose karo</b><small>6 alag group mini-games mein se ek.</small></div>
+  <div class="party-card pc-reaction"><span class="art">👥</span><b>2. Sab participate</b><small>Har player ki baari aur fair scoring.</small></div>
+  <div class="party-card pc-charades"><span class="art">🏆</span><b>3. Result decides</b><small>Winner aur loser game ke score se decide.</small></div>
+  <div class="party-card pc-category"><span class="art">🎯</span><b>4. Loser gets dare</b><small>Sirf round ke baad. Skip/swap allowed.</small></div>
  </div>
- <p class="footer-note">Doston ke liye • Pyaar se khelo • Skip karna hamesha allowed hai</p>
+ <p class="footer-note">Friends ke saath party game • No random dares • No pressure</p>
 </section>
 
 <section id="genderMode" class="screen">
@@ -120,7 +121,7 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
 <div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">STYLE-SWAP DARE</div><div class="dare-image-wrap hidden" id="genderImageWrap"></div><div class="prompt" id="genderText"></div><button class="btn soft full" id="genderDone" onclick="markGenderDone()">Complete dare ✓</button><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
 <div class="grid"><button class="btn soft full" onclick="drawGenderDare()">Dare badlo ↻</button><button class="btn full" onclick="nextGenderPlayer()">Agla player →</button></div></section>
 <section id="players" class="screen">
- <button class="back" onclick="show('home')">← Home</button><h2>Kaun-kaun khelega?</h2><p class="sub">2–8 players add karo. Sab isi phone par khelenge.</p>
+ <button class="back" onclick="show('home')">← Home</button><h2>Kaun-kaun khelega?</h2><p class="sub">3–8 players add karo. Sab isi phone par khelenge.</p>
  <div class="card"><div id="playerInputs"></div><button class="btn soft full" onclick="addPlayer()">+ Player add karo</button></div>
  <button class="btn primary full" onclick="savePlayers()">Aage badho →</button>
 </section>
@@ -835,11 +836,11 @@ function renderGenderPlayer(){$("genderPlayer").innerHTML=players.map((p,i)=>'<o
 function drawGenderDare(){const style=$("genderChoice").value,pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;currentGenderDare=pickAvailableDare(pool);$("genderTag").textContent=players[Number($("genderPlayer").value)]+" • "+(style==="boy"?"GIRL-STYLE THEME":style==="girl"?"BOY-STYLE THEME":"CUSTOM STYLE");$("genderText").textContent=currentGenderDare?currentGenderDare.text:"All dares in this theme completed!";renderDareImage("gender",currentGenderDare);$("genderDone").disabled=!currentGenderDare;$("genderPrompt").classList.remove("hidden");}
 function markGenderDone(){completeDare(currentGenderDare);drawGenderDare();}
 function nextGenderPlayer(){genderTurn=(genderTurn+1)%players.length;renderGenderPlayer();$("genderPrompt").classList.add("hidden");}
-let players=["Player 1","Player 2"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
+let players=["Player 1","Player 2","Player 3"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
+function show(id){if(id!=="partyGame"&&typeof partyTimer!=="undefined"){clearTimeout(partyTimer);partyReady=false;}document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
 function renderPlayers(){ $("playerInputs").innerHTML="";players.forEach((name,i)=>{const row=document.createElement("div");row.className="player-row";const input=document.createElement("input");input.value=name;input.maxLength=18;input.placeholder="Player "+(i+1);input.setAttribute("aria-label","Player "+(i+1));input.oninput=()=>players[i]=input.value;row.appendChild(input);if(players.length>2){const btn=document.createElement("button");btn.className="remove";btn.textContent="×";btn.onclick=()=>{players.splice(i,1);renderPlayers();};row.appendChild(btn);} $("playerInputs").appendChild(row);});}
 function addPlayer(){if(players.length>=8)return;players.push("Player "+(players.length+1));renderPlayers();}
-function savePlayers(){players=players.map((p,i)=>String(p||"").trim()||("Player "+(i+1)));if(players.length<2){alert("At least 2 players needed.");return;}renderDuelSelects();renderTruthSelect();show("games");}
+function savePlayers(){players=players.map((p,i)=>String(p||"").trim()||("Player "+(i+1)));if(players.length<3){alert("Party Arena ke liye kam se kam 3 players chahiye.");return;}renderDuelSelects();renderTruthSelect();show("games");}
 function renderDuelSelects(){["p1","p2"].forEach((id,idx)=>{$(id).innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$(id).value=String(idx===0?0:Math.min(1,players.length-1));});}
 function renderTruthSelect(){ $("truthPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("truthPlayer").value=String(truthTurn%players.length);}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
