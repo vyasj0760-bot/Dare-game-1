@@ -975,15 +975,16 @@ function renderEmojiTurn(){
  $("partyStage").innerHTML='<div class="step-label">QUESTION '+(partyPromptIndex+1)+' / '+PARTY_QUESTIONS.length+' · PLAYER '+(partyIndex+1)+' / '+players.length+'</div><div class="big-visual">'+q.q+'</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'’s turn</div><p class="stage-hint">Answer privately, then pass the phone. Everyone gets every question.</p><div class="choice-grid">'+q.a.map((a,i)=>'<button onclick="answerEmoji('+i+')">'+a+'</button>').join("")+'</div>';
 }
 function answerEmoji(i){
- const q=PARTY_QUESTIONS[partyPromptIndex];if(i===q.c)partyScores.forEach((v,j)=>partyScores[j]++);
- $("partyStage").innerHTML='<div class="big-visual">'+(i===q.c?"🎉":"🤔")+'</div><div class="turn-name">'+(i===q.c?"Correct!":"Not quite!")+'</div><p class="stage-hint">Answer: '+q.a[q.c]+'.</p><button class="btn primary full" onclick="partyPromptIndex++;renderEmojiTurn()">Next question →</button>';
+ const q=PARTY_QUESTIONS[partyPromptIndex],correct=i===q.c;if(correct)partyScores[partyIndex]++;
+ $("partyStage").innerHTML='<div class="big-visual">'+(correct?"🎉":"🤔")+'</div><div class="turn-name">'+(correct?"Correct!":"Not quite!")+'</div><p class="stage-hint">Answer: '+q.a[q.c]+'. Score saved for '+escapeHtml(players[partyIndex])+'</p><button class="btn primary full" onclick="nextEmojiTurn()">Next player →</button>';
 }
+function nextEmojiTurn(){partyIndex++;if(partyIndex>=players.length){partyIndex=0;partyPromptIndex++;}renderEmojiTurn();}
 function renderSecretTurn(){
  setPartyProgress(partyIndex,players.length);
  if(partyIndex>=players.length){
   let order=partyScores.map((v,i)=>({v:Math.abs(v-partyTarget),i})).sort((a,b)=>a.v-b.v);
   partyScores=partyScores.map(v=>Math.abs(v-partyTarget));
-  partyFinish(order[0].i,order[order.length-1].i,"Secret target was "+partyTarget+". Closest difference: "+order[0].v+" · Farthest: "+order[order.length-1].v);return;
+  partyFinish(order[0].i,order[order.length-1].i,"Secret target was "+partyTarget+". Closest difference: "+order[0].v+" · Farthest: "+order[order.length-1].v,order[0].v===order[order.length-1].v);return;
  }
  $("partyStage").innerHTML='<div class="step-label">PLAYER '+(partyIndex+1)+' OF '+players.length+'</div><div class="big-visual">🎯</div><div class="turn-name">'+escapeHtml(players[partyIndex])+'</div><p class="stage-hint">1 se 20 ke beech ek number secretly choose karo. Target kisi ko nahi pata. Phone next player ko pass karo.</p><div class="choice-grid">'+Array.from({length:20},(_,i)=>'<button onclick="chooseSecretNumber('+(i+1)+')">'+(i+1)+'</button>').join("")+'</div>';
 }
