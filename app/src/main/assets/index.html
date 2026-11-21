@@ -55,7 +55,7 @@ body.dark .dare-image-placeholder{background:linear-gradient(135deg,#302342,#482
 <section id="genderMode" class="screen">
 <button class="back" onclick="show('home')">← Home</button><h2>Gender Style-Swap 🎭</h2><p class="sub">Player ke selected style ke opposite theme se fun dare milega. Skip aur swap hamesha allowed hai.</p>
 <div class="card"><div class="field"><label>PLAYER</label><select id="genderPlayer"></select></div><div class="field"><label>PLAYER STYLE</label><select id="genderChoice"><option value="boy">Boy</option><option value="girl">Girl</option><option value="custom">Custom / Skip gender</option></select></div><button class="btn primary full" onclick="drawGenderDare()">Dare lo 🎯</button></div>
-<div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">STYLE-SWAP DARE</div><div class="dare-image-wrap hidden" id="genderImageWrap"></div><div class="prompt" id="genderText"></div><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
+<div id="genderPrompt" class="dare-box hidden"><div class="tag" id="genderTag">STYLE-SWAP DARE</div><div class="dare-image-wrap hidden" id="genderImageWrap"></div><div class="prompt" id="genderText"></div><button class="btn soft full" id="genderDone" onclick="markGenderDone()">Complete dare ✓</button><p class="note">Koi forced outfit ya appearance change nahi. Imagination, optional accessories ya acting se dare complete kar sakte ho.</p></div>
 <div class="grid"><button class="btn soft full" onclick="drawGenderDare()">Dare badlo ↻</button><button class="btn full" onclick="nextGenderPlayer()">Agla player →</button></div></section>
 <section id="players" class="screen">
  <button class="back" onclick="show('home')">← Home</button><h2>Kaun-kaun khelega?</h2><p class="sub">2–8 players add karo. Sab isi phone par khelenge.</p>
@@ -91,16 +91,16 @@ body.dark .dare-image-placeholder{background:linear-gradient(135deg,#302342,#482
  <div class="card"><div class="field"><label>IT'S YOUR TURN</label><select id="truthPlayer"></select></div>
   <div class="grid"><button class="tile" onclick="pickTruth('truth')"><div class="emoji">💬</div><b>Truth</b><small>Answer a fun question</small></button><button class="tile" onclick="pickTruth('dare')"><div class="emoji">🎯</div><b>Dare</b><small>Try a silly challenge</small></button></div>
  </div>
- <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="dare-image-wrap hidden" id="truthImageWrap"></div><div class="prompt" id="truthText"></div><button class="btn soft small" onclick="pickTruth(lastTruthType)">Ek aur</button></div>
+ <div id="truthPrompt" class="dare-box hidden"><div class="tag" id="truthTag">YOUR PROMPT</div><div class="dare-image-wrap hidden" id="truthImageWrap"></div><div class="prompt" id="truthText"></div><button class="btn soft full" id="truthDone" onclick="markTruthDone()">Complete dare ✓</button><button class="btn soft small" onclick="pickTruth(lastTruthType)">Ek aur</button></div>
  <button class="btn primary full" onclick="nextTruthPlayer()">Agla player →</button>
 </section>
 
 <section id="classic" class="screen">
  <button class="back" onclick="show('home')">← Home</button><h2>Classic Dare Mode 🎀</h2><p class="sub">One dare per turn. Players alternate. Keep it playful, comfortable and optional.</p>
  <div class="card"><div class="field"><label>PLAYER THIS TURN</label><select id="classicPlayer"></select></div>
- <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="fun">Funny dares</option><option value="hair">Hairstyle</option><option value="dress">Dress / Outfit</option><option value="dupatta">Chunni / Dupatta</option><option value="makeup">Simple Makeup</option><option value="lipstick">Lipstick</option><option value="accessory">Accessories</option><option value="acting">Acting</option></select></div>
+ <div class="field"><label>CHALLENGE CATEGORY</label><select id="classicCategory"><option value="all">Surprise me</option><option value="makeup">Makeup & Beauty</option><option value="fashion">Clothes & Fashion</option><option value="hairstyle">Hairstyle</option><option value="accessories">Accessories</option><option value="funny">Funny & Special</option><option value="special">Special Challenges</option></select></div>
  <button class="btn primary full" onclick="drawClassicDare()">Ek dare lo 🎯</button></div>
- <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="dare-image-wrap hidden" id="classicImageWrap"></div><div class="prompt" id="classicText"></div><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
+ <div id="classicPrompt" class="dare-box hidden"><div class="tag" id="classicTag">YOUR DARE</div><div class="dare-image-wrap hidden" id="classicImageWrap"></div><div class="prompt" id="classicText"></div><button class="btn soft full" id="classicDone" onclick="markClassicDone()">Complete dare ✓</button><p class="note">No photos required. Use only items you already have. Skip or swap any dare without penalty.</p></div>
  <div class="grid"><button class="btn soft full" onclick="drawClassicDare()">Dare badlo ↻</button><button class="btn full" onclick="nextClassicTurn()">Agla player →</button></div>
  <p class="note">Hair, clothes and accessories are always the player's choice. No makeup purchases or uncomfortable changes.</p>
 </section>
@@ -113,7 +113,7 @@ body.dark .dare-image-placeholder{background:linear-gradient(135deg,#302342,#482
 <section id="loser" class="screen">
  <button class="back" onclick="show('games')">← Games</button>
  <div class="result"><div class="big">🎯</div><h2 id="resultHeading">Dare time!</h2><p id="resultCaption"></p></div>
- <div class="dare-box"><div class="tag">LOSER'S DARE</div><div class="prompt" id="loserDare"></div><p class="note">Keep it comfortable. You can always skip or swap a dare.</p><button class="btn soft small" onclick="newLoserDare()">Dare badlo ↻</button></div>
+ <div class="dare-box"><div class="tag">LOSER'S DARE</div><div class="prompt" id="loserDare"></div><button class="btn soft full" id="loserDone" onclick="markLoserDone()">Complete dare ✓</button><p class="note">Keep it comfortable. You can always skip or swap a dare.</p><button class="btn soft small" onclick="newLoserDare()">Dare badlo ↻</button></div>
  <button class="btn primary full" onclick="show('games')">Play another game</button>
  <button class="btn ghost full" style="margin-top:9px" onclick="show('home')">Home</button>
 </section>
@@ -123,140 +123,644 @@ body.dark .dare-image-placeholder{background:linear-gradient(135deg,#302342,#482
 <script>
 const $=id=>document.getElementById(id);
 const DARE_BANK={
-  "fun": [
-    "10 second ka funny news bulletin sunao.",
-    "Apne group ke liye ek funny team name bolo.",
-    "Ek imaginary chai brand ka ad karo.",
-    "Ek biscuit ko award-winning snack ki tarah introduce karo.",
-    "Cartoon robot ki awaaz mein ek sentence bolo.",
-    "Ek funny royal title apne liye choose karo.",
-    "Ek imaginary festival ka naam announce karo.",
-    "Ek mango par 10-second ki shayari sunao.",
-    "Ek normal object ko museum ki rare cheez ki tarah present karo.",
-    "Ek funny ringtone hum karo.",
-    "Ek imaginary superhero ka naam bolo.",
-    "Ek line ka dramatic movie dialogue bolo.",
-    "Ek funny weather report do.",
-    "Ek snack ko cricket commentator ki tarah describe karo.",
-    "Ek friendly alien greeting invent karo."
-  ],
-  "hair": [
-    "Ek simple side-part hairstyle try karo, agar comfortable ho.",
-    "Ek simple braid banao; hair accessories zaroori nahi.",
-    "Apne hairstyle ko ek funny naam do.",
-    "Ek hair clip ya hairband choose karke lagao.",
-    "Apne baalon ke liye ek fictional character ka hairstyle sketch karo.",
-    "Ek ponytail style try karo, agar mann ho.",
-    "Ek hairstyle ka naam invent karo aur uska poster banao.",
-    "Apne current hairstyle ko 5-second ka fashion intro do."
-  ],
-  "dress": [
-    "Apne current outfit ko ek royal title do.",
-    "Ek comfortable outfit choose karke uska fashion-show intro do.",
-    "Ek kurta ya shirt ko fictional character ka signature outfit declare karo.",
-    "Ek outfit ka colour theme choose karo.",
-    "Ek traditional outfit ka quick sketch banao.",
-    "Apne outfit ke liye ek funny designer label invent karo.",
-    "Ek comfortable jacket, kurta ya shirt ko hero-entry style mein present karo.",
-    "Apne current outfit ka 5-second runway pose do, agar comfortable ho."
-  ],
-  "dupatta": [
-    "Dupatta ko ek simple shoulder drape mein set karo, agar comfortable ho.",
-    "Dupatta ko ek cape ki tarah imagine karke pose do.",
-    "Dupatta drape ka ek naya naam invent karo.",
-    "Dupatta ko neatly fold karne ka ek style dikhao.",
-    "Dupatta ke liye ek fictional fashion-brand ad bolo.",
-    "Dupatta ko ek traditional look ka main feature describe karo.",
-    "Dupatta drape ka ek simple sketch banao.",
-    "Dupatta ko ek royal sash ki tarah present karo, agar comfortable ho."
-  ],
   "makeup": [
-    "Ek bindi design choose karo ya paper par sketch karo.",
-    "Ek blush shade ka naam choose karo; apply karna zaroori nahi.",
-    "Ek eyeshadow colour choose karke uska naam invent karo.",
-    "Ek simple makeup look ko sirf ek naam do.",
-    "Apne personal makeup item mein se ek item choose karke uska ad bolo.",
-    "Ek kajal-inspired eye-look ka sketch banao; aankh mein product lagana zaroori nahi.",
-    "Ek highlighter shade ka naam invent karo.",
-    "Ek makeup brush ko mic bana kar 5-second ka ad bolo."
+    {
+      "id": "makeup-1",
+      "category": "makeup",
+      "text": "Lipstick Challenge — Apni pasand ki lipstick ka shade lagao; sirf apni lipstick use karo, share mat karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-2",
+      "category": "makeup",
+      "text": "One-Eye Kajal — Comfortable ho toh ek aankh mein kajal lagao; irritation ho toh stop karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-3",
+      "category": "makeup",
+      "text": "Bindi Challenge — Forehead par ek bindi lagao ya paper par design sketch karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-4",
+      "category": "makeup",
+      "text": "Eyebrow Styling — Clean brush se eyebrows gently set karo; plucking nahi karni.",
+      "image": ""
+    },
+    {
+      "id": "makeup-5",
+      "category": "makeup",
+      "text": "Lip Gloss — Apna personal lip gloss lagao aur look ka naam rakho.",
+      "image": ""
+    },
+    {
+      "id": "makeup-6",
+      "category": "makeup",
+      "text": "Blush Challenge — Halka blush lagao ya shade choose karke describe karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-7",
+      "category": "makeup",
+      "text": "Beauty Spot — Removable makeup pencil se tiny beauty spot banao ya paper par sketch karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-8",
+      "category": "makeup",
+      "text": "Nail Paint — Ek nail par nail paint lagao; nahi hai toh colour choose karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-9",
+      "category": "makeup",
+      "text": "Eyeliner Challenge — Comfortable ho toh ek eye par eyeliner lagao; warna paper par shape banao.",
+      "image": ""
+    },
+    {
+      "id": "makeup-10",
+      "category": "makeup",
+      "text": "Lipstick Shade Pick — Ek shade choose karo aur uska funny naam rakho.",
+      "image": ""
+    },
+    {
+      "id": "makeup-11",
+      "category": "makeup",
+      "text": "Simple Makeup Look — Bindi aur lipstick se simple look banao; dono optional hain.",
+      "image": ""
+    },
+    {
+      "id": "makeup-12",
+      "category": "makeup",
+      "text": "Eyebrow Brush — Dono eyebrows ko clean brush se neatly set karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-13",
+      "category": "makeup",
+      "text": "Flower Look — Baalon mein flower clip ya artificial flower lagao.",
+      "image": ""
+    },
+    {
+      "id": "makeup-14",
+      "category": "makeup",
+      "text": "Highlighter Look — Highlighter shade choose karo ya hand par chhota swatch banao.",
+      "image": ""
+    },
+    {
+      "id": "makeup-15",
+      "category": "makeup",
+      "text": "Matching Bindi & Lip — Bindi aur lipstick ke matching colours choose karo; apply optional.",
+      "image": ""
+    },
+    {
+      "id": "makeup-16",
+      "category": "makeup",
+      "text": "Hairband Beauty — Hairband pehno aur ek simple pose do.",
+      "image": ""
+    },
+    {
+      "id": "makeup-17",
+      "category": "makeup",
+      "text": "Side Makeup Sketch — Paper par face ke ek side ka makeup look sketch karo.",
+      "image": ""
+    },
+    {
+      "id": "makeup-18",
+      "category": "makeup",
+      "text": "Natural Look — Current look ko change kiye bina natural-look ka naam aur do features batao.",
+      "image": ""
+    },
+    {
+      "id": "makeup-19",
+      "category": "makeup",
+      "text": "Makeup Artist Intro — Makeup artist bankar chosen look ka 15-second intro do.",
+      "image": ""
+    },
+    {
+      "id": "makeup-20",
+      "category": "makeup",
+      "text": "Beauty Reveal — Current look ka fun reveal karo aur uska naam announce karo.",
+      "image": ""
+    }
   ],
-  "lipstick": [
-    "Apni pasand ka ek lipstick shade choose karo.",
-    "Ek lipstick shade ko funny naam do.",
-    "Ek lipstick shade ka 5-second product review do.",
-    "Ek lipstick colour ka paper swatch sketch karo.",
-    "Apni personal lipstick use karna chaaho toh ek light swipe karo; sharing nahi.",
-    "Ek fictional lipstick brand ka naam invent karo."
+  "fashion": [
+    {
+      "id": "fashion-1",
+      "category": "fashion",
+      "text": "Dupatta Shoulder Drape — Dupatta ko dono shoulders par comfortably set karo; pin zaroori nahi.",
+      "image": ""
+    },
+    {
+      "id": "fashion-2",
+      "category": "fashion",
+      "text": "Kurta Look — Kurta pehno ya choose karo aur matching accessory select karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-3",
+      "category": "fashion",
+      "text": "Shirt Tuck-In — Shirt ko neatly tuck-in style karo ya outfit par styling demonstrate karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-4",
+      "category": "fashion",
+      "text": "Scarf Sash — Scarf ko shoulders par sash ki tarah rakho; neck par tight mat baandho.",
+      "image": ""
+    },
+    {
+      "id": "fashion-5",
+      "category": "fashion",
+      "text": "Saree-Inspired Drape — Comfortable clothes ke upar dupatta se saree-inspired drape banao; movement easy rehna chahiye.",
+      "image": ""
+    },
+    {
+      "id": "fashion-6",
+      "category": "fashion",
+      "text": "Colour Match — Do matching colours choose karke outfit combination banao.",
+      "image": ""
+    },
+    {
+      "id": "fashion-7",
+      "category": "fashion",
+      "text": "Oversized Shirt Style — Oversized shirt ko comfortable casual style mein pehno ya idea present karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-8",
+      "category": "fashion",
+      "text": "Dupatta Head Style — Dupatta ko loosely head-covering style mein set karo; face aur vision clear rakho.",
+      "image": ""
+    },
+    {
+      "id": "fashion-9",
+      "category": "fashion",
+      "text": "Jacket Look — Jacket pehno aur ek confident fashion pose do.",
+      "image": ""
+    },
+    {
+      "id": "fashion-10",
+      "category": "fashion",
+      "text": "Royal Shawl — Shawl ko shoulders par royal style mein drape karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-11",
+      "category": "fashion",
+      "text": "Traditional Combo — Traditional outfit ke saath matching accessory choose karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-12",
+      "category": "fashion",
+      "text": "Funny Colour Combo — Do unusual but wearable colours combine karo aur combo ka naam rakho.",
+      "image": ""
+    },
+    {
+      "id": "fashion-13",
+      "category": "fashion",
+      "text": "One-Shoulder Drape — Dupatta ko ek shoulder par comfortably set karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-14",
+      "category": "fashion",
+      "text": "Waistcoat Look — Waistcoat pehno ya choose karo aur formal look ka intro do.",
+      "image": ""
+    },
+    {
+      "id": "fashion-15",
+      "category": "fashion",
+      "text": "Belt Styling — Outfit ke saath belt style karo; comfortable fit honi chahiye.",
+      "image": ""
+    },
+    {
+      "id": "fashion-16",
+      "category": "fashion",
+      "text": "Long Scarf Style — Long scarf ko outfit accessory ki tarah loosely style karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-17",
+      "category": "fashion",
+      "text": "Matching Socks — Do matching socks choose karo aur colour combo announce karo.",
+      "image": ""
+    },
+    {
+      "id": "fashion-18",
+      "category": "fashion",
+      "text": "Sleeve Styling — Shirt ya kurta ki sleeves neatly fold karke style dikhao.",
+      "image": ""
+    },
+    {
+      "id": "fashion-19",
+      "category": "fashion",
+      "text": "Winter Look — Sweater aur scarf se comfortable winter outfit banao.",
+      "image": ""
+    },
+    {
+      "id": "fashion-20",
+      "category": "fashion",
+      "text": "Mini Fashion Show — Current outfit mein teen different fashion poses do.",
+      "image": ""
+    }
   ],
-  "accessory": [
-    "Ek lightweight bracelet choose karke uska royal intro do.",
-    "Ek hairband ya clip ko fashion award do.",
-    "Ek watch ko superhero gadget ki tarah introduce karo.",
-    "Ek pair of earrings choose karo ya sketch karo.",
-    "Ek ring ko fictional royal treasure ka naam do.",
-    "Ek safe, lightweight accessory ke saath ek pose do.",
-    "Ek cap ko detective character ka signature accessory banao.",
-    "Ek paper crown ka quick sketch banao."
+  "hairstyle": [
+    {
+      "id": "hairstyle-1",
+      "category": "hairstyle",
+      "text": "High Ponytail — Baalon ki high ponytail banao; tight kheenchna zaroori nahi.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-2",
+      "category": "hairstyle",
+      "text": "Side Ponytail — Ponytail ko ek side par set karo aur hairstyle ka naam rakho.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-3",
+      "category": "hairstyle",
+      "text": "Two Braids — Do simple braids banao; help lena allowed hai.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-4",
+      "category": "hairstyle",
+      "text": "Messy Bun — Loose messy bun banao; hair ko zor se mat kheecho.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-5",
+      "category": "hairstyle",
+      "text": "Centre Partition — Comb se baalon ki centre partition banao.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-6",
+      "category": "hairstyle",
+      "text": "Side Partition — Comb se side partition banao aur look describe karo.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-7",
+      "category": "hairstyle",
+      "text": "Hair Bow — Ribbon ya bow clip ko baalon mein lagao.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-8",
+      "category": "hairstyle",
+      "text": "Low Ponytail — Low ponytail banao aur ek clip add karo.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-9",
+      "category": "hairstyle",
+      "text": "Half-Up Style — Upper hair section gently baandho aur baaki khula rakho.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-10",
+      "category": "hairstyle",
+      "text": "Hair Twist — Dono sides se hair twist karke clips se secure karo.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-11",
+      "category": "hairstyle",
+      "text": "Double Clip — Baalon mein do matching clips lagao.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-12",
+      "category": "hairstyle",
+      "text": "Mini Bun — Ek small bun banao; hair tie comfortable honi chahiye.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-13",
+      "category": "hairstyle",
+      "text": "Ribbon Style — Ponytail ya braid mein ribbon lagao.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-14",
+      "category": "hairstyle",
+      "text": "Front Hair Styling — Front hair ko clips se neatly style karo; pulling avoid karo.",
+      "image": ""
+    },
+    {
+      "id": "hairstyle-15",
+      "category": "hairstyle",
+      "text": "Royal Hairstyle — Available hair accessories se royal-inspired hairstyle banao.",
+      "image": ""
+    }
   ],
-  "acting": [
-    "15 second ke liye funny news anchor bano.",
-    "Ek family-serial style dramatic reaction do.",
-    "Ek school principal ki funny announcement act karo.",
-    "Ek cricket commentator ki tarah room ka scene describe karo.",
-    "Ek imaginary restaurant ka waiter ban kar welcome bolo.",
-    "Ek cartoon villain ka introduction do.",
-    "Ek movie trailer ki opening line bolo.",
-    "Ek 10-second ka silent acting scene karo: lost remote.",
-    "Ek radio jockey ki tarah show start karo.",
-    "Ek fictional king ya queen ka royal announcement do."
+  "accessories": [
+    {
+      "id": "accessories-1",
+      "category": "accessories",
+      "text": "Earring Dare — Earrings pehno ya pair choose karke style describe karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-2",
+      "category": "accessories",
+      "text": "Bracelet Dare — Comfortable bracelet pehno aur uska royal intro do.",
+      "image": ""
+    },
+    {
+      "id": "accessories-3",
+      "category": "accessories",
+      "text": "Bangles Dare — Pasand ki bangles pehno; tight bangles mat use karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-4",
+      "category": "accessories",
+      "text": "Necklace Dare — Necklace choose karke outfit ke saath match karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-5",
+      "category": "accessories",
+      "text": "Ring Dare — Ek ring pehno ya choose karo aur fictional royal naam rakho.",
+      "image": ""
+    },
+    {
+      "id": "accessories-6",
+      "category": "accessories",
+      "text": "Anklet Dare — Comfortable anklet pehno; warna uska design choose karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-7",
+      "category": "accessories",
+      "text": "Hair Pin — Decorative hair pin lagao aur hairstyle complete karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-8",
+      "category": "accessories",
+      "text": "Sunglasses Pose — Sunglasses pehno aur ek model pose do.",
+      "image": ""
+    },
+    {
+      "id": "accessories-9",
+      "category": "accessories",
+      "text": "Watch Styling — Watch ko outfit ke saath match karo aur short intro do.",
+      "image": ""
+    },
+    {
+      "id": "accessories-10",
+      "category": "accessories",
+      "text": "Nose-Pin Sticker — Sirf removable nose-pin sticker use karo; piercing nahi.",
+      "image": ""
+    },
+    {
+      "id": "accessories-11",
+      "category": "accessories",
+      "text": "Brooch Style — Outfit par brooch ya safe fabric clip attach karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-12",
+      "category": "accessories",
+      "text": "Headband Dare — Headband pehno aur hairstyle set karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-13",
+      "category": "accessories",
+      "text": "Scarf Accessory — Scarf ko neck ke around loosely accessory ki tarah style karo.",
+      "image": ""
+    },
+    {
+      "id": "accessories-14",
+      "category": "accessories",
+      "text": "Matching Jewellery — Necklace aur earrings ka matching set choose karo; pehenna optional.",
+      "image": ""
+    },
+    {
+      "id": "accessories-15",
+      "category": "accessories",
+      "text": "Royal Accessories — Teen comfortable accessories choose karke royal look ka intro do.",
+      "image": ""
+    }
+  ],
+  "funny": [
+    {
+      "id": "funny-1",
+      "category": "funny",
+      "text": "Dadi Dialogue — Dadi-style mein ek harmless funny dialogue bolo.",
+      "image": ""
+    },
+    {
+      "id": "funny-2",
+      "category": "funny",
+      "text": "Princess Introduction — Princess ki tarah fictional introduction do.",
+      "image": ""
+    },
+    {
+      "id": "funny-3",
+      "category": "funny",
+      "text": "Fashion Judge — Imaginary outfit ko 10 mein se rating do aur reason batao.",
+      "image": ""
+    },
+    {
+      "id": "funny-4",
+      "category": "funny",
+      "text": "Ramp Walk — Room mein 20-second playful ramp walk karo; space clear rakho.",
+      "image": ""
+    },
+    {
+      "id": "funny-5",
+      "category": "funny",
+      "text": "Mirror Pose — Mirror ke saamne teen funny poses banao.",
+      "image": ""
+    },
+    {
+      "id": "funny-6",
+      "category": "funny",
+      "text": "Serial Dialogue — TV serial ke dramatic andaaz mein original dialogue bolo.",
+      "image": ""
+    },
+    {
+      "id": "funny-7",
+      "category": "funny",
+      "text": "Air Hostess Announcement — Imaginary flight ke liye 15-second announcement do.",
+      "image": ""
+    },
+    {
+      "id": "funny-8",
+      "category": "funny",
+      "text": "Wedding Guest Intro — Imaginary wedding guest ki tarah funny introduction do.",
+      "image": ""
+    },
+    {
+      "id": "funny-9",
+      "category": "funny",
+      "text": "Makeup Reveal Acting — Apne look ko dramatic TV-show reveal ki tarah present karo.",
+      "image": ""
+    },
+    {
+      "id": "funny-10",
+      "category": "funny",
+      "text": "Royal Namaste — Royal andaaz mein namaste karke apna title announce karo.",
+      "image": ""
+    },
+    {
+      "id": "funny-11",
+      "category": "funny",
+      "text": "Photoshoot Poses — Teen different photoshoot poses do; photo lena zaroori nahi.",
+      "image": ""
+    },
+    {
+      "id": "funny-12",
+      "category": "funny",
+      "text": "Cartoon Expressions — Teen cartoon-style expressions banao.",
+      "image": ""
+    },
+    {
+      "id": "funny-13",
+      "category": "funny",
+      "text": "Accessory Advertisement — Kisi accessory ka 10-second funny advertisement karo.",
+      "image": ""
+    },
+    {
+      "id": "funny-14",
+      "category": "funny",
+      "text": "Dramatic Hair Flip — Comfortable ho toh gentle hair flip; warna dramatic head pose do.",
+      "image": ""
+    },
+    {
+      "id": "funny-15",
+      "category": "funny",
+      "text": "Award Actress — Imaginary award receive karne ki short acting karo.",
+      "image": ""
+    }
+  ],
+  "special": [
+    {
+      "id": "special-1",
+      "category": "special",
+      "text": "Traditional Look — Traditional outfit aur ek accessory ke saath coordinated look banao.",
+      "image": ""
+    },
+    {
+      "id": "special-2",
+      "category": "special",
+      "text": "Indo-Western Look — Ek Indian aur ek western clothing element combine karo.",
+      "image": ""
+    },
+    {
+      "id": "special-3",
+      "category": "special",
+      "text": "Monochrome Challenge — Ek hi colour family ke comfortable clothes choose karo.",
+      "image": ""
+    },
+    {
+      "id": "special-4",
+      "category": "special",
+      "text": "Retro Look — Retro-inspired hairstyle ya accessory choose karke look ka naam rakho.",
+      "image": ""
+    },
+    {
+      "id": "special-5",
+      "category": "special",
+      "text": "Royal Colour Theme — Purple, maroon ya gold theme choose karke outfit style karo.",
+      "image": ""
+    },
+    {
+      "id": "special-6",
+      "category": "special",
+      "text": "One-Accessory Makeover — Sirf ek accessory se current look ko style karo.",
+      "image": ""
+    },
+    {
+      "id": "special-7",
+      "category": "special",
+      "text": "Two-Colour Challenge — Outfit mein do main colours choose karke combo present karo.",
+      "image": ""
+    },
+    {
+      "id": "special-8",
+      "category": "special",
+      "text": "Fictional Character Look — Fictional character se inspired harmless outfit/accessory idea banao.",
+      "image": ""
+    },
+    {
+      "id": "special-9",
+      "category": "special",
+      "text": "Festival Look — Festival-ready comfortable outfit aur accessory combination banao.",
+      "image": ""
+    },
+    {
+      "id": "special-10",
+      "category": "special",
+      "text": "Cute Casual Look — Casual clothes aur ek hair accessory se look complete karo.",
+      "image": ""
+    },
+    {
+      "id": "special-11",
+      "category": "special",
+      "text": "Elegant Look — Simple, neat aur coordinated outfit choose karke present karo.",
+      "image": ""
+    },
+    {
+      "id": "special-12",
+      "category": "special",
+      "text": "Vintage Hairstyle — Vintage-inspired hairstyle banao ya sketch dikhao.",
+      "image": ""
+    },
+    {
+      "id": "special-13",
+      "category": "special",
+      "text": "Matching Challenge — Outfit aur accessory ka colour match karke explain karo.",
+      "image": ""
+    },
+    {
+      "id": "special-14",
+      "category": "special",
+      "text": "Final Runway — Chosen look mein short runway walk aur final pose do.",
+      "image": ""
+    },
+    {
+      "id": "special-15",
+      "category": "special",
+      "text": "Grand Reveal — Selected look present karo aur styling ke teen choices explain karo.",
+      "image": ""
+    }
   ]
 };
-const DARE_ICONS={"fun":"🎉","hair":"💇","dress":"👗","dupatta":"🧣","makeup":"🪞","lipstick":"💄","accessory":"✨","acting":"🎭"};
-const DARES=Object.entries(DARE_BANK).flatMap(([category,items])=>items.map((text,index)=>({id:category+"-"+(index+1),category,text,image:""})));
+const DARE_ICONS={makeup:"💄",fashion:"👗",hairstyle:"💇",accessories:"💍",funny:"😂",special:"👑",hair:"💇",dress:"👗",dupatta:"🧣",lipstick:"💄",accessory:"✨",acting:"🎭",fun:"🎉"};
+const DARES=Object.values(DARE_BANK).flat();
+const CLASSIC_DARES={all:DARES,makeup:DARE_BANK.makeup,fashion:DARE_BANK.fashion,hairstyle:DARE_BANK.hairstyle,accessories:DARE_BANK.accessories,funny:DARE_BANK.funny,special:DARE_BANK.special,hair:DARE_BANK.hairstyle,dress:DARE_BANK.fashion,dupatta:DARE_BANK.fashion,lipstick:DARE_BANK.makeup,accessory:DARE_BANK.accessories,acting:DARE_BANK.funny,fun:DARE_BANK.funny};
+const completedDareIds=new Set();try{JSON.parse(localStorage.getItem("completedDareIds")||"[]").forEach(id=>completedDareIds.add(id));}catch(e){}
+let currentClassicDare=null,currentGenderDare=null,currentTruthDare=null,currentLoserDare=null;
+function pickAvailableDare(pool){const available=pool.filter(d=>!completedDareIds.has(d.id));return available.length?available[Math.floor(Math.random()*available.length)]:null;}
+function completeDare(dare){if(!dare)return;completedDareIds.add(dare.id);try{localStorage.setItem("completedDareIds",JSON.stringify([...completedDareIds]));}catch(e){}alert("Dare completed! ✓");}
+function resetDareProgress(){completedDareIds.clear();try{localStorage.removeItem("completedDareIds");}catch(e){}alert("Completed-dare history reset ho gayi.");}
 const TRUTHS=[
 "Aaj tak ka sabse funny school moment kya tha?","Tumhari favourite comfort food kya hai?","Agar ek din ke liye kisi fictional character ki power mile toh kya choose karoge?","Kaunsa song tumhe instantly happy kar deta hai?","Tumhari sabse funny harmless habit kya hai?","Group mein sabse achha storyteller kaun hai?","Ek skill jo tum seekhna chahte ho?","Agar tum ek game invent karo toh uska naam kya hoga?","Tumhara favourite festival kaunsa hai aur kyun?","Tumhe sabse zyada kis baat par hasi aati hai?","Aaj ka din ek movie hota toh uska title kya hota?","Kaunsa snack tum kabhi mana nahi karte?","Tumhari dream holiday destination kya hai?","Ek fictional character jise tum apni team mein rakhna chahoge?","Kisi friend ki ek achhi quality batao?"
 ];
 
-const CLASSIC_DARES={
-all:DARES,
-fun:DARE_BANK.fun.map((text,i)=>({id:"fun-"+i,category:"fun",text,image:""})),
-hair:DARE_BANK.hair.map((text,i)=>({id:"hair-"+i,category:"hair",text,image:""})),
-dress:DARE_BANK.dress.map((text,i)=>({id:"dress-"+i,category:"dress",text,image:""})),
-dupatta:DARE_BANK.dupatta.map((text,i)=>({id:"dupatta-"+i,category:"dupatta",text,image:""})),
-makeup:DARE_BANK.makeup.map((text,i)=>({id:"makeup-"+i,category:"makeup",text,image:""})),
-lipstick:DARE_BANK.lipstick.map((text,i)=>({id:"lipstick-"+i,category:"lipstick",text,image:""})),
-accessory:DARE_BANK.accessory.map((text,i)=>({id:"accessory-"+i,category:"accessory",text,image:""})),
-acting:DARE_BANK.acting.map((text,i)=>({id:"acting-"+i,category:"acting",text,image:""}))
-};
-let classicTurn=0;
+let classicTurn=0,genderTurn=0;
 function startClassic(){if(players.length<2){renderPlayers();show("players");return;}renderClassicPlayer();$("classicPrompt").classList.add("hidden");show("classic");}
 function renderClassicPlayer(){$("classicPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("classicPlayer").value=String(classicTurn%players.length);}
-function renderDareImage(prefix,dare){const wrap=$(prefix+"ImageWrap");if(!wrap)return;wrap.innerHTML="";wrap.classList.remove("hidden");if(dare&&dare.image){const img=document.createElement("img");img.src=dare.image;img.alt="Dare reference image";img.loading="lazy";wrap.appendChild(img);}else{const box=document.createElement("div");box.className="dare-image-placeholder";const icon=document.createElement("span");icon.textContent=DARE_ICONS[dare.category]||"🎯";const label=document.createElement("small");label.textContent="Is dare ki reference image yahan add hogi";box.append(icon,label);wrap.appendChild(box);}}
-function drawClassicDare(){const c=$("classicCategory").value;const pool=CLASSIC_DARES[c]||CLASSIC_DARES.all;const dare=pool[Math.floor(Math.random()*pool.length)];$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+c.toUpperCase();$("classicText").textContent=dare.text;renderDareImage("classic",dare);$("classicPrompt").classList.remove("hidden");}
+function renderDareImage(prefix,dare){const wrap=$(prefix+"ImageWrap");if(!wrap)return;wrap.innerHTML="";if(!dare){wrap.classList.add("hidden");return;}wrap.classList.remove("hidden");const box=document.createElement("div");box.className="dare-image-placeholder";const icon=document.createElement("span");icon.textContent=DARE_ICONS[dare.category]||"🎯";const label=document.createElement("small");label.textContent="DARE CHALLENGE";box.append(icon,label);wrap.appendChild(box);}
+function drawClassicDare(){const c=$("classicCategory").value,pool=CLASSIC_DARES[c]||DARES;currentClassicDare=pickAvailableDare(pool);$("classicTag").textContent=players[Number($("classicPlayer").value)]+" • "+c.toUpperCase();$("classicText").textContent=currentClassicDare?currentClassicDare.text:"Is category ke sabhi dares complete!";renderDareImage("classic",currentClassicDare);$("classicDone").disabled=!currentClassicDare;$("classicPrompt").classList.remove("hidden");}
+function markClassicDone(){completeDare(currentClassicDare);drawClassicDare();}
 function nextClassicTurn(){classicTurn=(classicTurn+1)%players.length;renderClassicPlayer();$("classicPrompt").classList.add("hidden");}
-
-const GENDER_DARES={
-boyToGirl:[...CLASSIC_DARES.hair.slice(0,2),...CLASSIC_DARES.dupatta.slice(0,3),...CLASSIC_DARES.makeup.slice(0,2),...CLASSIC_DARES.lipstick.slice(0,2),...CLASSIC_DARES.accessory.slice(0,2),...CLASSIC_DARES.dress.slice(0,2)],
-girlToBoy:[
-{id:"g2b-1",category:"accessory",text:"Ek cap choose karke uska hero-style intro do.",image:""},
-{id:"g2b-2",category:"dress",text:"Ek jacket ya shirt ko fictional hero ka signature outfit declare karo.",image:""},
-{id:"g2b-3",category:"accessory",text:"Paper par ek simple moustache sketch karo.",image:""},
-{id:"g2b-4",category:"accessory",text:"Ek watch ko action-hero gadget ki tarah introduce karo.",image:""},
-{id:"g2b-5",category:"acting",text:"Ek fictional detective ka introduction do.",image:""},
-{id:"g2b-6",category:"acting",text:"Cricket captain ki 10-second team speech do.",image:""},
-{id:"g2b-7",category:"acting",text:"Ek movie hero ka entry dialogue bolo.",image:""},
-{id:"g2b-8",category:"dress",text:"Ek tie ka fashion-show intro do; pehenna optional hai.",image:""},
-{id:"g2b-9",category:"acting",text:"Ek sports commentator ki awaaz mein score announce karo.",image:""},
-{id:"g2b-10",category:"accessory",text:"Ek bracelet ko champion medal ki tarah present karo.",image:""}
-],
-custom:DARES
-};
-let genderTurn=0;
+const GENDER_DARES={boyToGirl:[...DARE_BANK.hairstyle,...DARE_BANK.fashion,...DARE_BANK.makeup,...DARE_BANK.accessories],girlToBoy:[...DARE_BANK.funny,...DARE_BANK.special],custom:DARES};
 function startGenderMode(){if(players.length<2){renderPlayers();show("players");return;}renderGenderPlayer();$("genderPrompt").classList.add("hidden");show("genderMode");}
 function renderGenderPlayer(){$("genderPlayer").innerHTML=players.map((p,i)=>'<option value="'+i+'">'+escapeHtml(p)+'</option>').join("");$("genderPlayer").value=String(genderTurn%players.length);}
-function drawGenderDare(){const style=$("genderChoice").value;const pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;const dare=pool[Math.floor(Math.random()*pool.length)];$("genderTag").textContent=players[Number($("genderPlayer").value)]+" • "+(style==="boy"?"GIRL-STYLE THEME":style==="girl"?"BOY-STYLE THEME":"CUSTOM STYLE");$("genderText").textContent=dare.text;renderDareImage("gender",dare);$("genderPrompt").classList.remove("hidden");}
+function drawGenderDare(){const style=$("genderChoice").value,pool=style==="boy"?GENDER_DARES.boyToGirl:style==="girl"?GENDER_DARES.girlToBoy:GENDER_DARES.custom;currentGenderDare=pickAvailableDare(pool);$("genderTag").textContent=players[Number($("genderPlayer").value)]+" • "+(style==="boy"?"GIRL-STYLE THEME":style==="girl"?"BOY-STYLE THEME":"CUSTOM STYLE");$("genderText").textContent=currentGenderDare?currentGenderDare.text:"All dares in this theme completed!";renderDareImage("gender",currentGenderDare);$("genderDone").disabled=!currentGenderDare;$("genderPrompt").classList.remove("hidden");}
+function markGenderDone(){completeDare(currentGenderDare);drawGenderDare();}
 function nextGenderPlayer(){genderTurn=(genderTurn+1)%players.length;renderGenderPlayer();$("genderPrompt").classList.add("hidden");}
-
 let players=["Player 1","Player 2"],currentDuel={type:"rps",p1:0,p2:1},rpsFirst=null,diceRolls=[],numberSecret=null,tapTurn=0,tapTimes=[],tapTimer=null,tapReady=false,lastTruthType="dare",truthTurn=0;
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");}
 function renderPlayers(){ $("playerInputs").innerHTML="";players.forEach((name,i)=>{const row=document.createElement("div");row.className="player-row";const input=document.createElement("input");input.value=name;input.maxLength=18;input.placeholder="Player "+(i+1);input.setAttribute("aria-label","Player "+(i+1));input.oninput=()=>players[i]=input.value;row.appendChild(input);if(players.length>2){const btn=document.createElement("button");btn.className="remove";btn.textContent="×";btn.onclick=()=>{players.splice(i,1);renderPlayers();};row.appendChild(btn);} $("playerInputs").appendChild(row);});}
@@ -282,9 +786,11 @@ function tapNow(){}
 function startTap(){}
 function finishDuel(winner,loser,detail){$("duelPlay").classList.add("hidden");$("duelResult").classList.remove("hidden");$("duelResult").innerHTML='<div class="result"><div class="big">🏆</div><h2>'+escapeHtml(players[winner])+' wins!</h2><p>'+escapeHtml(detail||"")+'</p><p class="sub">'+escapeHtml(players[loser])+' gets the dare this round.</p></div><button class="btn primary full" onclick="showLoser('+loser+','+winner+')">Reveal loser\'s dare →</button>';}
 function showLoser(loser,winner){$("resultHeading").textContent=players[loser]+", dare time!";$("resultCaption").textContent=players[winner]+" won this round.";newLoserDare();show("loser");}
-function newLoserDare(){$("loserDare").textContent=DARES[Math.floor(Math.random()*DARES.length)];}
+function newLoserDare(){currentLoserDare=pickAvailableDare(DARES);$("loserDare").textContent=currentLoserDare?currentLoserDare.text:"All dares completed!";$("loserDone").disabled=!currentLoserDare;}
 function startTruthDare(){if(players.length<2){renderPlayers();show("players");}else{renderTruthSelect();$("truthPrompt").classList.add("hidden");show("truth");}}
-function pickTruth(type){lastTruthType=type;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";if(type==="truth"){const q=TRUTHS[Math.floor(Math.random()*TRUTHS.length)];$("truthText").textContent=q;$("truthImageWrap").classList.add("hidden");}else{const dare=DARES[Math.floor(Math.random()*DARES.length)];$("truthText").textContent=dare.text;renderDareImage("truth",dare);}$("truthPrompt").classList.remove("hidden");}
+function pickTruth(type){lastTruthType=type;$("truthTag").textContent=type==="truth"?"TRUTH QUESTION":"YOUR DARE";$("truthDone").classList.toggle("hidden",type==="truth");if(type==="truth"){const q=TRUTHS[Math.floor(Math.random()*TRUTHS.length)];$("truthText").textContent=q;$("truthImageWrap").classList.add("hidden");currentTruthDare=null;}else{currentTruthDare=pickAvailableDare(DARES);$("truthText").textContent=currentTruthDare?currentTruthDare.text:"All dares completed!";renderDareImage("truth",currentTruthDare);$("truthDone").disabled=!currentTruthDare;} $("truthPrompt").classList.remove("hidden");}
+function markTruthDone(){completeDare(currentTruthDare);pickTruth("dare");}
+function markLoserDone(){completeDare(currentLoserDare);newLoserDare();}
 function nextTruthPlayer(){truthTurn=(truthTurn+1)%players.length;renderTruthSelect();$("truthPrompt").classList.add("hidden");}
 renderPlayers();
 function applyTheme(){const d=localStorage.getItem("dareTheme")==="dark";document.body.classList.toggle("dark",d);$("themeToggle").textContent=d?"☀ Light":"☾ Dark";}
