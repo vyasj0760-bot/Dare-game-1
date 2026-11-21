@@ -123,7 +123,7 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
  <div class="feature-grid">
   <button class="feature-card feature-ludo" onclick="openLudoSetup()"><span class="feature-icon">🎲</span><b>Ludo</b><small>Doston ke saath ya computer ke khilaaf khelo.</small></button>
   <button class="feature-card feature-iq" onclick="startIQTest()"><span class="feature-icon">🧠</span><b>IQ-style Test</b><small>10 logic aur pattern sawaal. Apna score dekho.</small></button>
-  <button class="feature-card feature-quick" onclick="openQuickDare()"><span class="feature-icon">🎯</span><b>Give Me a Dare</b><small>One tap, one simple surprise challenge.</small></button>
+  <button class="feature-card feature-quick" style="display:none" onclick="openQuickDare()"><span class="feature-icon">🎯</span><b>Give Me a Dare</b><small>One tap, one simple surprise challenge.</small></button>
   <button class="feature-card feature-arena" onclick="show('players')"><span class="feature-icon">🏆</span><b>Party Arena</b><small>Pehle group game, phir loser ka dare.</small></button>
  </div>
  <p class="footer-note">Friends ke saath party game • No pressure • Skip is always okay</p>
@@ -225,9 +225,9 @@ body.dark .party-stage .player-chip{background:#3b2c50;color:#eee3ff}
 
 <section id="loser" class="screen">
  <button class="back" onclick="show('games')">← Games</button>
- <div class="result"><div class="big">🎯</div><h2 id="resultHeading">Dare time!</h2><p id="resultCaption"></p></div>
- <div class="dare-box"><div class="tag">LOSER KA GENDER DARE</div><div class="field"><label>LOSER KA STYLE</label><select id="loserStyle" onchange="newLoserDare()"><option value="boy">Boy — girl-style dare</option><option value="girl">Girl — boy-style dare</option><option value="custom">Custom — neutral dare</option></select></div><div class="dare-image-wrap hidden" id="loserImageWrap"></div><div class="prompt" id="loserDare"></div><button class="btn soft full" id="loserDone" onclick="markLoserDone()">Dare complete ✓</button><p class="note">Keep it comfortable. You can always skip or swap a dare.</p><button class="btn soft small" onclick="newLoserDare()">Dare badlo ↻</button></div>
- <button class="btn primary full" onclick="show('games')">Play another game</button>
+ <div class="result"><div class="big">🎯</div><h2 id="resultHeading">Dare ka time!</h2><p id="resultCaption"></p></div>
+ <div class="dare-box"><div class="tag">LOSER KA GENDER DARE</div><div class="field"><label>LOSER KA STYLE</label><select id="loserStyle" onchange="newLoserDare()"><option value="boy">Boy — girl-style wala dare</option><option value="girl">Girl — boy-style wala dare</option><option value="custom">Custom — neutral dare</option></select></div><div class="dare-image-wrap hidden" id="loserImageWrap"></div><div class="prompt" id="loserDare"></div><button class="btn soft full" id="loserDone" onclick="markLoserDone()">Dare complete ✓</button><p class="note">Comfortable na ho toh dare skip ya swap kar sakte ho.</p><button class="btn soft small" onclick="newLoserDare()">Dare badlo ↻</button></div>
+ <button class="btn primary full" onclick="show('games')">Doosra game khelo</button>
  <button class="btn ghost full" style="margin-top:9px" onclick="show('home')">Home</button>
 </section>
 </div>
