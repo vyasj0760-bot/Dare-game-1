@@ -1,22 +1,21 @@
-# The Dare Game v16
+# The Dare Game v2.3
 
-A lightweight, mobile-first Indian party game with an offline-first Android WebView build.
+A mobile-first, offline-friendly friends party game. The core loop is simple: **play a fair group mini-game → decide the winner and loser from the result → reveal a dare for the loser.**
 
-## Included
-- 100 fresh explained dares across six categories: Makeup & Beauty, Clothes & Fashion, Hairstyle, Accessories, Funny & Special, and Special Challenges
-- Completed dares are saved locally and excluded from future draws until the player resets dare history
-- Separate Gender Style-Swap mode: Boy → Girl-style theme, Girl → Boy-style theme, and Custom mode
-- Classic Dare Mode with the previously played hairstyle, styling, accessory and acting challenges
-- Local pass-and-play multiplayer for 2–8 players
-- Mini-games: Stone Paper Scissors, Dice Duel, Number Guess and Quick Tap
-- Truth or Dare mode
-- Skip and swap are always allowed; no forced outfit changes or purchases
+## Party Arena
+- 3–8 players on one phone (three sample players are prefilled; rename or add players)
+- Six group mini-games: Reflex Rush, Memory Flash, Category Clash, Emoji Decode, Secret Target, and Act It Out
+- Each game has its own flow and scoring; every player participates
+- Ties lead to a rematch — no dare is assigned on a tied round
+- A dare is shown only after a completed game identifies a loser
+- Dares can be skipped or swapped; no forced changes or purchases
 
-## Browser version
-Open [dare-game-v15.html](./dare-game-v15.html) from the repository.
+## Dare library
+- 100 explained dares across Makeup & Beauty, Clothes & Fashion, Hairstyle, Accessories, Funny & Special, and Special Challenges
+- Completed dare history is saved locally and excluded from future draws
 
 ## Android APK
-Pushes to the Android app source trigger the GitHub Actions debug APK build. Download the artifact named **The-Dare-Game-APK** from the latest successful workflow run.
+Pushes to the Android app source trigger the GitHub Actions debug APK build. Download **The-Dare-Game-APK** from the latest successful workflow run.
 
 ## Current scope
-The current build is local/offline pass-and-play. Firebase online multiplayer and a secure server-side owner portal are not implemented in this version. Do not put passwords, API keys, or other secrets in public HTML or repository descriptions.
+The current build is offline pass-and-play on one device. It does not include online matchmaking or a remote multiplayer server.
